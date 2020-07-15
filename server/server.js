@@ -6,6 +6,10 @@ mongoose.Promise = global.Promise;
 const dbConfig = require("./app/config/db.config");
 const app = express();
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+
 // var corsOptions = {
   // origin: "http://localhost:8081"
 // };
@@ -32,14 +36,10 @@ mongoose
     process.exit();
   });
 
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome" });
-});
-
 // routes
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
+require("./app/routes/tournament.routes")(app);
 
 // set port, listen for requests
 const PORT = dbConfig.PORT || 8080;

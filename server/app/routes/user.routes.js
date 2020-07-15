@@ -1,5 +1,5 @@
 const verifyToken = require("../middlewares/verifyToken");
-const controller = require("../controllers/user.controller");
+const userController = require("../controllers/user.controller");
 
 module.exports = (app) => {
   app.use((req, res, next) => {
@@ -10,9 +10,8 @@ module.exports = (app) => {
     next();
   });
 
-  app.get("/api/test/all", controller.allAccess);
-
-  app.get("/api/test/user", [verifyToken], controller.userBoard);
-
-
+  app.get("/api/users", userController.index);
+  app.get("/api/users/:username", userController.show);
+  app.patch("/api/users/:username", userController.update);
+  
 };
