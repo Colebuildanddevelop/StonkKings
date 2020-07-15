@@ -21,6 +21,19 @@ TOURNAMENT
 - 
 
 
+TODO 
+
+  BACKEND
+  - create models
+  - create controllers
+  - create middleware? 
+  - create routes 
+
+  FRONTEND
+  - create layout diagrams 
+  - create simple forms to test backend routes 
+
+
 Models/ Relationships
 
 User
