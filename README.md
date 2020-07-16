@@ -54,6 +54,12 @@ TODO
     - tournament to be created with a creatorId, 
       - convert jwt to userID ?  
 
+    - Entry 
+      - controller needs to save a tournament id and user id
+      - show needs to populate
+      - index needs to populate
+
+
 
 Models/ Relationships
 

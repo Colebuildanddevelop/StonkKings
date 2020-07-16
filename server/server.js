@@ -40,6 +40,7 @@ mongoose
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 require("./app/routes/tournament.routes")(app);
+require("./app/routes/entry.routes")(app);
 
 // set port, listen for requests
 const PORT = dbConfig.PORT || 8080;

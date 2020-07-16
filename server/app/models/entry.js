@@ -14,7 +14,7 @@ const EntrySchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Trade"
   }], 
-  accountBalance: Number 
+  accountBalance: { type: Number, default: 10000 } 
 })
 
 module.exports = mongoose.model("Entry", EntrySchema);
