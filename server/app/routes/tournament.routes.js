@@ -12,5 +12,5 @@ module.exports = (app) => {
 
   app.get("/api/tournaments", TournamentController.index);
   app.get("/api/tournaments/:name", TournamentController.show);
-  app.post("/api/tournaments", TournamentController.create);
+  app.post("/api/tournaments", verifyToken, TournamentController.create);
 };

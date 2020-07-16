@@ -25,13 +25,34 @@ TODO
 
   BACKEND
   - create models
+    - user
+    - tournament 
+    - entry
+    - trade
+
   - create controllers
+    - user 
+    - tournament 
+    - entry 
+    - trade
+
   - create middleware? 
+    - verifyToken
+    - checkDuplicate
+
   - create routes 
+    - user
+    - tournament 
+    - entry 
+    - trade
 
   FRONTEND
   - create layout diagrams 
   - create simple forms to test backend routes 
+
+  SPECIFIC
+    - tournament to be created with a creatorId, 
+      - convert jwt to userID ?  
 
 
 Models/ Relationships

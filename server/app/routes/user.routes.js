@@ -12,6 +12,6 @@ module.exports = (app) => {
 
   app.get("/api/users", userController.index);
   app.get("/api/users/:username", userController.show);
-  app.patch("/api/users/:username", userController.update);
+  app.patch("/api/users/:username", verifyToken, userController.update);
   
 };
