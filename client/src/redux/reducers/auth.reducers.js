@@ -2,7 +2,7 @@ import {
   FETCH_USER_INFORMATION_BEGIN,
   FETCH_USER_INFORMATION_SUCCESS,
   FETCH_USER_INFORMATION_FAILURE,
-} from "../actions/authActions";
+} from "../actions/auth.actions";
 
 const initialState = {
   currentUser: {},

@@ -3,9 +3,10 @@ import { connect } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 // actions
-import { loginWithToken } from "./redux/actions/authActions";
+import { loginWithToken } from "./redux/actions/auth.actions";
 
 // containers 
+import Lobby from "./containers/Lobby";
 import Login from "./containers/Login";
 import NavBar from "./containers/NavBar";
 
@@ -27,6 +28,13 @@ class App extends React.Component {
         <Switch>
           <Route
             exact
+            path="/"
+            render={(routeProps) => (
+              <Lobby {...routeProps} />
+            )}
+          />
+          <Route
+            exact
             path="/login"
             render={(routeProps) => (
               <Login {...routeProps} />
@@ -40,10 +48,8 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  state: state
+  currentUser: state.auth.currentUser
 })
-
-
 
 export default connect(
   mapStateToProps,

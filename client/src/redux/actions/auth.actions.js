@@ -2,19 +2,16 @@ export const FETCH_USER_INFORMATION_BEGIN = "FETCH_USER_INFORMATION_BEGIN";
 export const FETCH_USER_INFORMATION_SUCCESS = "FETCH_USER_INFORMATION_SUCCESS";
 export const FETCH_USER_INFORMATION_FAILURE = "FETCH_USER_INFORMATION_FAILURE";
 
-export const SIGN_UP = "SIGN_UP"; 
-export const SIGN_IN = "SIGN_IN";
-
-export const fetchUserInfoBegin = () => ({
+const fetchUserInfoBegin = () => ({
   type: FETCH_USER_INFORMATION_BEGIN
 });
 
-export const fetchUserInfoSuccess = userInfo => ({
+const fetchUserInfoSuccess = userInfo => ({
   type: FETCH_USER_INFORMATION_SUCCESS,
   payload: { userInfo }
 });
 
-export const fetchUserInfoFailure = err => ({
+const fetchUserInfoFailure = err => ({
   type: FETCH_USER_INFORMATION_FAILURE,
   payload: { err }
 });
@@ -39,7 +36,7 @@ export const auth = (credentials, signInOrUp) => {
       })
       .catch(err => dispatch(fetchUserInfoFailure(err)));
   }
-}
+};
 
 export const loginWithToken = (token) => {
   return dispatch => {
@@ -58,4 +55,4 @@ export const loginWithToken = (token) => {
     })
     .catch(err => dispatch(fetchUserInfoFailure(err)))
   }
-}
+};

@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
-    flexGrow: 1,
     textDecoration: 'none',
+    marginRight: 30
   },
 }));
 
@@ -28,8 +28,17 @@ const NavBar = () => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography component={Link} to={"/"} variant="h6" color="inherit" className={classes.title}>
+          <Typography component={Link} to={"/"} variant="h4" color="inherit" className={classes.title}>
             STONKKINGS
+          </Typography>
+          <Typography component={Link} to={"/"} variant="h6" color="inherit" className={classes.title}>
+            Lobby
+          </Typography>
+          <Typography component={Link} to={"/"} variant="h6" color="inherit" className={classes.title}>
+            My Tournaments
+          </Typography>
+          <Typography component={Link} to={"/"} variant="h6" color="inherit" style={{flexGrow: 1}} className={classes.title}>
+            Leaderboard        
           </Typography>
           <Button component={Link} to={"/login"} color="inherit">Login</Button>
         </Toolbar>
