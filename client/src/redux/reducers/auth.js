@@ -2,15 +2,16 @@ import {
   FETCH_USER_INFORMATION_BEGIN,
   FETCH_USER_INFORMATION_SUCCESS,
   FETCH_USER_INFORMATION_FAILURE,
-} from "../actions/userActions";
+} from "../actions/authActions";
 
 const initialState = {
   currentUser: {},
+  loggedIn: false,
   loading: false,
   error: null
 }
 
-const userReducer = (state=initialState, action) => {
+const authReducer = (state=initialState, action) => {
   switch(action.type) {
     case FETCH_USER_INFORMATION_BEGIN: 
       return {
@@ -22,6 +23,7 @@ const userReducer = (state=initialState, action) => {
       return {
         ...state,
         loading: false,
+        loggedIn: true,
         currentUser: action.payload.userInfo
       }
     case FETCH_USER_INFORMATION_FAILURE:
@@ -35,4 +37,4 @@ const userReducer = (state=initialState, action) => {
   }  
 }
 
-export default userReducer;
+export default authReducer;

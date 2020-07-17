@@ -34,10 +34,28 @@ export const auth = (credentials, signInOrUp) => {
       .then(res => res.json())
       .then(userInfo => {
         dispatch(fetchUserInfoSuccess(userInfo))
-        console.log(userInfo)
         localStorage.token = userInfo.accessToken
         return userInfo
       })
       .catch(err => dispatch(fetchUserInfoFailure(err)));
+  }
+}
+
+export const loginWithToken = (token) => {
+  return dispatch => {
+    dispatch(fetchUserInfoBegin());
+    return fetch("http://localhost:3000/api/auth/loginWithToken", {
+      method: "GET",
+      headers: {
+        "x-access-token": token
+      }
+    })
+    .then(res => res.json())
+    .then(userInfo => {
+      dispatch(fetchUserInfoSuccess(userInfo))
+      localStorage.token = userInfo.accessToken
+      return userInfo
+    })
+    .catch(err => dispatch(fetchUserInfoFailure(err)))
   }
 }

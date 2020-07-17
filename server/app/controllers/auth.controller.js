@@ -66,4 +66,21 @@ exports.signin = (req, res) => {
         accessToken: token
       });
     });
+  
 };
+
+exports.getUserWithToken = async (req, res) => {
+  const user = await User.findById(req.userId);
+  if (!user) return res.send({error: "token expired"})
+  var token = jwt.sign({ id: user.id }, config.secret, {
+    expiresIn: 86400 // 24 hours
+  });
+
+  res.status(200).send({
+    id: user._id,
+    username: user.username,
+    email: user.email,
+    accessToken: token
+  });
+  
+}

@@ -171,6 +171,13 @@ FRONTEND
 
 - make layouts for the site in awwapp 
 
+- if logged in should have all user credentials on app open
+    - if local storage has a token, fetch user data with it ???
+
+- DRY up authActions
+
+- get all tournament data
+
 - 
 
 - get simple login to work first 

@@ -19,7 +19,7 @@ const UserController = {
         res.send(updatedUser)
       }
     );
-  }
+  },
 }
 
 module.exports = UserController;
