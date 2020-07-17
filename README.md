@@ -56,6 +56,8 @@ TODO
 
     - Entry 
       - controller needs to save a tournament id and user id
+      - store username, if want to see users entries then query for show entries by username....? 
+        - 
       - show needs to populate
       - index needs to populate
 
@@ -164,6 +166,16 @@ TRADE
   - SHOW? 
   - CREATE
   
+======================================================================
+FRONTEND  
+
+- make layouts for the site in awwapp 
+
+- 
+
+- get simple login to work first 
+
+- 
 
 
 
@@ -179,66 +191,3 @@ TRADE
 
 
 
-
-
-
-
-
-Models/ Relationships
-
-User
-has_many entrants
-has_many trades through entrants
-has_many Tournaments, through entrants 
-{
-  username: String,
-  password: String, 
-  email: String,
-  profilePicture: String,
-  accountBalance: Integer,
-}
-
-Entry
-belongs_to User
-belongs_to Tournament 
-has_many Trades
-{
-  user_id: Integer,
-  tournament_id: Integer,
-  accountBalance: Integer 
-}
-
-Tournament
-has_many Users through entries
-{
-  entryFee: Integer,
-  startTime: Date,
-  endTime: Date,
-  Winners: [array of UserIds] (iterate each entry for highest account balance and return user(s))
-}
-
-Trade 
-belongs_to Entry
-{
-  entry_id: Integer,
-  time: Date,
-  StockTicker: String,
-  BuyOrSell: String,
-  price: Integer,
-  shares: Integer
-}
-
-
-
-fetch("http://localhost:8080/api/auth/signin", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    username: "cole",
-    password: "123"
-  })
-})
-.then(res => res.json())
-.then(console.log)

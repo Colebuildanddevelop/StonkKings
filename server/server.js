@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-// const cors = require("cors");
+const cors = require("cors");
 const dbConfig = require("./app/config/db.config");
 const app = express();
 
@@ -10,11 +10,11 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-// var corsOptions = {
-  // origin: "http://localhost:8081"
-// };
+var corsOptions = {
+  origin: "http://localhost:3001"
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
