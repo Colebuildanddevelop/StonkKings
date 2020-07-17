@@ -19,29 +19,25 @@ export const fetchUserInfoFailure = err => ({
   payload: { err }
 });
 
-export const signIn = (credentials) => {
+export const auth = (credentials, signInOrUp) => {
   return dispatch => {
     dispatch(fetchUserInfoBegin());
-    return fetch("http://localhost:3000/api/auth/signIn", {
+    return fetch(`http://localhost:3000/api/auth/${signInOrUp}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        username: credentials.username,
-        password: credentials.password
+        ...credentials
       })
     })
       .then(res => res.json())
       .then(userInfo => {
         dispatch(fetchUserInfoSuccess(userInfo))
+        console.log(userInfo)
+        localStorage.token = userInfo.accessToken
         return userInfo
       })
       .catch(err => dispatch(fetchUserInfoFailure(err)));
   }
 }
-
-export const signUp = user => ({
-  type: SIGN_IN,
-  payload: { user }
-});

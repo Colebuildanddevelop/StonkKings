@@ -2,8 +2,6 @@ import {
   FETCH_USER_INFORMATION_BEGIN,
   FETCH_USER_INFORMATION_SUCCESS,
   FETCH_USER_INFORMATION_FAILURE,
-  SIGN_UP,
-  SIGN_IN
 } from "../actions/userActions";
 
 const initialState = {

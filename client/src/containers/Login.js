@@ -1,12 +1,8 @@
 import React from 'react'; 
 import { connect } from "react-redux";
-import { signIn, signUp } from "../redux/actions/userActions";
+import { auth } from "../redux/actions/userActions";
 
 class Login extends React.Component {
-  state = {
-    username: "",
-    password: ""
-  }
 
   handleField = (e) => {
     this.setState({
@@ -19,7 +15,10 @@ class Login extends React.Component {
       <div>
         <input onChange={this.handleField} type="text" name="username" placeholder="username" />
         <input onChange={this.handleField} type="text" name="password" placeholder="password" />
-        <button onClick={() => this.props.signIn({username: this.state.username, password: this.state.password})}>Login</button>
+        <input onChange={this.handleField} type="text" name="email" placeholder="email" />
+
+        <button onClick={() => this.props.auth({username: this.state.username, password: this.state.password}, "signIn")}>Login</button>
+        <button onClick={() => this.props.auth({username: this.state.username, password: this.state.password, email: this.state.email}, "signUp")}>signUP</button>
       </div>
     )
   }
@@ -27,5 +26,5 @@ class Login extends React.Component {
 
 export default connect(
   null,
-  { signIn, signUp }
+  { auth }
 )(Login)
