@@ -61,8 +61,6 @@ TODO
       - show needs to populate
       - index needs to populate
 
-
-
 Models/ Relationships
 
 User
@@ -177,8 +175,8 @@ FRONTEND
 - DRY up authActions
 
 - get all tournament data
-
-- 
+    - add duration to backend
+    - format table in the frontend
 
 - get simple login to work first 
 
