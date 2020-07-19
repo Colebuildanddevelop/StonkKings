@@ -4,7 +4,7 @@ import TableCell from '@material-ui/core/TableCell';
 class Countdown extends React.Component {
 
   state = {
-    countdown: ""
+    countdown: "loading..."
   }
   
   componentDidMount() {

@@ -167,20 +167,23 @@ TRADE
 ======================================================================
 FRONTEND  
 
-- make layouts for the site in awwapp 
+- make layouts for the site in awwapp !
 
 - if logged in should have all user credentials on app open
     - if local storage has a token, fetch user data with it ???
 
-- DRY up authActions
+- DRY up authActions !
 
 - get all tournament data
     - add duration to backend
-    - format table in the frontend
+    - format table in the frontend !
 
 - get simple login to work first 
 
-- 
+- when user presses enter tournament
+  - an entry is created
+  - users account is debited the entry fee
+  -  
 
 
 

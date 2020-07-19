@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from "react-redux";
 import { getTournaments } from "../redux/actions/tournament.actions";
 import Countdown from "../components/Countdown";
+import { Link } from "react-router-dom";
 // MATERIAL UI 
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -38,6 +40,7 @@ class Lobby extends React.Component {
               <TableCell align="right">Total Prize</TableCell>
               <TableCell align="right">Start</TableCell>
               <TableCell align="right">Duration</TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -52,6 +55,9 @@ class Lobby extends React.Component {
                   <TableCell align="right">{tournament.entryFee}</TableCell>
                   <Countdown countDownEnd={new Date(tournament.startTime).getTime()} overMsg={"Started!"}/>
                   <Countdown countDownEnd={new Date(tournament.endTime).getTime()} overMsg={"Ended!"} />
+                  <TableCell align="right">
+                    <Button component={Link} to={"/login"} color="inherit">Enter</Button>
+                  </TableCell>
                 </TableRow>
               )
             })}
