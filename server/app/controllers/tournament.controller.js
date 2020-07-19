@@ -6,11 +6,14 @@ const TournamentController = {
       .populate({ path: 'createdBy', select: 'username -_id' })
     tournamentsFormatted = tournaments.map(tournament => {
       return {
+        id: tournament._id,
         name: tournament.name,
         createdBy: tournament.createdBy,
         entryFee: tournament.entryFee,
+        entryLimit: tournament.entryLimit,
+        entries: tournament.entries,
         totalPrize: tournament.entryFee * tournament.entries.length,
-        start: tournament.start,
+        startTime: tournament.startTime,
         endTime: tournament.endTime
       }
     })
@@ -30,8 +33,8 @@ const TournamentController = {
       createdBy: req.userId,
       entryFee: req.body.entryFee, 
       entryLimit: req.body.entryLimit,
-      startTime: Date(req.body.startTime),
-      endTime: Date(req.body.endTime)
+      startTime: req.body.startTime,
+      endTime: req.body.endTime
     });
     tournament.save((err, tournamentCreated) => {
       if (err) return res.send({error: err})

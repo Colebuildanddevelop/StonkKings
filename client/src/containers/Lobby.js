@@ -21,6 +21,30 @@ class Lobby extends React.Component {
 
   componentDidMount() {
     this.props.getTournaments()
+    this.setCountdown("1995-12-17T09:24:00.000Z", "2020-12-17T09:24:00.000Z")
+  }
+
+  setCountdown = (startDateString, endDateString) => {
+    let start = new Date(startDateString).getTime();
+    let end = new Date(endDateString).getTime();
+    const countdown = setInterval(() => {
+      let now = new Date().getTime();
+
+      let timeleft = end - now;
+        
+      // Calculating the days, hours, minutes and seconds left
+      let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+      let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+        
+      // Result is output to the specific element
+      console.log(days, hours, minutes, seconds)
+      // Display the message when countdown is over
+      if (timeleft < 0) {
+        clearInterval(countdown);
+      }
+    }, 1000);
   }
 
   render() {
@@ -40,18 +64,20 @@ class Lobby extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.props.tournamentsArr.map((tournament) => (
-              <TableRow key={tournament._id}>
-                <TableCell component="th" scope="row">
-                  {tournament.name}
-                </TableCell>
-                <TableCell align="right">{tournament.entryFee}</TableCell>
-                <TableCell align="right">{tournament.entries.length}</TableCell>
-                <TableCell align="right">{tournament.entryFee}</TableCell>
-                <TableCell align="right">{tournament.startTime}</TableCell>
-                <TableCell align="right">{"Month"}</TableCell>
-              </TableRow>
-            ))}
+            {this.props.tournamentsArr.map((tournament) => {
+              return (
+                <TableRow key={tournament.id}>
+                  <TableCell component="th" scope="row">
+                    {tournament.name}
+                  </TableCell>
+                  <TableCell align="right">{tournament.entryFee}</TableCell>
+                  <TableCell align="right">{tournament.entries.length}</TableCell>
+                  <TableCell align="right">{tournament.entryFee}</TableCell>
+                  <TableCell align="right">{"start"}</TableCell>
+                  <TableCell align="right">{"Month"}</TableCell>
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>
