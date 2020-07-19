@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { getTournaments } from "../redux/actions/tournament.actions";
+import Countdown from "../components/Countdown";
 // MATERIAL UI 
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -21,35 +22,11 @@ class Lobby extends React.Component {
 
   componentDidMount() {
     this.props.getTournaments()
-    this.setCountdown("1995-12-17T09:24:00.000Z", "2020-12-17T09:24:00.000Z")
   }
 
-  setCountdown = (startDateString, endDateString) => {
-    let start = new Date(startDateString).getTime();
-    let end = new Date(endDateString).getTime();
-    const countdown = setInterval(() => {
-      let now = new Date().getTime();
-
-      let timeleft = end - now;
-        
-      // Calculating the days, hours, minutes and seconds left
-      let days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
-      let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
-      let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
-        
-      // Result is output to the specific element
-      console.log(days, hours, minutes, seconds)
-      // Display the message when countdown is over
-      if (timeleft < 0) {
-        clearInterval(countdown);
-      }
-    }, 1000);
-  }
 
   render() {
     const { classes } = this.props;
-    console.log(this.props.tournamentsArr)
     return (
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
@@ -73,8 +50,8 @@ class Lobby extends React.Component {
                   <TableCell align="right">{tournament.entryFee}</TableCell>
                   <TableCell align="right">{tournament.entries.length}</TableCell>
                   <TableCell align="right">{tournament.entryFee}</TableCell>
-                  <TableCell align="right">{"start"}</TableCell>
-                  <TableCell align="right">{"Month"}</TableCell>
+                  <Countdown countDownEnd={new Date(tournament.startTime).getTime()} overMsg={"Started!"}/>
+                  <Countdown countDownEnd={new Date(tournament.endTime).getTime()} overMsg={"Ended!"} />
                 </TableRow>
               )
             })}
