@@ -5,6 +5,7 @@ import Chart from "../components/Chart";
 class Tournament extends React.Component {
 
   state = {
+    error: null,
     stockData: [{
       id: "IBM",
       data: [{
@@ -12,55 +13,71 @@ class Tournament extends React.Component {
         y: 1
       }]
     }],
-    currentSearch: "IBM",
     timeInterval: "Daily",
-    queryString: "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&outputsize=compact&apikey=MFZK4WADD8FSBHVF"
   }
 
   componentDidMount() {
-    fetch(this.state.queryString)
+    this.getPriceData("IBM");
+  }
+
+  getPriceData = (searchString) => {
+    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${searchString}&outputsize=compact&apikey=MFZK4WADD8FSBHVF`)
       .then(res => res.json())
       .then(data => {
+        if (data["Error Message"]) {
+          this.setState({
+            error: data["Error Message"]
+          })
+          return;
+        }
         const timeSeriesHash = data[`Time Series (${this.state.timeInterval})`];
         const formattedData = Object.keys(timeSeriesHash).map(key => {
-          console.log(key)
           return {
             x: key, 
             y: parseFloat(timeSeriesHash[key]["4. close"])
           };
         });
-        this.setState({
-          stockData: [{
-            id: this.state.currentSearch,
-            data: formattedData
-          }] 
-        })
+        fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${searchString}&apikey=dMFZK4WADD8FSBHVF`)
+          .then(res => res.json())
+          .then(data => {
+            console.log("fetching stock info", data)
+            this.setState({
+              error: null,
+              stockData: [{
+                id: searchString,
+                data: formattedData
+              }],
+              stockInfo: {
+                symbol: data["Symbol"],
+                name: data["Name"],
+                exchange: data["Exchange"]
+              }
+            })
+          })
       });
   }
 
   handleSearchSubmit = (searchString) => {
-    this.setState({
-      queryString: `https://www.alphavantage.co/query?function=${this.state.timeInterval}&symbol=${searchString}&interval=5min&outputsize=full&apikey=MFZK4WADD8FSBHVF`,
-      currentSearch: searchString
-    })
+    this.getPriceData(searchString);
   }
 
   handleTimeInterval = (timeInterval) => {
     this.setState({
-      queryString: `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${this.state.currentSearch}&interval=${timeInterval}&outputsize=full&apikey=MFZK4WADD8FSBHVF`
     })
   }
 
   render() {
-    console.log(this.state.stockData)
+    console.log(this.state)
     return (
       <div>
-        <SearchBar handleSearchSubmit={this.handleSearchSubmit} />
-        <div style={{height: 400}}>
-          <Chart
-            data={this.state.stockData}
-          />
-        </div>
+        <SearchBar 
+          handleSearchSubmit={this.handleSearchSubmit} 
+          error={this.state.error} 
+        />
+        <Chart
+          stockInfo={this.state.stockInfo}
+          data={this.state.stockData}
+        />
       </div>
     )
   }

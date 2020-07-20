@@ -3,6 +3,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = theme => ({
   search: {
@@ -46,27 +48,36 @@ class SearchBar extends React.Component {
 
   handleSearchTerm = (e) => {
     this.setState({
-      [e.target.name]: e.target.name
+      [e.target.name]: e.target.value
     })
   }  
 
   render() {
     const { classes } = this.props; 
     return (
-      <div className={classes.search} onClick={() => this.props.handleSearchSubmit(this.state.search)} >
-        <div className={classes.searchIcon} >
-          <SearchIcon  />
+      <div>
+        <div className={classes.search}  >
+          <div className={classes.searchIcon} >
+            <SearchIcon  />
+          </div>
+          <InputBase
+            placeholder="Search..."
+            name="search"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ 'aria-label': 'search' }}
+            onChange={this.handleSearchTerm}
+            value={this.state.search}
+          />
+          <Button onClick={() => this.props.handleSearchSubmit(this.state.search)}>Search</Button>
         </div>
-        <InputBase
-          placeholder="Search..."
-          name="search"
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
-          inputProps={{ 'aria-label': 'search' }}
-          onChange={this.handleSearchTerm}
-        />
+        {this.props.error ? (
+          <Typography>
+            {this.props.error}
+          </Typography>
+        ) : (null)}
       </div>
     );
   }
