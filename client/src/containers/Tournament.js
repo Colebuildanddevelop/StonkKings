@@ -5,10 +5,16 @@ import Chart from "../components/Chart";
 class Tournament extends React.Component {
 
   state = {
-    stockData: [{}],
-    currentSearch: "",
+    stockData: [{
+      id: "IBM",
+      data: [{
+        x: "2020-06-01",
+        y: 1
+      }]
+    }],
+    currentSearch: "IBM",
     timeInterval: "Daily",
-    queryString: "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&outputsize=full&apikey=MFZK4WADD8FSBHVF"
+    queryString: "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&outputsize=compact&apikey=MFZK4WADD8FSBHVF"
   }
 
   componentDidMount() {
@@ -17,14 +23,17 @@ class Tournament extends React.Component {
       .then(data => {
         const timeSeriesHash = data[`Time Series (${this.state.timeInterval})`];
         const formattedData = Object.keys(timeSeriesHash).map(key => {
+          console.log(key)
           return {
-            x: new Date(key),
-            y: parseInt(timeSeriesHash[key]["4. close"])
+            x: key, 
+            y: parseFloat(timeSeriesHash[key]["4. close"])
           };
         });
-        console.log(formattedData)
         this.setState({
-          stockData: formattedData
+          stockData: [{
+            id: this.state.currentSearch,
+            data: formattedData
+          }] 
         })
       });
   }
@@ -43,12 +52,15 @@ class Tournament extends React.Component {
   }
 
   render() {
+    console.log(this.state.stockData)
     return (
       <div>
-        <SearchBar handleSearch={this.handleSearchSubmit} />
-        <Chart
-          data={this.state.stockData}
-        />
+        <SearchBar handleSearchSubmit={this.handleSearchSubmit} />
+        <div style={{height: 400}}>
+          <Chart
+            data={this.state.stockData}
+          />
+        </div>
       </div>
     )
   }

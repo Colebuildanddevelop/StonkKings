@@ -40,6 +40,10 @@ const useStyles = theme => ({
 
 class SearchBar extends React.Component {
 
+  state = {
+    search: ""
+  }
+
   handleSearchTerm = (e) => {
     this.setState({
       [e.target.name]: e.target.name

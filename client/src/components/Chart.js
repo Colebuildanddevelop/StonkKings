@@ -1,107 +1,87 @@
 import React from "react";
-import * as V from 'victory';
-import { 
-  VictoryChart,
-  VictoryAxis,
-  VictoryCandlestick,
-  VictoryLine,
-  VictoryTheme,
-  VictoryBrushContainer,
-  VictoryZoomContainer
-} from 'victory';
+import { ResponsiveLine } from '@nivo/line';
 
-const data = [
-  {x: new Date(1982, 1, 1), y: 125},
-  {x: new Date(1987, 1, 1), y: 257},
-  {x: new Date(1993, 1, 1), y: 345},
-  {x: new Date(1997, 1, 1), y: 515},
-  {x: new Date(2001, 1, 1), y: 132},
-  {x: new Date(2005, 1, 1), y: 305},
-  {x: new Date(2011, 1, 1), y: 270},
-  {x: new Date(2015, 1, 1), y: 470}
-]
-console.log(data)
+// make sure parent container have a defined height when using
+// responsive component, otherwise height will be 0 and
+// no chart will be rendered.
+// website examples showcase many properties,
+// you'll often use just a few of them.
 
-class Chart extends React.Component {
 
-  state = {};
-  
-  handleZoom(domain) {
-    this.setState({selectedDomain: domain});
-  }
 
-  handleBrush(domain) {
-    this.setState({zoomDomain: domain});
-  }
-
-  render() {
-    return (
-      <div>
-          <VictoryChart
-            width={550}
-            height={300}
-            scale={{x: "time"}}
-            containerComponent={
-              <VictoryZoomContainer responsive={false}
-                zoomDimension="x"
-                zoomDomain={this.state.zoomDomain}
-                onZoomDomainChange={this.handleZoom.bind(this)}
-              />
+const Chart = (props) => (
+    <ResponsiveLine
+      data={props.data}
+      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+      xScale={{
+        type: "time",
+        format: "%Y-%m-%d"
+      }}
+      xFormat="time:%Y-%m-%d"
+      yScale={{
+        type: "linear",
+        min: "auto",
+        max: "auto",
+        stacked: false,
+        reverse: false
+      }}
+      axisTop={null}
+      axisRight={null}
+      axisLeft={{
+        orient: "left",
+        tickSize: 5,
+        tickPadding: 5,
+        tickRotation: 0,
+        legend: "price",
+        legendOffset: -40,
+        legendPosition: "middle"
+      }}
+      axisBottom={{
+        format: "%b %d",
+        tickSize: 5,
+        tickPadding: 5,
+        tickRotation: 0,
+        legend: 'transportation',
+        orient: "bottom",
+        legendPosition: "middle",
+        legend: "date",
+        legendOffset: 36
+      }}
+      colors={{ scheme: "category10" }}
+      pointSize={10}
+      pointColor={{ theme: "background" }}
+      pointBorderWidth={2}
+      pointBorderColor={{ from: "serieColor" }}
+      pointLabel="y"
+      pointLabelYOffset={-12}
+      useMesh={true}
+      legends={[
+        {
+          anchor: "bottom-right",
+          direction: "column",
+          justify: false,
+          translateX: 100,
+          translateY: 0,
+          itemsSpacing: 0,
+          itemDirection: "left-to-right",
+          itemWidth: 80,
+          itemHeight: 20,
+          itemOpacity: 0.75,
+          symbolSize: 12,
+          symbolShape: "circle",
+          symbolBorderColor: "rgba(0, 0, 0, .5)",
+          effects: [
+            {
+              on: "hover",
+              style: {
+                itemBackground: "rgba(0, 0, 0, .03)",
+                itemOpacity: 1
+              }
             }
-          >
-            <VictoryLine
-              style={{
-                data: {stroke: "tomato"}
-              }}
-              data={this.props.data}
-            />
-
-          </VictoryChart>
-
-          <VictoryChart
-            width={550}
-            height={90}
-            scale={{x: "time"}}
-            padding={{top: 0, left: 50, right: 50, bottom: 30}}
-            containerComponent={
-              <VictoryBrushContainer responsive={false}
-                brushDimension="x"
-                brushDomain={this.state.selectedDomain}
-                onBrushDomainChange={this.handleBrush.bind(this)}
-              />
-            }
-          >
-            <VictoryAxis
-              tickValues={[
-                new Date(1985, 1, 1),
-                new Date(1990, 1, 1),
-                new Date(1995, 1, 1),
-                new Date(2000, 1, 1),
-                new Date(2005, 1, 1),
-                new Date(2010, 1, 1),
-                new Date(2015, 1, 1)
-              ]}
-              tickFormat={(x) => new Date(x).getFullYear()}
-            />
-            <VictoryLine
-              style={{
-                data: {stroke: "tomato"}
-              }}
-              data={[
-                {x: new Date(1982, 1, 1), y: 125},
-                {x: new Date(1987, 1, 1), y: 257},
-                {x: new Date(1993, 1, 1), y: 345},
-                {x: new Date(1997, 1, 1), y: 515},
-                {x: new Date(2001, 1, 1), y: 132},
-                {x: new Date(2005, 1, 1), y: 305},
-                {x: new Date(2011, 1, 1), y: 270},
-                {x: new Date(2015, 1, 1), y: 470}
-              ]}
-            />
-          </VictoryChart>
-      </div>
-    );
-  }
-}
+          ]
+        }
+      ]}
+    />
+)
 
 export default Chart;
