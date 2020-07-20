@@ -5,7 +5,7 @@ import {
 } from "../actions/auth.actions";
 
 const initialState = {
-  currentUser: {},
+  currentUser: null,
   loggedIn: false,
   loading: false,
   error: null

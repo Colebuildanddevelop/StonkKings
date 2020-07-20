@@ -6,7 +6,6 @@ const UserSchema = new Schema({
   email: String,
   password: String,
   profilePicture: String,
-  accountBalance: { type: Number, default: 10000 }, 
   friends: [{
     type: Schema.Types.ObjectId,
     ref: "User"
@@ -17,4 +16,6 @@ const UserSchema = new Schema({
   }]
 })
 
-module.exports = mongoose.model("User", UserSchema);
+const user = mongoose.model("User", UserSchema);
+user.accountBalance = 10000
+module.exports = user;

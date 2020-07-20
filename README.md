@@ -203,12 +203,24 @@ TODO agane
 
     - tournament page
       - COMPONENTS 
-        - search stocks
-        - when selected fetch api and start polling for live data
-        - display a candle chart of the data
+        - search stocks x 
+        - when selected fetch api and start polling for live data x
+        - display a candle chart of the data x 
+        - get name of stock and other information to display x 
+        - APPBAR
+          - My positions
+          - Trade History
+          - All Entrants
+
+
         - 
       - TODO
         - style search bar and make a better input method
+        - make search use api to suggest stocks 
+        - poll for live data?
+        - create nivo chart for volume data
+
+        
 
 
 

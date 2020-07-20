@@ -1,6 +1,7 @@
 import React from "react";
 import SearchBar from "../components/SearchBar";
 import Chart from "../components/Chart";
+import TradeBar from "../components/TradeBar";
 
 class Tournament extends React.Component {
 
@@ -78,6 +79,7 @@ class Tournament extends React.Component {
           stockInfo={this.state.stockInfo}
           data={this.state.stockData}
         />
+        <TradeBar />
       </div>
     )
   }

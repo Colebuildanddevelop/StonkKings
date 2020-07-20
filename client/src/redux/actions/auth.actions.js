@@ -31,6 +31,7 @@ export const auth = (credentials, signInOrUp) => {
       .then(res => res.json())
       .then(userInfo => {
         dispatch(fetchUserInfoSuccess(userInfo))
+        console.log(userInfo)
         localStorage.token = userInfo.accessToken
         return userInfo
       })
@@ -50,6 +51,7 @@ export const loginWithToken = (token) => {
     .then(res => res.json())
     .then(userInfo => {
       dispatch(fetchUserInfoSuccess(userInfo))
+      console.log(userInfo)
       localStorage.token = userInfo.accessToken
       return userInfo
     })

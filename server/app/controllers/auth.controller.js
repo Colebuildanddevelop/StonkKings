@@ -23,6 +23,9 @@ exports.signup = (req, res) => {
     res.status(200).send({
       id: user._id,
       username: user.username,
+      accountBalance: user.accountBalance,
+      friends: user.friends,
+      entries: user.entries,
       email: user.email,
       accessToken: token
     });
@@ -62,6 +65,9 @@ exports.signin = (req, res) => {
       res.status(200).send({
         id: user._id,
         username: user.username,
+        accountBalance: user.accountBalance,
+        friends: user.friends,
+        entries: user.entries,
         email: user.email,
         accessToken: token
       });
@@ -79,6 +85,9 @@ exports.getUserWithToken = async (req, res) => {
   res.status(200).send({
     id: user._id,
     username: user.username,
+    accountBalance: user.accountBalance,
+    friends: user.friends,
+    entries: user.entries,
     email: user.email,
     accessToken: token
   });

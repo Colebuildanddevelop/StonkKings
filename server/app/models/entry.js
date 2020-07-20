@@ -16,5 +16,5 @@ const EntrySchema = new Schema({
   }] 
 })
 const entry = mongoose.model("Entry", EntrySchema); 
-entry.accountBalance = 10000;
+entry.tournamentBalance = 10000;
 module.exports = entry; 
