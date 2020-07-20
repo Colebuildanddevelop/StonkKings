@@ -201,7 +201,14 @@ TODO agane
       - need to create a awwapp for tournament compete page. 
       - tournament compete 
 
-
+    - tournament page
+      - COMPONENTS 
+        - search stocks
+        - when selected fetch api and start polling for live data
+        - display a candle chart of the data
+        - 
+      - TODO
+        - style search bar and make a better input method
 
 
 

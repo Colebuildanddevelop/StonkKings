@@ -1,10 +1,10 @@
 import React from "react";
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-import { makeStyles, fade } from '@material-ui/core/styles';
+import { fade } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = theme => ({
   search: {
     position: "relative",
     borderRadius: 10,
@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: theme.palette.primary
   },
   inputRoot: {
     color: 'inherit',
@@ -35,28 +36,39 @@ const useStyles = makeStyles((theme) => ({
       width: '20ch',
     },
   }
-}));
+});
 
-const SearchBar = () => {
-  const classes = useStyles();
-  return (
-    <div className={classes.search}>
-      <div className={classes.searchIcon}>
-        <SearchIcon />
+class SearchBar extends React.Component {
+
+  handleSearchTerm = (e) => {
+    this.setState({
+      [e.target.name]: e.target.name
+    })
+  }  
+
+  render() {
+    const { classes } = this.props; 
+    return (
+      <div className={classes.search} onClick={() => this.props.handleSearchSubmit(this.state.search)} >
+        <div className={classes.searchIcon} >
+          <SearchIcon  />
+        </div>
+        <InputBase
+          placeholder="Search..."
+          name="search"
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+          inputProps={{ 'aria-label': 'search' }}
+          onChange={this.handleSearchTerm}
+        />
       </div>
-      <InputBase
-        placeholder="Search..."
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput,
-        }}
-        inputProps={{ 'aria-label': 'search' }}
-      />
-    </div>
-  );
+    );
+  }
 }
 
-export default SearchBar;
+export default withStyles(useStyles, {withTheme: true})(SearchBar);
 
 
 
