@@ -22,7 +22,6 @@ const checkUserBalance = (req, res, next) => {
             res.status(400).send({ message: "Tournament was not found!" });
             return;
           }
-          console.log("user:", user, "tournament", tournament)
           if (user.accountBalance < tournament.entryFee) {
             res.send({message: "User funds insufficient for entry!"})
             return;

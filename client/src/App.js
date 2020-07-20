@@ -8,6 +8,7 @@ import { loginWithToken } from "./redux/actions/auth.actions";
 // containers 
 import Lobby from "./containers/Lobby";
 import Login from "./containers/Login";
+import Tournament from "./containers/Tournament";
 import NavBar from "./containers/NavBar";
 
 
@@ -38,6 +39,13 @@ class App extends React.Component {
             path="/login"
             render={(routeProps) => (
               <Login {...routeProps} />
+            )}
+          />
+          <Route
+            exact
+            path="/tournament/:tournamentName"
+            render={(routeProps) => (
+              <Tournament {...routeProps} />
             )}
           />
         </Switch>

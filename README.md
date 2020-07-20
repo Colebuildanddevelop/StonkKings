@@ -189,10 +189,17 @@ TODO agane
   - user is associated 
 
   entry 
+    BACKEND 
     - first check to see if the user has enough balance,
     - then debit it etc. 
 
-
+    FRONT 
+    - when enter is pressed, 
+      - need some type of confirmation, <- do later? 
+      - send a post to api/entries with tournamentId in body,
+      - route to the tournament "compete page" 
+      - need to create a awwapp for tournament compete page. 
+      - tournament compete 
 
 
 

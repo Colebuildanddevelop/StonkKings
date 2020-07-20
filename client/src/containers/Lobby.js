@@ -56,7 +56,7 @@ class Lobby extends React.Component {
                   <Countdown countDownEnd={new Date(tournament.startTime).getTime()} overMsg={"Started!"}/>
                   <Countdown countDownEnd={new Date(tournament.endTime).getTime()} overMsg={"Ended!"} />
                   <TableCell align="right">
-                    <Button component={Link} to={"/login"} color="inherit">Enter</Button>
+                    <Button component={Link} to={`/tournament/${tournament.name}`} color="inherit">Enter</Button>
                   </TableCell>
                 </TableRow>
               )
