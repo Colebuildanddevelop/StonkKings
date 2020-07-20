@@ -165,7 +165,9 @@ TRADE
   - CREATE
   
 ======================================================================
-FRONTEND  
+TODO agane
+
+- make validations for tournament entry fee
 
 - make layouts for the site in awwapp !
 
@@ -183,9 +185,12 @@ FRONTEND
 - when user presses enter tournament
   - an entry is created
   - users account is debited the entry fee
-  -  
+  - tournament is associated
+  - user is associated 
 
-
+  entry 
+    - first check to see if the user has enough balance,
+    - then debit it etc. 
 
 
 

@@ -39,7 +39,7 @@ class Lobby extends React.Component {
               <TableCell align="right">Entries</TableCell>
               <TableCell align="right">Total Prize</TableCell>
               <TableCell align="right">Start</TableCell>
-              <TableCell align="right">Duration</TableCell>
+              <TableCell align="right">End</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>

@@ -13,8 +13,8 @@ const EntrySchema = new Schema({
   trades: [{
     type: Schema.Types.ObjectId,
     ref: "Trade"
-  }], 
-  accountBalance: { type: Number, default: 10000 } 
+  }] 
 })
-
-module.exports = mongoose.model("Entry", EntrySchema);
+const entry = mongoose.model("Entry", EntrySchema); 
+entry.accountBalance = 10000;
+module.exports = entry; 
