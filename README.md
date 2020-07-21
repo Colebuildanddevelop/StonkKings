@@ -220,10 +220,20 @@ TODO agane
         - poll for live data?
         - create nivo chart for volume data
 
-        
+- TODO big functionality
+  - buy and sell 
+  - award winner of tournament
+  - show trade history
+  - show entrants in tournament
+  - create tournament
+  - enter tournament 
+  - redeem main account balance somehow 
+  - show tournament history ( entrants, their trades, the winner, the payout)
+  - 
 
-
-
+  ENTRY 
+    - restrict to one entry per tournament
+    - cant enter tourneys that have started
 
 
 

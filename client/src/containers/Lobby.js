@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { getTournaments } from "../redux/actions/tournament.actions";
+import { createEntry } from "../redux/actions/entry.actions";
 import Countdown from "../components/Countdown";
 import { Link } from "react-router-dom";
 // MATERIAL UI 
@@ -56,7 +57,7 @@ class Lobby extends React.Component {
                   <Countdown countDownEnd={new Date(tournament.startTime).getTime()} overMsg={"Started!"}/>
                   <Countdown countDownEnd={new Date(tournament.endTime).getTime()} overMsg={"Ended!"} />
                   <TableCell align="right">
-                    <Button component={Link} to={`/tournament/${tournament.name}`} color="inherit">Enter</Button>
+                    <Button onClick={() => this.props.createEntry(tournament.id, localStorage.token)} component={Link} to={`/tournament/${tournament.name}`} color="inherit">Enter</Button>
                   </TableCell>
                 </TableRow>
               )
@@ -69,10 +70,11 @@ class Lobby extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  tournamentsArr: state.tournament.tournamentsArr
+  tournamentsArr: state.tournament.tournamentsArr,
+  entryData: state.entry
 });
 
 export default connect(
   mapStateToProps,
-  { getTournaments }
+  { getTournaments, createEntry }
 )(withStyles(useStyles)(Lobby))
