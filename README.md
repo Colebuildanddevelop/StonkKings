@@ -211,8 +211,6 @@ TODO agane
           - My positions
           - Trade History
           - All Entrants
-
-
         - 
       - TODO
         - style search bar and make a better input method
@@ -229,14 +227,18 @@ TODO agane
   - enter tournament 
   - redeem main account balance somehow 
   - show tournament history ( entrants, their trades, the winner, the payout)
-  - 
+  - add friends  
 
   ENTRY 
-    - restrict to one entry per tournament
-    - cant enter tourneys that have started
-
-
-
+    - restrict to one entry per tournament x
+    - cant enter tourneys that have started x
+    - entry limit 
+      - when an entry is created, increment the tournaments entries to include 
+    - start time has to be less then end time 
+    - on enter the dom needs to update to show the balance changed
+    - create a confirmation to enter
+    - create a way to view tournament page with out entering x 
+    - display errors
 
 
 

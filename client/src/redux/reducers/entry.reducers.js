@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   entries: [],
+  createdEntry: [],
   loading: false,
   error: null
 }
@@ -41,7 +42,7 @@ const entryReducer = (state=initialState, action) => {
       return {
         ...state,
         loading: false,
-        entries: [...state.entries, action.payload.entryInfo]
+        createdEntry: action.payload.entryInfo
       }
     case CREATE_ENTRY_FAILURE:
       return {

@@ -18,6 +18,9 @@ import Paper from '@material-ui/core/Paper';
 const useStyles = () => ({
   table: {
     minWidth: 650,
+  },
+  row: {
+    textDecoration: 'none'
   }
 });
 
@@ -47,8 +50,8 @@ class Lobby extends React.Component {
           <TableBody>
             {this.props.tournamentsArr.map((tournament) => {
               return (
-                <TableRow key={tournament.id}>
-                  <TableCell component="th" scope="row">
+                <TableRow className={classes.row} key={tournament.id}   >
+                  <TableCell component="th" scope="row" component={Link} to={`/tournament/${tournament.name}`} >
                     {tournament.name}
                   </TableCell>
                   <TableCell align="right">{tournament.entryFee}</TableCell>
@@ -57,7 +60,7 @@ class Lobby extends React.Component {
                   <Countdown countDownEnd={new Date(tournament.startTime).getTime()} overMsg={"Started!"}/>
                   <Countdown countDownEnd={new Date(tournament.endTime).getTime()} overMsg={"Ended!"} />
                   <TableCell align="right">
-                    <Button onClick={() => this.props.createEntry(tournament.id, localStorage.token)} component={Link} to={`/tournament/${tournament.name}`} color="inherit">Enter</Button>
+                    <Button onClick={() => this.props.createEntry(tournament.id, localStorage.token)} color="inherit">Enter</Button>
                   </TableCell>
                 </TableRow>
               )

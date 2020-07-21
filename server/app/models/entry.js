@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const EntrySchema = new Schema({
+  tournamentBalance: { type: Number, default: 100000 },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User"
@@ -14,7 +15,6 @@ const EntrySchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Trade"
   }] 
-})
-const entry = mongoose.model("Entry", EntrySchema); 
-entry.tournamentBalance = 10000;
-module.exports = entry; 
+});
+
+module.exports = mongoose.model("Entry", EntrySchema);

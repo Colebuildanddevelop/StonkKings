@@ -29,8 +29,10 @@ const EntryController = {
       tournament: req.body.tournamentId,
     });
     entry.save((err, entryCreated) => {
-      if (err) return res.send({error: err})
-      res.send(entryCreated)
+      if (err) return res.send({error: err});
+      req.tournament.entries.push(entryCreated._id);
+      req.tournament.save();
+      res.send(entryCreated);
     })
   }
 }

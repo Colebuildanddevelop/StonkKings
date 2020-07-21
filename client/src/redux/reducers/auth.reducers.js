@@ -21,9 +21,9 @@ const authReducer = (state=initialState, action) => {
       };
     case FETCH_USER_INFORMATION_SUCCESS:
       return {
-        ...state,
         loading: false,
         loggedIn: true,
+        error: false,
         currentUser: action.payload.userInfo
       }
     case FETCH_USER_INFORMATION_FAILURE:

@@ -17,7 +17,6 @@ const TournamentController = {
         endTime: tournament.endTime
       }
     })
-    console.log(tournamentsFormatted)
     res.send(tournamentsFormatted)  
   },
   show: async (req, res) => {

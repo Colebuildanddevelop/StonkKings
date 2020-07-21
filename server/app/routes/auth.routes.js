@@ -16,7 +16,6 @@ module.exports = function(app) {
     checkDuplicateUsernameOrEmail,
     controller.signup
   );
-
   app.post("/api/auth/signin", controller.signin);
   app.get("/api/auth/logInWithToken", verifyToken, controller.getUserWithToken)
 };
