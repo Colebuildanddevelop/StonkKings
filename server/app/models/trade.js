@@ -8,9 +8,9 @@ const TradeSchema = new Schema({
   },
   stockTicker: String,
   time: Date,
-  BuyOrSell: String,
+  buyOrSell: String,
   price: Number, 
-  shares: Number 
+  amountOfShares: Number 
 })
 
-module.exports = mongoose.model("Entry", TradeSchema);
+module.exports = mongoose.model("Trade", TradeSchema);

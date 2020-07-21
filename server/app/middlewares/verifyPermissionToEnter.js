@@ -38,11 +38,10 @@ const verifyPermissionToEnter = (req, res, next) => {
                 res.status(400).send({ message: "Tournament has already started!" });
                 return;
               }
-              // if (!) {
-                // res.status(400).send({ message: "Tournament was not found!" });
-                // return;
-              // }
-
+              if (tournament.entryLimit <= tournament.entries.length) {
+                res.status(400).send({ message: "Tournament is full!" });
+                return;
+              }
               if (user.accountBalance < tournament.entryFee) {
                 res.status(400).send({message: "User funds insufficient for entry!"})
                 return;

@@ -232,13 +232,28 @@ TODO agane
   ENTRY 
     - restrict to one entry per tournament x
     - cant enter tourneys that have started x
-    - entry limit 
-      - when an entry is created, increment the tournaments entries to include 
-    - start time has to be less then end time 
-    - on enter the dom needs to update to show the balance changed
-    - create a confirmation to enter
+    - entry limit x
+      - when an entry is created, increment the tournaments entries to include x
+    - start time has to be less then end time !!!!!!!!!!
+    - on enter the dom needs to update to show the balance changed !!!!!
+    - create a confirmation to enter !!!!!!!!
     - create a way to view tournament page with out entering x 
-    - display errors
+    - display errors !!!!!!!!! 
+    - increment tournament total prize on entry!!!!!!
 
 
+  BUY & SELL
+    - BUY
+      - user must have enough tournament balance to buy
+      - On buy, user sends share amount and price of stock? 
+        - if user sends this information then can easily be cheated... !!!!!!!
+          - therefore user specifies the stock ticker and the backend works off the latest price? 
+          - 
+        - A Trade is created and associated to the entry for that user and that tournament,
+          - a user must be the owner of the entry in order to make a trade
+          - a user must have a sufficient balance to trade
+
+    - SELL 
+      - if you want to short a stock...
+        - do you have to figure out margin calls? 
 

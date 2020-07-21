@@ -1,4 +1,4 @@
-const TournamentModel= require("../models/tournament");
+const TournamentModel = require("../models/tournament");
 
 const TournamentController = {
   index: async (req, res) => {
