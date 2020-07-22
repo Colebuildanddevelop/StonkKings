@@ -11,6 +11,7 @@ const TradeSchema = new Schema({
   buyOrSell: String,
   price: Number, 
   amountOfShares: Number 
-})
+});
+
 
 module.exports = mongoose.model("Trade", TradeSchema);

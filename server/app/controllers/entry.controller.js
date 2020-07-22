@@ -8,11 +8,11 @@ const EntryController = {
     res.send(found)  
   },
   showByUsername: async (req, res) => {
-    console.log(req.params)
     const found = await EntryModel.find({})
       .populate({ path: 'user', select: 'username -_id' })
       .populate("tournament");
     const foundByUser = found.filter(entry => entry.user.username === req.params.username);
+    console.log("meth", foundByUser[0].getPositions())
     res.send(foundByUser);
   },
   showByTournamentName: async (req, res) => {

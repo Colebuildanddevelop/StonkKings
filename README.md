@@ -243,11 +243,14 @@ TODO agane
 
 
   BUY & SELL
+    
+    
     - BUY
       - user must have enough tournament balance to buy
       - On buy, user sends share amount and price of stock? 
         - if user sends this information then can easily be cheated... !!!!!!!
           - therefore user specifies the stock ticker and the backend works off the latest price? 
+          - user specifying buy or sell can mess up the data need validations
           - 
         - A Trade is created and associated to the entry for that user and that tournament,
           - a user must be the owner of the entry in order to make a trade
@@ -257,3 +260,10 @@ TODO agane
       - if you want to short a stock...
         - do you have to figure out margin calls? 
 
+    - How to get current positions? 
+      - could calculate based off trade history.... 
+        - for each symbol ...
+          - get net positions
+            - 
+
+        

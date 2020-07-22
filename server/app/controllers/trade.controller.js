@@ -12,7 +12,7 @@ const TradeController = {
       time: req.body.time,
       buyOrSell: req.body.buyOrSell,
       price: req.body.price,
-      amountOfShares: req.body.shares
+      amountOfShares: req.body.amountOfShares
     });
     trade.save((err, tradeCreated) => {
       if (err) return res.send({error: err})
