@@ -73,7 +73,7 @@ export const createEntry = (tournamentId, token) => {
     .then(res => res.json())
     .then(entryInfo => {
       dispatch(createEntrySuccess(entryInfo))
-      return entryInfo
+      return entryInfo;
     })
     .catch(err => dispatch(createEntryFailure(err)));
   };

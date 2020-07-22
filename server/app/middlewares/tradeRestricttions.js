@@ -5,7 +5,7 @@ const Entry = require("../models/entry");
 
 const tradeRestrictions = (req, res, next) => {
   Entry.findById(req.body.entryId)
-    .exec((err, entry) => {
+    .exec(async (err, entry) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
@@ -16,10 +16,29 @@ const tradeRestrictions = (req, res, next) => {
       }
       if (entry.user.toString() !== req.userId) {
         res.status(400).send({ message: "User and entry do not match!" });
-      }
-      if (entry.tournamentBalance < (req.body.amountOfShares * req.body.price)) {
-        res.status(400).send({ message: "User does not have enough funds to make this trade!" });
         return;
+      }
+      if (req.body.buyOrSell === "buy") {
+        if (entry.tournamentBalance < (req.body.amountOfShares * req.body.price)) {
+          res.status(400).send({ message: "User does not have enough funds to make this trade!" });
+          return;
+        }
+        
+      } else {
+        // if sell, then user must have enough shares of the stock to sell
+        const positions = await entry.getPositions();
+        let eligibleToSell = true;
+        positions.forEach(position => {
+          if (position.ticker === req.body.stockTicker) {
+            if (position.netShares < req.body.amountOfShares) {
+              eligibleToSell = false;
+            }
+          }
+        });
+        if (!eligibleToSell) {
+          res.status(400).send({ message: "You dont have enough shares to sell" })
+          return;
+        }
       }
       req.entry = entry;
       next();
@@ -27,3 +46,4 @@ const tradeRestrictions = (req, res, next) => {
 };
 
 module.exports = tradeRestrictions;
+

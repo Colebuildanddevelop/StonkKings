@@ -243,6 +243,14 @@ TODO agane
 
 
   BUY & SELL
+
+    - TODO major
+      - verify malicious req
+      - cant trade unless tournament has started
+      - handle selling and buying in the backend
+      - handle selling and buying in the frontend
+      - handle getting all current postitions
+
     
     
     - BUY
@@ -259,6 +267,8 @@ TODO agane
     - SELL 
       - if you want to short a stock...
         - do you have to figure out margin calls? 
+      - go long only for now
+      - 
 
     - How to get current positions? 
       - could calculate based off trade history.... 

@@ -16,8 +16,14 @@ const TradeController = {
     });
     trade.save((err, tradeCreated) => {
       if (err) return res.send({error: err})
-      const oldBalance = req.entry.tournamentBalance;
-      req.entry.tournamentBalance = oldBalance - (req.body.amountOfShares * req.body.price) 
+      if (req.body.buyOrSell === "buy") {
+        const oldBalance = req.entry.tournamentBalance;
+        req.entry.tournamentBalance = oldBalance - (req.body.amountOfShares * req.body.price) 
+      } else {
+        const sharesSoldVal = req.body.amountOfShares * req.body.price;
+        const oldBalance = req.entry.tournamentBalance;
+        req.entry.tournamentBalance = oldBalance + sharesSoldVal;
+      }
       req.entry.trades.push(tradeCreated._id);
       req.entry.save();
       res.send(tradeCreated)
