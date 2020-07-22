@@ -32,6 +32,7 @@ export const auth = (credentials, signInOrUp) => {
       .then(userInfo => {
         dispatch(fetchUserInfoSuccess(userInfo))
         localStorage.token = userInfo.accessToken
+        localStorage.userId = userInfo.id
         return userInfo
       })
       .catch(err => dispatch(fetchUserInfoFailure(err)));
@@ -52,6 +53,7 @@ export const loginWithToken = (token) => {
       dispatch(fetchUserInfoSuccess(userInfo))
       console.log(userInfo)
       localStorage.token = userInfo.accessToken
+      localStorage.userId = userInfo.id
       return userInfo
     })
     .catch(err => dispatch(fetchUserInfoFailure(err)))

@@ -14,6 +14,7 @@ module.exports = (app) => {
   app.get("/api/entries", EntryController.index);
   app.get("/api/entries/user/:username", EntryController.showByUsername);
   app.get("/api/entries/tournament/:tournamentName", EntryController.showByTournamentName);
+  app.get("/api/entries/:userId/:tournamentId", EntryController.showByUsernameAndTournamentName);
   app.post("/api/entries", [verifyToken, verifyPermissionToEnter], EntryController.create);
   
 };

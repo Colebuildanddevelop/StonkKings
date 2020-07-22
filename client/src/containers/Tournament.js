@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { getEntryByUsernameAndTournamentName } from "../redux/actions/entry.actions";
 import SearchBar from "../components/SearchBar";
 import Chart from "../components/Chart";
 import TradeBar from "../components/TradeBar";
@@ -14,11 +16,18 @@ class Tournament extends React.Component {
         y: 1
       }]
     }],
+    stockInfo: {
+      symbol: "IBM",
+      
+    },
     timeInterval: "Daily",
   }
 
   componentDidMount() {
     this.getPriceData("IBM");
+    if (localStorage.userId) {
+      this.props.getEntryByUsernameAndTournamentName(localStorage.userId, this.props.match.params.id);
+    }
   }
 
   getPriceData = (searchString) => {
@@ -41,7 +50,6 @@ class Tournament extends React.Component {
         fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${searchString}&apikey=dMFZK4WADD8FSBHVF`)
           .then(res => res.json())
           .then(data => {
-            console.log("fetching stock info", data)
             this.setState({
               error: null,
               stockData: [{
@@ -66,9 +74,15 @@ class Tournament extends React.Component {
     this.setState({
     })
   }
+  
+  handleTrade = () => {
+    console.log("trading")
+    console.log(this.props);
+
+  }
 
   render() {
-    console.log(this.state)
+    console.log(this.props);
     return (
       <div>
         <SearchBar 
@@ -79,10 +93,23 @@ class Tournament extends React.Component {
           stockInfo={this.state.stockInfo}
           data={this.state.stockData}
         />
-        <TradeBar />
+        <TradeBar 
+          entryId={""}
+          stockTicker={this.state.stockInfo.symbol}
+          handleTrade={this.handleTrade}
+        />
       </div>
     )
   }
 }
 
-export default Tournament;
+const mapStateToProps = state => ({
+  currentEntry: state.entry.currentEntry,
+  currentUser: state.auth.currentUser
+})
+
+export default connect(
+  mapStateToProps,
+  { getEntryByUsernameAndTournamentName }
+)(Tournament);
+  

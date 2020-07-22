@@ -3,7 +3,7 @@ const TradeModel = require("../models/trade");
 const TradeController = {
   index: async (req, res) => {
     const trades = await TradeModel.find({})
-    res.send(trades)  
+    res.send(trades);
   },
   create: async (req, res) => {
     const trade = new TradeModel({

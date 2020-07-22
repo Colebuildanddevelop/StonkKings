@@ -17,12 +17,16 @@ const EntryController = {
     res.send(foundByUser);
   },
   showByTournamentName: async (req, res) => {
-    console.log(req.params)
     const found = await EntryModel.find({})
       .populate({ path: 'user', select: 'username -_id' })
       .populate("tournament");
     const foundByTournament = found.filter(entry => entry.tournament.name === req.params.tournamentName);
     res.send(foundByTournament);
+  },
+  showByUsernameAndTournamentName: async (req, res) => {
+    const found = await EntryModel.findOne({ user: req.params.userId, tournament: req.params.tournamentId })
+    if (!found) return res.send({message: "entry not found"})
+    res.send(found);
   },
   create: async (req, res) => {
     const entry = new EntryModel({

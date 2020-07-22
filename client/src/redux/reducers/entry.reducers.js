@@ -25,7 +25,7 @@ const entryReducer = (state=initialState, action) => {
       return {
         ...state,
         loading: false,
-        entries: action.payload.entries
+        currentEntry: action.payload.entryInfo
       }
     case FETCH_ENTRY_INFORMATION_FAILURE:
       return {

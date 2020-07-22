@@ -16,6 +16,22 @@ const fetchEntryInfoFailure = err => ({
   payload: { err }
 });
 
+export const getEntryByUsernameAndTournamentName = (userId, tournamentId) => {
+  return dispatch => {
+    dispatch(fetchEntryInfoBegin());
+    return fetch(`http://localhost:3000/api/entries/${userId}/${tournamentId}`)
+    .then(res => res.json())
+    .then(entryInfo => {
+      console.log(entryInfo)
+      dispatch(fetchEntryInfoSuccess(entryInfo));
+      return entryInfo;
+    })
+   .catch(err => {
+     dispatch(fetchEntryInfoFailure(err))
+    });
+  };
+};
+
 // export const getEntrants = (credentials, signInOrUp) => {
   // return dispatch => {
     // dispatch(fetchUserInfoBegin());

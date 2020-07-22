@@ -51,7 +51,7 @@ class Lobby extends React.Component {
             {this.props.tournamentsArr.map((tournament) => {
               return (
                 <TableRow className={classes.row} key={tournament.id}   >
-                  <TableCell component="th" scope="row" component={Link} to={`/tournament/${tournament.name}`} >
+                  <TableCell component="th" scope="row" component={Link} to={`/tournament/${tournament.id}`} >
                     {tournament.name}
                   </TableCell>
                   <TableCell align="right">{tournament.entryFee}</TableCell>

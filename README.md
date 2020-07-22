@@ -277,3 +277,7 @@ TODO agane
             - 
 
         
+- when we click a tournament and refresh we lose access to current user...
+  - store the whole user in localstorage? 
+  - fetch the user login in mount of tournament? 
+  - 

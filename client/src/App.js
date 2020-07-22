@@ -16,12 +16,12 @@ class App extends React.Component {
 
   componentDidMount() {
     if (localStorage.token) {
+      console.log("getting user")
       this.props.loginWithToken(localStorage.token)
     }
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="App">
         <BrowserRouter>
@@ -43,9 +43,9 @@ class App extends React.Component {
           />
           <Route
             exact
-            path="/tournament/:tournamentName"
+            path="/tournament/:id"
             render={(routeProps) => (
-              <Tournament {...routeProps} />
+              <Tournament {...routeProps} currentUser={this.props.currentUser} />
             )}
           />
         </Switch>
@@ -56,7 +56,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth
+  currentUser: state.auth.currentUser
 });
 
 export default connect(
