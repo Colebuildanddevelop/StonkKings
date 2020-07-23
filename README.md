@@ -248,8 +248,9 @@ TODO agane
       - verify malicious req
       - cant trade unless tournament has started
       - handle selling and buying in the backend x 
-      - handle selling and buying in the frontend
-        - handle latest price 
+      - handle selling and buying in the frontend 
+        - display tournament balance, update in dom positions and balance every trade that is created  
+        - handle latest price x
           - poll fetch the latest quote and push to data ? 
       - handle getting all current postitions
 
@@ -280,3 +281,15 @@ TODO agane
 
 SHOW POSITIONS AND TRADE HISTORY 
   - include positions object in response to get entries
+
+
+- two different problems with trades
+
+  - helper returns empty array randomly? 
+  - will track trades that should not have been created because restrictions? 
+    - make trade middleware to prevent creation? 
+    - make helper method on trade controller? 
+      - get all trades based on entry id,
+      - calulate pos in frontend?
+      - either set state after action... dont you in redux?
+      - 

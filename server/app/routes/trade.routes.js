@@ -12,6 +12,7 @@ module.exports = (app) => {
   });
 
   app.get("/api/trades", TradeController.index);
+  app.get("/api/trades/:entryId", TradeController.showTradeByEntryId);
   app.post("/api/trades", [verifyToken, tradeRestrictions], TradeController.create);
   
 };

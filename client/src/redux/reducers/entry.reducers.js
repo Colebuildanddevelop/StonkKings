@@ -9,7 +9,8 @@ import {
 
 const initialState = {
   entries: [],
-  createdEntry: [],
+  createdEntry: {},
+  currentEntry: null,
   loading: false,
   error: null
 }

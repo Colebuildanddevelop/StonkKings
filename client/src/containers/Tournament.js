@@ -6,6 +6,7 @@ import Chart from "../components/Chart";
 import TradeBar from "../components/TradeBar";
 import LatestPrice from "../components/LatestPrice";
 import MyPositions from "../components/MyPositions";
+import TournamentBar from "../components/TournamentBar";
 
 class Tournament extends React.Component {
 
@@ -34,7 +35,7 @@ class Tournament extends React.Component {
   }
 
   getPriceData = (searchString) => {
-    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${searchString}&outputsize=compact&apikey=MFZK4WADD8FSBHVF`)
+    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${searchString}&outputsize=compact&apikey=3VP9375JIOYD1569`)
       .then(res => res.json())
       .then(data => {
         if (data["Error Message"]) {
@@ -44,16 +45,17 @@ class Tournament extends React.Component {
           return;
         }
         const timeSeriesHash = data[`Time Series (${this.state.timeInterval})`];
+        console.log(data)
         const formattedData = Object.keys(timeSeriesHash).map(key => {
           return {
             x: key, 
             y: parseFloat(timeSeriesHash[key]["4. close"])
           };
         });
-        fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${searchString}&apikey=dMFZK4WADD8FSBHVF`)
+        fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${searchString}&apikey=3VP9375JIOYD1569`)
           .then(res => res.json())
           .then(stockInfo => {
-            fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${searchString}&apikey=dMFZK4WADD8FSBHVF`)
+            fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${searchString}&apikey=3VP9375JIOYD1569`)
               .then(res => res.json())
               .then(priceData => {
                 console.log(priceData["Global Quote"]["05. price"])
@@ -84,7 +86,7 @@ class Tournament extends React.Component {
   handleSearchSubmit = (searchString) => {
     this.getPriceData(searchString);
   }
-
+  
   //handleTimeInterval = (timeInterval) => {
     //this.setState({
     //})
@@ -93,6 +95,7 @@ class Tournament extends React.Component {
   render() {
     return (
       <div>
+        <TournamentBar />
         <SearchBar 
           handleSearchSubmit={this.handleSearchSubmit} 
           error={this.state.error} 
@@ -101,7 +104,7 @@ class Tournament extends React.Component {
           stockInfo={this.state.stockInfo}
           data={this.state.stockData}
         />
-        {this.props.currentEntry ? (
+        {this.props.currentEntry && !this.props.currentEntry.message ? (
           <div>
             <TradeBar 
               currentPrice={this.state.currentPrice}
@@ -113,7 +116,7 @@ class Tournament extends React.Component {
               setPrice={this.setPrice}
               currentPrice={this.state.currentPrice}
             />
-            <MyPositions positions={this.props.currentEntry.positions.filter(position => position.netShares > 0)} />
+            <MyPositions currentEntry={this.props.currentEntry}  />
           </div>
         ): (null)}
       </div>
@@ -123,8 +126,9 @@ class Tournament extends React.Component {
 
 const mapStateToProps = state => ({
   currentEntry: state.entry.currentEntry,
-  currentUser: state.auth.currentUser
-})
+  currentUser: state.auth.currentUser,
+  createdTrade: state.trade.createdTrade
+});
 
 export default connect(
   mapStateToProps,

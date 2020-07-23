@@ -43,3 +43,33 @@ export const createTrade = (tradeObj, token) => {
     .catch(err => dispatch(createTradeFailure(err)));
   };
 };
+
+export const FETCH_TRADES_BY_ENTRY_BEGIN = "FETCH_TRADES_BY_ENTRY_BEGIN";
+export const FETCH_TRADES_BY_ENTRY_SUCCESS = "FETCH_TRADES_BY_ENTRY_SUCCESS";
+export const FETCH_TRADES_BY_ENTRY_FAILURE = "FETCH_TRADES_BY_ENTRY_FAILURE";
+
+const fetchTradesByEntryBegin = () => ({
+  type: FETCH_TRADES_BY_ENTRY_BEGIN 
+});
+
+const fetchTradesByEntrySuccess = tradesByEntry => ({
+  type: FETCH_TRADES_BY_ENTRY_SUCCESS,
+  payload: { tradesByEntry }
+});
+
+const fetchTradesByEntryFailure = err => ({
+  type: FETCH_TRADES_BY_ENTRY_FAILURE,
+  payload: { err }
+});
+
+export const getTradesByEntryId = (entryId) => dispatch => {
+  dispatch(fetchTradesByEntryBegin())
+  return fetch(`http://localhost:3000/api/trades/${entryId}`)
+    .then(res => res.json())
+    .then(tradesByEntry => {
+      dispatch(fetchTradesByEntrySuccess(tradesByEntry))
+    })
+    .catch(err => dispatch(fetchTradesByEntryFailure(err)));
+};
+  
+

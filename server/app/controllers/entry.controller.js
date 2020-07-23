@@ -12,8 +12,6 @@ const EntryController = {
       .populate({ path: 'user', select: 'username -_id' })
       .populate("tournament");
     const foundByUser = found.filter(entry => entry.user.username === req.params.username);
-    const myPositions = await foundByUser[0].getPositions()
-    console.log("my pos", myPositions);
     res.send(foundByUser);
   },
   showByTournamentName: async (req, res) => {
@@ -26,11 +24,7 @@ const EntryController = {
   showByUsernameAndTournamentName: async (req, res) => {
     const found = await EntryModel.findOne({ user: req.params.userId, tournament: req.params.tournamentId })
     if (!found) return res.send({message: "entry not found"})
-    const positions = await found.getPositions();
-    res.send({
-      ...found._doc,
-      positions: positions
-    });
+    res.send(found);
   },
   create: async (req, res) => {
     const entry = new EntryModel({

@@ -5,6 +5,10 @@ const TradeController = {
     const trades = await TradeModel.find({})
     res.send(trades);
   },
+  showTradeByEntryId: async (req, res) => {
+    const trades = await TradeModel.find({ entry: req.params.entryId });
+    res.send(trades);
+  },
   create: async (req, res) => {
     const trade = new TradeModel({
       entry: req.body.entryId,

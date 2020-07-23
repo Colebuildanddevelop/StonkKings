@@ -2,7 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from "react-redux";
-import { createTrade } from "../redux/actions/trade.actions";
+import { createTrade, getTradesByEntryId } from "../redux/actions/trade.actions";
 // MATERIAL UI
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -29,11 +29,9 @@ class TradeBar extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     });
-    console.log(parseInt(this.state.shareAmountField))
   }
   
   handleTrade = (e) => {
-    console.log(e.currentTarget)
     this.props.createTrade({
       entryId: this.props.entryId,
       stockTicker: this.props.stockTicker,
@@ -42,6 +40,7 @@ class TradeBar extends React.Component {
       price: this.props.currentPrice,
       amountOfShares: parseInt(this.state.shareAmountField)
     }, localStorage.token)
+    this.props.getTradesByEntryId(this.props.entryId)
   }
 
   render() {
@@ -68,6 +67,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(
-  mapStateToProps,
-  { createTrade }
+  null,
+  { createTrade, getTradesByEntryId }
 )(withStyles(useStyles)(TradeBar));
