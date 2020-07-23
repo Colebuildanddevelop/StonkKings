@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 class LatestPrice extends React.Component {
 
   componentDidMount() {
-    const intervalId = setInterval(this.fetchPrice, 30000)
+    const intervalId = setInterval(this.fetchPrice, 60000)
     this.setState({ intervalId: intervalId });
   }
 

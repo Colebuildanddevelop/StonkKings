@@ -5,6 +5,7 @@ import SearchBar from "../components/SearchBar";
 import Chart from "../components/Chart";
 import TradeBar from "../components/TradeBar";
 import LatestPrice from "../components/LatestPrice";
+import MyPositions from "../components/MyPositions";
 
 class Tournament extends React.Component {
 
@@ -90,7 +91,6 @@ class Tournament extends React.Component {
   //}
   
   render() {
-    console.log(this.state);
     return (
       <div>
         <SearchBar 
@@ -102,17 +102,20 @@ class Tournament extends React.Component {
           data={this.state.stockData}
         />
         {this.props.currentEntry ? (
-          <TradeBar 
-            currentPrice={this.state.currentPrice}
-            stockTicker={this.state.stockInfo.symbol}
-            entryId={this.props.currentEntry._id || null} 
-          />
+          <div>
+            <TradeBar 
+              currentPrice={this.state.currentPrice}
+              stockTicker={this.state.stockInfo.symbol}
+              entryId={this.props.currentEntry._id || null} 
+            />
+            <LatestPrice 
+              searchString={this.state.stockInfo.symbol}
+              setPrice={this.setPrice}
+              currentPrice={this.state.currentPrice}
+            />
+            <MyPositions positions={this.props.currentEntry.positions.filter(position => position.netShares > 0)} />
+          </div>
         ): (null)}
-        <LatestPrice 
-          searchString={this.state.stockInfo.symbol}
-          setPrice={this.setPrice}
-          currentPrice={this.state.currentPrice}
-        />
       </div>
     )
   }

@@ -26,7 +26,11 @@ const EntryController = {
   showByUsernameAndTournamentName: async (req, res) => {
     const found = await EntryModel.findOne({ user: req.params.userId, tournament: req.params.tournamentId })
     if (!found) return res.send({message: "entry not found"})
-    res.send(found);
+    const positions = await found.getPositions();
+    res.send({
+      ...found._doc,
+      positions: positions
+    });
   },
   create: async (req, res) => {
     const entry = new EntryModel({

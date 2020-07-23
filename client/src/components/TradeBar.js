@@ -58,7 +58,6 @@ class TradeBar extends React.Component {
           id="standard-basic" 
           label="Amount of shares"
         />
-
       </div>
     )
   }

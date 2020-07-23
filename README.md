@@ -224,7 +224,7 @@ TODO agane
   - show trade history
   - show entrants in tournament
   - create tournament
-  - enter tournament 
+  - enter tournament x
   - redeem main account balance somehow 
   - show tournament history ( entrants, their trades, the winner, the payout)
   - add friends  
@@ -278,5 +278,5 @@ TODO agane
           - get net positions
             - 
 
-
-        
+SHOW POSITIONS AND TRADE HISTORY 
+  - include positions object in response to get entries
