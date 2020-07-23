@@ -4,6 +4,7 @@ import { getEntryByUsernameAndTournamentName } from "../redux/actions/entry.acti
 import SearchBar from "../components/SearchBar";
 import Chart from "../components/Chart";
 import TradeBar from "../components/TradeBar";
+import LatestPrice from "../components/LatestPrice";
 
 class Tournament extends React.Component {
 
@@ -21,6 +22,7 @@ class Tournament extends React.Component {
       
     },
     timeInterval: "Daily",
+    currentPrice: "loading"
   }
 
   componentDidMount() {
@@ -49,40 +51,46 @@ class Tournament extends React.Component {
         });
         fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${searchString}&apikey=dMFZK4WADD8FSBHVF`)
           .then(res => res.json())
-          .then(data => {
-            this.setState({
-              error: null,
-              stockData: [{
-                id: searchString,
-                data: formattedData
-              }],
-              stockInfo: {
-                symbol: data["Symbol"],
-                name: data["Name"],
-                exchange: data["Exchange"]
-              }
-            })
-          })
+          .then(stockInfo => {
+            fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${searchString}&apikey=dMFZK4WADD8FSBHVF`)
+              .then(res => res.json())
+              .then(priceData => {
+                console.log(priceData["Global Quote"]["05. price"])
+                this.setState({
+                  error: null,
+                  stockData: [{
+                    id: searchString,
+                    data: formattedData
+                  }],
+                  stockInfo: {
+                    symbol: stockInfo["Symbol"],
+                    name: stockInfo["Name"],
+                    exchange: stockInfo["Exchange"]
+                  },
+                  currentPrice: priceData["Global Quote"]["05. price"]
+                });
+              });
+          });
       });
+  }
+
+  setPrice = (price) => {
+    this.setState({
+      currentPrice: parseFloat(price)
+    });
   }
 
   handleSearchSubmit = (searchString) => {
     this.getPriceData(searchString);
   }
 
-  handleTimeInterval = (timeInterval) => {
-    this.setState({
-    })
-  }
+  //handleTimeInterval = (timeInterval) => {
+    //this.setState({
+    //})
+  //}
   
-  handleTrade = () => {
-    console.log("trading")
-    console.log(this.props);
-
-  }
-
   render() {
-    console.log(this.props);
+    console.log(this.state);
     return (
       <div>
         <SearchBar 
@@ -93,10 +101,17 @@ class Tournament extends React.Component {
           stockInfo={this.state.stockInfo}
           data={this.state.stockData}
         />
-        <TradeBar 
-          entryId={""}
-          stockTicker={this.state.stockInfo.symbol}
-          handleTrade={this.handleTrade}
+        {this.props.currentEntry ? (
+          <TradeBar 
+            currentPrice={this.state.currentPrice}
+            stockTicker={this.state.stockInfo.symbol}
+            entryId={this.props.currentEntry._id || null} 
+          />
+        ): (null)}
+        <LatestPrice 
+          searchString={this.state.stockInfo.symbol}
+          setPrice={this.setPrice}
+          currentPrice={this.state.currentPrice}
         />
       </div>
     )

@@ -247,8 +247,10 @@ TODO agane
     - TODO major
       - verify malicious req
       - cant trade unless tournament has started
-      - handle selling and buying in the backend
+      - handle selling and buying in the backend x 
       - handle selling and buying in the frontend
+        - handle latest price 
+          - poll fetch the latest quote and push to data ? 
       - handle getting all current postitions
 
     
@@ -276,8 +278,5 @@ TODO agane
           - get net positions
             - 
 
+
         
-- when we click a tournament and refresh we lose access to current user...
-  - store the whole user in localstorage? 
-  - fetch the user login in mount of tournament? 
-  - 

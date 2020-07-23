@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { createTrade } from "../redux/actions/trade.actions";
 // MATERIAL UI
 import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
 
 const useStyles = () => ({
   buyButton: {
@@ -19,29 +21,54 @@ const useStyles = () => ({
 
 class TradeBar extends React.Component {
 
-  // handleTrade = (e) => {
-    // this.props.createTrade({
-      // entryId: "",
-      // stockTicker: "",
-      // time: new Date.now(),
-      // buyOrSell: e.target.name,
-      // price: "",
-      // amountOfShares: ""
-    // })
-  // }
+  state = {
+    shareAmountField: 0
+  }
+  
+  handleShareField = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+    console.log(parseInt(this.state.shareAmountField))
+  }
+  
+  handleTrade = (e) => {
+    console.log(e.currentTarget)
+    this.props.createTrade({
+      entryId: this.props.entryId,
+      stockTicker: this.props.stockTicker,
+      time: new Date(),
+      buyOrSell: e.currentTarget.name,
+      price: this.props.currentPrice,
+      amountOfShares: parseInt(this.state.shareAmountField)
+    }, localStorage.token)
+  }
 
   render() {
     const { classes } = this.props
     return (
       <div>
-        <Button onClick={this.props.handleTrade} name="buy" className={classes.buyButton}>BUY</Button>
-        <Button name="sell" className={classes.sellButton}>SELL</Button>
+        <Button onClick={this.handleTrade} name="buy" className={classes.buyButton}>BUY</Button>
+        <Button onClick={this.handleTrade} name="sell" className={classes.sellButton}>SELL</Button>
+        <TextField 
+          onChange={this.handleShareField} 
+          value={this.state.shareAmount} 
+          name="shareAmountField"
+          type="number" 
+          id="standard-basic" 
+          label="Amount of shares"
+        />
+
       </div>
     )
   }
 }
 
+const mapStateToProps = state => ({
+  createdTrade: state.trade
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { createTrade }
 )(withStyles(useStyles)(TradeBar));
