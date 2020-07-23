@@ -35,12 +35,10 @@ class MyPositions extends React.Component {
       });
       return position;
     })
-    console.log(positions)
     return positions
   }
 
   render() {
-    console.log(this.props.tradeData.tradesByEntry.length)
     return (
       <TableContainer component={Paper} >
         <Table aria-label="simple table">

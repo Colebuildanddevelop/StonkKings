@@ -219,7 +219,7 @@ TODO agane
         - create nivo chart for volume data
 
 - TODO big functionality
-  - buy and sell 
+  - buy and sell (need to make sure trade is not created if dont have enough shares to sell?)
   - toast all errors
   - 
   - award winner of tournament

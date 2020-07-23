@@ -45,12 +45,11 @@ class NavBar extends React.Component {
             {this.props.currentUser ? 
             (
               <Typography component={Link} to={"/"} variant="h6" color="inherit" className={classes.title}>
-                Account Balance: {this.props.currentUser.accountBalance}
+                Stonk Credits: {this.props.currentUser.accountBalance}
               </Typography>
             ) : (
               <Button component={Link} to={"/login"} color="inherit">Login</Button>
-            )
-            }
+            )}
           </Toolbar>
         </AppBar>
       </div>
