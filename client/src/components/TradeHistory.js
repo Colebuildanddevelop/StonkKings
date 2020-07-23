@@ -14,7 +14,9 @@ import { Typography } from "@material-ui/core";
 class TradeHistory extends React.Component {
 
   componentDidMount() {
-    this.props.getTradesByEntryId(this.props.currentEntry._id)
+    if (!this.props.currentEntry.message) {
+      this.props.getTradesByEntryId(this.props.currentEntry._id)
+    }
   }
 
   formatDate = (date) => {

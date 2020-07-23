@@ -220,15 +220,16 @@ TODO agane
 
 - TODO big functionality
   - buy and sell (need to make sure trade is not created if dont have enough shares to sell?)
+  - make search have suggestions
   - toast all errors
-  - 
+  - update chart every second with live data 
   - award winner of tournament
-  - show trade history
-  - show entrants in tournament
+  - show trade history x 
+  - show entrants in tournament 
   - create tournament
   - enter tournament x
   - redeem main account balance somehow 
-  - show tournament history ( entrants, their trades, the winner, the payout)
+  - show tournament history ( entrants, their trades, the winner, the payout) 
   - add friends  
 
   ENTRY 

@@ -14,12 +14,11 @@ const EntryController = {
     const foundByUser = found.filter(entry => entry.user.username === req.params.username);
     res.send(foundByUser);
   },
-  showByTournamentName: async (req, res) => {
-    const found = await EntryModel.find({})
+  showByTournamentId: async (req, res) => {
+    const found = await EntryModel.find({ tournament: req.params.tournamentId })
       .populate({ path: 'user', select: 'username -_id' })
       .populate("tournament");
-    const foundByTournament = found.filter(entry => entry.tournament.name === req.params.tournamentName);
-    res.send(foundByTournament);
+    res.send(found);
   },
   showByUsernameAndTournamentName: async (req, res) => {
     const found = await EntryModel.findOne({ user: req.params.userId, tournament: req.params.tournamentId })
