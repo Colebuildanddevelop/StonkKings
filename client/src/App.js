@@ -25,30 +25,30 @@ class App extends React.Component {
     return (
       <div className="App">
         <BrowserRouter>
-        <NavBar />
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={(routeProps) => (
-              <Lobby {...routeProps} />
-            )}
-          />
-          <Route
-            exact
-            path="/login"
-            render={(routeProps) => (
-              <Login {...routeProps} />
-            )}
-          />
-          <Route
-            exact
-            path="/tournament/:id"
-            render={(routeProps) => (
-              <Tournament {...routeProps} currentUser={this.props.currentUser} />
-            )}
-          />
-        </Switch>
+          <NavBar />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(routeProps) => (
+                <Lobby {...routeProps} />
+              )}
+            />
+            <Route
+              exact
+              path="/login"
+              render={(routeProps) => (
+                <Login {...routeProps} />
+              )}
+            />
+            <Route
+              exact
+              path="/tournament/:id"
+              render={(routeProps) => (
+                <Tournament {...routeProps} currentUser={this.props.currentUser} />
+              )}
+            />
+          </Switch>
         </BrowserRouter>
       </div>
     );

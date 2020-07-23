@@ -1,12 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getEntryByUsernameAndTournamentName } from "../redux/actions/entry.actions";
+import { getPriceData } from "../helpers/fetchPriceData";
+// COMPONENTS
 import SearchBar from "../components/SearchBar";
 import Chart from "../components/Chart";
 import TradeBar from "../components/TradeBar";
 import LatestPrice from "../components/LatestPrice";
 import MyPositions from "../components/MyPositions";
 import TournamentBar from "../components/TournamentBar";
+import AllEntrants from "../components/AllEntrants";
+import TradeHistory from "../components/TradeHistory";
 
 class Tournament extends React.Component {
 
@@ -24,13 +28,14 @@ class Tournament extends React.Component {
       
     },
     timeInterval: "Daily",
-    currentPrice: "loading"
+    currentPrice: "loading",
+    currentView: "buy/sell"
   }
 
   componentDidMount() {
     this.getPriceData("IBM");
     if (localStorage.userId) {
-      this.props.getEntryByUsernameAndTournamentName(localStorage.userId, this.props.match.params.id);
+      this.handleGetCurrentEntry();
     }
   }
 
@@ -77,6 +82,10 @@ class Tournament extends React.Component {
       });
   }
 
+  handleGetCurrentEntry = () => {
+    this.props.getEntryByUsernameAndTournamentName(localStorage.userId, this.props.match.params.id);
+  }
+
   setPrice = (price) => {
     this.setState({
       currentPrice: parseFloat(price)
@@ -92,33 +101,54 @@ class Tournament extends React.Component {
     //})
   //}
   
+  changeView = (view) => {
+    this.setState({
+      currentView: view
+    });
+  }
+  
   render() {
     return (
       <div>
-        <TournamentBar />
-        <SearchBar 
-          handleSearchSubmit={this.handleSearchSubmit} 
-          error={this.state.error} 
-        />
-        <Chart
-          stockInfo={this.state.stockInfo}
-          data={this.state.stockData}
-        />
-        {this.props.currentEntry && !this.props.currentEntry.message ? (
+        <TournamentBar setView={this.changeView} />
+        {this.state.currentView === "buy/sell" ? (
           <div>
-            <TradeBar 
-              currentPrice={this.state.currentPrice}
-              stockTicker={this.state.stockInfo.symbol}
-              entryId={this.props.currentEntry._id || null} 
+            <SearchBar 
+              handleSearchSubmit={this.handleSearchSubmit} 
+              error={this.state.error} 
             />
-            <LatestPrice 
-              searchString={this.state.stockInfo.symbol}
-              setPrice={this.setPrice}
-              currentPrice={this.state.currentPrice}
+            <Chart
+              stockInfo={this.state.stockInfo}
+              data={this.state.stockData}
             />
-            <MyPositions currentEntry={this.props.currentEntry}  />
+            {this.props.currentEntry && !this.props.currentEntry.message ? (
+              <div>
+                <TradeBar 
+                  getCurrentEntry={this.handleGetCurrentEntry}
+                  currentPrice={this.state.currentPrice}
+                  stockTicker={this.state.stockInfo.symbol}
+                  entryId={this.props.currentEntry._id || null} 
+                />
+                <LatestPrice 
+                  searchString={this.state.stockInfo.symbol}
+                  setPrice={this.setPrice}
+                  currentPrice={this.state.currentPrice}
+                />
+                <MyPositions currentEntry={this.props.currentEntry}  />
+              </div>
+            ): (null)}
           </div>
-        ): (null)}
+        ) : null}
+        {this.state.currentView === "tradeHistory" ? (
+          <div>
+            <TradeHistory />
+          </div>
+        ) : null}
+        {this.state.currentView === "allEntrants" ? (
+          <div>
+            <AllEntrants />
+          </div>
+        ) : null}
       </div>
     )
   }

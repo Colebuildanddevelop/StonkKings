@@ -45,7 +45,7 @@ class NavBar extends React.Component {
             {this.props.currentUser ? 
             (
               <Typography component={Link} to={"/"} variant="h6" color="inherit" className={classes.title}>
-                {this.props.currentUser.accountBalance}
+                Account Balance: {this.props.currentUser.accountBalance}
               </Typography>
             ) : (
               <Button component={Link} to={"/login"} color="inherit">Login</Button>

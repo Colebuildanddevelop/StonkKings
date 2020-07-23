@@ -23,25 +23,28 @@ const useStyles = (theme) => ({
 
 class TournamentBar extends React.Component {
   render() {
-    console.log(this.props.currentEntry)
+    console.log(this.props)
     const { classes } = this.props;
-    if (!this.props.currentEntry) return null;
     return (
       <div className={classes.root}>
         <AppBar position="static" color="secondary">
           <Toolbar>
-            <Typography component={Link} to={"/"} variant="h6" color="inherit" className={classes.title}>
+            <Typography onClick={() => this.props.setView("buy/sell")} variant="h6" color="inherit" className={classes.title}>
               Buy/Sell
             </Typography>
-            <Typography component={Link} to={"/"} variant="h6" color="inherit" className={classes.title}>
+            <Typography onClick={() => this.props.setView("tradeHistory")} variant="h6" color="inherit" className={classes.title}>
               Trade History
             </Typography>
-            <Typography component={Link} to={"/"} variant="h6" color="inherit" style={{flexGrow: 1}} className={classes.title}>
+            <Typography onClick={() => this.props.setView("allEntrants")} variant="h6" color="inherit" style={{flexGrow: 1}} className={classes.title}>
               All Entrants
             </Typography>
-            <Typography component={Link} to={"/"} variant="h6" color="inherit"  className={classes.title}>
-              Account Balance: {this.props.currentEntry.tournamentBalance.toFixed(2)}
-            </Typography>
+            {this.props.currentEntry && !this.props.currentEntry.message ? (
+              <Typography component={Link} to={"/"} variant="h6" color="inherit"  className={classes.title}>
+                Tournament Balance: {this.props.currentEntry.tournamentBalance.toFixed(2)}
+              </Typography>
+            ) : (
+              null
+            )}
           </Toolbar>
         </AppBar>
       </div>

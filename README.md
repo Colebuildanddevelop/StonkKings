@@ -220,6 +220,8 @@ TODO agane
 
 - TODO big functionality
   - buy and sell 
+  - toast all errors
+  - 
   - award winner of tournament
   - show trade history
   - show entrants in tournament
@@ -231,6 +233,7 @@ TODO agane
 
   ENTRY 
     - restrict to one entry per tournament x
+    - 
     - cant enter tourneys that have started x
     - entry limit x
       - when an entry is created, increment the tournaments entries to include x
@@ -261,11 +264,11 @@ TODO agane
       - On buy, user sends share amount and price of stock? 
         - if user sends this information then can easily be cheated... !!!!!!!
           - therefore user specifies the stock ticker and the backend works off the latest price? 
-          - user specifying buy or sell can mess up the data need validations
+          - user specifying buy or sell can mess up the data need validations ???? 
           - 
         - A Trade is created and associated to the entry for that user and that tournament,
-          - a user must be the owner of the entry in order to make a trade
-          - a user must have a sufficient balance to trade
+          - a user must be the owner of the entry in order to make a trade x 
+          - a user must have a sufficient balance to trade x
 
     - SELL 
       - if you want to short a stock...

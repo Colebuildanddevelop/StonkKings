@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from '@material-ui/core/styles';
 import { connect } from "react-redux";
 import { createTrade, getTradesByEntryId } from "../redux/actions/trade.actions";
 // MATERIAL UI
@@ -31,8 +30,8 @@ class TradeBar extends React.Component {
     });
   }
   
-  handleTrade = (e) => {
-    this.props.createTrade({
+  handleTrade = async (e) => {
+    await this.props.createTrade({
       entryId: this.props.entryId,
       stockTicker: this.props.stockTicker,
       time: new Date(),
@@ -40,7 +39,8 @@ class TradeBar extends React.Component {
       price: this.props.currentPrice,
       amountOfShares: parseInt(this.state.shareAmountField)
     }, localStorage.token)
-    this.props.getTradesByEntryId(this.props.entryId)
+    await this.props.getTradesByEntryId(this.props.entryId)
+    await this.props.getCurrentEntry();
   }
 
   render() {
