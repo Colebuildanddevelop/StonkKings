@@ -96,11 +96,6 @@ class Tournament extends React.Component {
     this.getPriceData(searchString);
   }
   
-  //handleTimeInterval = (timeInterval) => {
-    //this.setState({
-    //})
-  //}
-  
   changeView = (view) => {
     this.setState({
       currentView: view

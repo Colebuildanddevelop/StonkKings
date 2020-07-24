@@ -258,8 +258,6 @@ TODO agane
           - poll fetch the latest quote and push to data ? 
       - handle getting all current postitions
 
-    
-    
     - BUY
       - user must have enough tournament balance to buy
       - On buy, user sends share amount and price of stock? 
@@ -297,3 +295,6 @@ SHOW POSITIONS AND TRADE HISTORY
       - calulate pos in frontend?
       - either set state after action... dont you in redux?
       - 
+
+STYLING IDEAS
+  - buttons with icons

@@ -30,44 +30,59 @@ class Lobby extends React.Component {
     this.props.getTournaments()
   }
 
-
   render() {
     const { classes } = this.props;
     return (
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Tournament</TableCell>
-              <TableCell align="right">Entry Fee</TableCell>
-              <TableCell align="right">Entries</TableCell>
-              <TableCell align="right">Total Prize</TableCell>
-              <TableCell align="right">Start</TableCell>
-              <TableCell align="right">End</TableCell>
-              <TableCell align="right"></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {this.props.tournamentsArr.map((tournament) => {
-              return (
-                <TableRow className={classes.row} key={tournament.id}   >
-                  <TableCell scope="row" component={Link} to={`/tournament/${tournament.id}`} >
-                    {tournament.name}
-                  </TableCell>
-                  <TableCell align="right">{tournament.entryFee}</TableCell>
-                  <TableCell align="right">{tournament.entries.length}</TableCell>
-                  <TableCell align="right">{tournament.entryFee}</TableCell>
-                  <Countdown countDownEnd={new Date(tournament.startTime).getTime()} overMsg={"Started!"}/>
-                  <Countdown countDownEnd={new Date(tournament.endTime).getTime()} overMsg={"Ended!"} />
-                  <TableCell align="right">
-                    <Button onClick={() => this.props.createEntry(tournament.id, localStorage.token)} color="inherit">Enter</Button>
-                  </TableCell>
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <div>
+        <Button 
+          variant="contained" 
+          color="secondary"
+          component={Link}
+          to={`/create-tournament`}
+        >
+          Create Tournament
+        </Button> 
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Tournament</TableCell>
+                <TableCell align="right">Entry Fee</TableCell>
+                <TableCell align="right">Entries</TableCell>
+                <TableCell align="right">Total Prize</TableCell>
+                <TableCell align="right">Start</TableCell>
+                <TableCell align="right">End</TableCell>
+                <TableCell align="right"></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.props.tournamentsArr.map((tournament) => {
+                return (
+                  <TableRow className={classes.row} key={tournament.id}   >
+                    <TableCell scope="row" component={Link} to={`/tournament/${tournament.id}`} >
+                      {tournament.name}
+                    </TableCell>
+                    <TableCell align="right">{tournament.entryFee}</TableCell>
+                    <TableCell align="right">{tournament.entries.length + " / " + tournament.entryLimit}</TableCell>
+                    <TableCell align="right">{tournament.entryFee * tournament.entries.length}</TableCell>
+                    <Countdown countDownEnd={new Date(tournament.startTime).getTime()} overMsg={"Started!"}/>
+                    <Countdown countDownEnd={new Date(tournament.endTime).getTime()} overMsg={"Ended!"} />
+                    <TableCell align="right">
+                      <Button
+                        variant="contained" 
+                        color="secondary" 
+                        onClick={() => this.props.createEntry(tournament.id, localStorage.token)}
+                      >
+                        Enter
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     );
   }
 }

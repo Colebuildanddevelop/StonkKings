@@ -10,6 +10,7 @@ import Lobby from "./containers/Lobby";
 import Login from "./containers/Login";
 import Tournament from "./containers/Tournament";
 import NavBar from "./containers/NavBar";
+import CreateTournament from "./containers/CreateTournament";
 
 
 class App extends React.Component {
@@ -39,6 +40,13 @@ class App extends React.Component {
               path="/login"
               render={(routeProps) => (
                 <Login {...routeProps} />
+              )}
+            />
+            <Route
+              exact
+              path="/create-tournament"
+              render={(routeProps) => (
+                <CreateTournament {...routeProps} />
               )}
             />
             <Route
