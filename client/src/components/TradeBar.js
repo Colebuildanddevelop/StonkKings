@@ -62,10 +62,6 @@ class TradeBar extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  createdTrade: state.trade
-});
-
 export default connect(
   null,
   { createTrade, getTradesByEntryId }

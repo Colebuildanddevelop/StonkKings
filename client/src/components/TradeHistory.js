@@ -13,12 +13,6 @@ import { Typography } from "@material-ui/core";
 
 class TradeHistory extends React.Component {
 
-  componentDidMount() {
-    if (!this.props.currentEntry.message) {
-      this.props.getTradesByEntryId(this.props.currentEntry._id)
-    }
-  }
-
   formatDate = (date) => {
     let hours = date.getHours();
     let minutes = date.getMinutes();

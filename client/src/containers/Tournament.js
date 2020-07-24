@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getEntryByUsernameAndTournamentName } from "../redux/actions/entry.actions";
+import { getTradesByEntryId } from "../redux/actions/trade.actions";
 import { getPriceData } from "../helpers/fetchPriceData";
+
 // COMPONENTS
 import SearchBar from "../components/SearchBar";
 import Chart from "../components/Chart";
@@ -82,8 +84,9 @@ class Tournament extends React.Component {
       });
   }
 
-  handleGetCurrentEntry = () => {
-    this.props.getEntryByUsernameAndTournamentName(localStorage.userId, this.props.match.params.id);
+  handleGetCurrentEntry = async () => {
+    await this.props.getEntryByUsernameAndTournamentName(localStorage.userId, this.props.match.params.id);
+    await this.props.getTradesByEntryId(this.props.currentEntry._id)
   }
 
   setPrice = (price) => {
@@ -157,6 +160,6 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getEntryByUsernameAndTournamentName }
+  { getEntryByUsernameAndTournamentName, getTradesByEntryId }
 )(Tournament);
   

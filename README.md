@@ -302,6 +302,10 @@ STYLING IDEAS
   - buttons with icons
 
 
-HANDLING SUCCESS AND ERRORS 
+HANDLING SUCCESS AND ERRORS
 
   - create a component that transitions an alert at an absolute positions at the top of the screen 
+
+MISC
+
+  - right now when we reflect dom changes we dispatch a whole action rather than initally setting component state then updating that state which would be more optimal  

@@ -12,10 +12,6 @@ import Paper from '@material-ui/core/Paper';
 
 class MyPositions extends React.Component {
 
-  componentDidMount() {
-    this.props.getTradesByEntryId(this.props.currentEntry._id)
-  }
-
   consolidatePositionsArr = () => {
     const allTickers = this.props.tradeData.tradesByEntry.map(t => t.stockTicker);
     const uniqueTickers = allTickers.filter((val, index, self) => self.indexOf(val) === index);
@@ -68,10 +64,8 @@ class MyPositions extends React.Component {
 
 const mapStateToProps = state => ({
   tradeData: state.trade,
-  
 });
 
 export default connect(
-  mapStateToProps,
-  { getTradesByEntryId }
+  mapStateToProps
 )(MyPositions);

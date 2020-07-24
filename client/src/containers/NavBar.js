@@ -59,7 +59,7 @@ class NavBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser,
+  currentUser: state.auth.currentUser
 })
 
 export default connect(
