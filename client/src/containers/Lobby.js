@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { getTournaments } from "../redux/actions/tournament.actions";
 import { createEntry } from "../redux/actions/entry.actions";
+import { loginWithToken } from "../redux/actions/auth.actions";
 import Countdown from "../components/Countdown";
 import { Link } from "react-router-dom";
 // MATERIAL UI 
@@ -28,6 +29,12 @@ class Lobby extends React.Component {
 
   componentDidMount() {
     this.props.getTournaments()
+  }
+
+  handleEnter = async (tournamentId) => {
+    await this.props.createEntry(tournamentId, localStorage.token)
+    await this.props.getTournaments()
+    await this.props.loginWithToken(localStorage.token)
   }
 
   render() {
@@ -71,7 +78,7 @@ class Lobby extends React.Component {
                       <Button
                         variant="contained" 
                         color="secondary" 
-                        onClick={() => this.props.createEntry(tournament.id, localStorage.token)}
+                        onClick={() => this.handleEnter(tournament.id)}
                       >
                         Enter
                       </Button>
@@ -94,5 +101,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getTournaments, createEntry }
+  { getTournaments, createEntry, loginWithToken }
 )(withStyles(useStyles)(Lobby))

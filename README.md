@@ -294,5 +294,14 @@ SHOW POSITIONS AND TRADE HISTORY
       - either set state after action... dont you in redux?
       - 
 
+
+CREATING TOURNAMENTS
+  - 
+
 STYLING IDEAS
   - buttons with icons
+
+
+HANDLING SUCCESS AND ERRORS 
+
+  - create a component that transitions an alert at an absolute positions at the top of the screen 

@@ -25,6 +25,7 @@ const useStyles = (theme) => ({
 
 class NavBar extends React.Component {
   render() {
+    console.log("rendering nav")
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -58,7 +59,7 @@ class NavBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser
+  currentUser: state.auth.currentUser,
 })
 
 export default connect(
