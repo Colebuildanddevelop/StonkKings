@@ -245,18 +245,16 @@ TODO agane
     - display errors !!!!!!!!! 
     - increment tournament total prize on entry!!!!!!
 
-
   BUY & SELL
 
-    - TODO major
-      - verify malicious req
-      - cant trade unless tournament has started
-      - handle selling and buying in the backend x 
-      - handle selling and buying in the frontend 
-        - display tournament balance, update in dom positions and balance every trade that is created  
-        - handle latest price x
-          - poll fetch the latest quote and push to data ? 
-      - handle getting all current postitions
+    - verify malicious req
+    - cant trade unless tournament has started
+    - handle selling and buying in the backend x 
+    - handle selling and buying in the frontend 
+      - display tournament balance, update in dom positions and balance every trade that is created  
+      - handle latest price x
+        - poll fetch the latest quote and push to data ? 
+    - handle getting all current postitions
 
     - BUY
       - user must have enough tournament balance to buy

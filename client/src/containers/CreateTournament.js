@@ -1,5 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
+// MATERIAL UI
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import Typography from "@material-ui/core/Typography";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -37,9 +45,88 @@ const useStyles = (theme) => ({
   },
 });
 
+const DateAndTimeSelectors = (props) => {
+
+  return (
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <KeyboardDatePicker
+        margin="normal"
+        id="date-picker-dialog"
+        label={props.dateLabel}
+        format="MM/dd/yyyy"
+        value={props.dateValue}
+        onChange={(value) => props.handleChangeTime(value, `selectedDateFor${props.name}`)}
+        KeyboardButtonProps={{
+          'aria-label': 'change date',
+        }}
+      />
+      <KeyboardTimePicker
+        margin="normal"
+        id="time-picker"
+        label={props.timeLabel}
+        value={props.timeValue}
+        onChange={(value) => props.handleChangeTime(value, `selectedTimeFor${props.name}`)}
+        KeyboardButtonProps={{
+          'aria-label': 'change time',
+        }}
+      />
+    </MuiPickersUtilsProvider>
+  );
+}
+
 class CreateTournament extends React.Component {
 
+  state = {
+    tournamentName: "",
+    entryLimit: 20,
+    entryFee: 100,
+    selectedDateForStart: new Date(),
+    selectedTimeForStart: new Date(),
+    selectedDateForEnd: new Date(),
+    selectedTimeForEnd: new Date() 
+  }
+  
+  handleChangeTime = (value, name) => {
+    this.setState({
+      [name]: value 
+    })
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  formatTime = (dateSelected, timeSelected) => {
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    return new Date(`${monthNames[dateSelected.getMonth()]} ${dateSelected.getDate()}, ${dateSelected.getFullYear()} ${timeSelected.getHours()}:${timeSelected.getMinutes()}:${timeSelected.getSeconds()}`).toString();
+  }
+
+  createTournamentFetch = (e) => {
+    e.preventDefault()
+    console.log(this.formatTime(this.state.selectedDateForStart, this.state.selectedTimeForStart))
+    fetch("http://localhost:3000/api/tournaments", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        "x-access-token": localStorage.token
+      },
+      body: JSON.stringify({
+        name: this.state.tournamentName,
+        entryFee: this.state.entryFee,
+        entryLimit: this.state.entryLimit,
+        startTime: this.formatTime(this.state.selectedDateForStart, this.state.selectedTimeForStart),
+        endTime: this.formatTime(this.state.selectedDateForEnd, this.state.selectedTimeForEnd)
+      })
+    })
+    .then(res => res.json())
+    .then(console.log)
+    .catch(console.log)
+  }
+
   render() {
+    console.log(this.state)
     const { classes } = this.props;
     return (
       <Container component="main" maxWidth="xs">
@@ -53,6 +140,8 @@ class CreateTournament extends React.Component {
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
+              value={this.state.name}
+              onChange={this.handleChange}
               variant="outlined"
               margin="normal"
               required
@@ -63,27 +152,44 @@ class CreateTournament extends React.Component {
               autoFocus
             />
             <TextField
+              value={this.state.entryLimit}      
+              onChange={this.handleChange}        
               variant="outlined"
               type="number"
               margin="normal"
-              defaultValue="20"
               required
-              
-              name=""
+              name="entryLimit"
               label="Max Players"
               id=""
             />
             <InputLabel htmlFor="outlined-adornment-amount">Entry Fee</InputLabel>
             <OutlinedInput
+              value={this.state.entryFee}      
+              onChange={this.handleChange}        
               type="number"
-              margin="normal"
-              defaultValue="20"
               required
               startAdornment={<InputAdornment position="start">$</InputAdornment>}
-              name=""
+              name="entryFee"
               id="outlined-adornment-amount"
             />
+            <DateAndTimeSelectors 
+              name={"Start"}   
+              dateLabel={"Choose start date"}
+              timeLabel={"Choose start time"}
+              dateValue={this.state.selectedDateForStart}
+              timeValue={this.state.selectedTimeForStart}
+              handleChangeTime={this.handleChangeTime}
+            />
+            <DateAndTimeSelectors 
+              name={"End"}   
+              dateLabel={"Choose end date"}
+              timeLabel={"Choose end time"}
+              dateValue={this.state.selectedDateForEnd}
+              timeValue={this.state.selectedTimeForEnd}
+              handleChangeTime={this.handleChangeTime}
+            />
             <Button
+              onClick={this.createTournamentFetch}
               type="submit"
               fullWidth
               variant="contained"
@@ -100,3 +206,5 @@ class CreateTournament extends React.Component {
 }
 
 export default withStyles(useStyles, {withTheme: true})(CreateTournament);
+
+
