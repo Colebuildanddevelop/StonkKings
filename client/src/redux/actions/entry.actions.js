@@ -94,3 +94,31 @@ export const createEntry = (tournamentId, token) => {
     .catch(err => dispatch(createEntryFailure(err)));
   };
 };
+
+export const FETCH_ENTRIES_BY_TOURNAMENT_ID_BEGIN = "FETCH_ENTRIES_BY_TOURNAMENT_ID_BEGIN";
+export const FETCH_ENTRIES_BY_TOURNAMENT_ID_SUCCESS = "FETCH_ENTRIES_BY_TOURNAMENT_ID_SUCCESS";
+export const FETCH_ENTRIES_BY_TOURNAMENT_ID_FAILURE = "FETCH_ENTRIES_BY_TOURNAMENT_ID_FAILURE";
+
+const fetchEntriesByTournamentIdBegin = () => ({
+  type: FETCH_ENTRIES_BY_TOURNAMENT_ID_BEGIN 
+});
+
+const fetchEntriesByTournamentIdSuccess = entriesArr => ({
+  type: FETCH_ENTRIES_BY_TOURNAMENT_ID_SUCCESS,
+  payload: { entriesArr }
+});
+
+const fetchEntriesByTournamentIdFailure = error => ({
+  type: FETCH_ENTRIES_BY_TOURNAMENT_ID_FAILURE,
+  payload: { error }
+});
+
+export const getEntriesByTournamentId = (tournamentId) => dispatch => {
+  dispatch(fetchEntriesByTournamentIdBegin())
+  return fetch(`http://localhost:3000/api/entries/tournament/${tournamentId}`)
+    .then(res => res.json())
+    .then(entriesArr => {
+      dispatch(fetchEntriesByTournamentIdSuccess(entriesArr))
+    })
+    .catch(error => dispatch(fetchEntriesByTournamentIdFailure(error)));
+};

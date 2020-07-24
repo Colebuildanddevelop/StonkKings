@@ -146,7 +146,7 @@ class Tournament extends React.Component {
         ) : null}
         {this.state.currentView === "allEntrants" ? (
           <div>
-            <AllEntrants />
+            <AllEntrants tournamentId={this.props.match.params.id} />
           </div>
         ) : null}
       </div>

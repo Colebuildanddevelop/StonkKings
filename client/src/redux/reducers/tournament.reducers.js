@@ -1,13 +1,16 @@
 import { 
   FETCH_TOURNAMENTS_BEGIN,
   FETCH_TOURNAMENTS_SUCCESS,
-  FETCH_TOURNAMENTS_FAILURE,
+  FETCH_TOURNAMENTS_FAILURE
 } from "../actions/tournament.actions";
 
 const initialState = {
   tournamentsArr: [],
-  loading: false,
-  error: null
+  loadingTournaments: false,
+  tournamentsError: null,
+  tournamentById: {},
+  loadingTournamentById: false,
+  tournamentByIdError: null,
 }
 
 const tournamentReducer = (state=initialState, action) => {
@@ -15,21 +18,21 @@ const tournamentReducer = (state=initialState, action) => {
     case FETCH_TOURNAMENTS_BEGIN: 
       return {
         ...state,
-        loading: true,
-        error: null
+        loadingTournaments: true,
+        tournamentsError: null
       };
     case FETCH_TOURNAMENTS_SUCCESS:
       return {
         ...state,
-        loading: false,
+        loadingTournaments: false,
         tournamentsArr: action.payload.tournamentsArr
       }
     case FETCH_TOURNAMENTS_FAILURE:
-        return {
-          ...state,
-          loading: false,
-          error: action.payload.error
-        }
+      return {
+        ...state,
+        loadingTournaments: false,
+        tournamentsError: action.payload.error
+      }
     default:
       return state;
   }  

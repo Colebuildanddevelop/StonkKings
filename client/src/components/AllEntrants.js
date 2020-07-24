@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getTradesByEntryId } from "../redux/actions/trade.actions";
+import { getEntriesByTournamentId } from "../redux/actions/entry.actions";
 // MATERIAL UI  
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -15,38 +15,32 @@ class AllEntrants extends React.Component {
 
   componentDidMount() {
     // get entrants by tournament
+    this.props.getEntriesByTournamentId(`${this.props.tournamentId}`)
   }
 
   render() {
-    console.log(this.props)
+    console.log(this.props.entrants)
     return (
       <TableContainer component={Paper} >
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Stock Name</TableCell>
-              <TableCell>Time Traded</TableCell>
-              <TableCell>Buy Or Sell</TableCell>
-              <TableCell># of Shares</TableCell>
-              <TableCell>Price</TableCell>
+              <TableCell>Username</TableCell>
+              <TableCell>Tournament Balance</TableCell>
+              <TableCell># of Trades</TableCell>
             </TableRow>
           </TableHead>
-          {this.props.trades ? (
-            <TableBody>
-              {this.props.trades.map((position, idx) => {
-                const formattedDate = this.formatDate(new Date(position.time)) 
-                return (
-                  <TableRow key={idx}>
-                    <TableCell>{position.stockTicker}</TableCell>
-                    <TableCell>{formattedDate}</TableCell>
-                    <TableCell>{position.buyOrSell}</TableCell>
-                    <TableCell>{position.amountOfShares}</TableCell>
-                    <TableCell>{position.price}</TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          ) : null}
+          <TableBody>
+            {this.props.entrants.map((entry, idx) => {
+              return (
+                <TableRow key={idx}>
+                  <TableCell>{entry.user.username}</TableCell>
+                  <TableCell>{entry.tournamentBalance.toFixed(2)}</TableCell>
+                  <TableCell>{entry.trades.length}</TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
         </Table>
       </TableContainer>    
     )
@@ -54,11 +48,10 @@ class AllEntrants extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  trades: state.trade.tradesByEntry,
-  currentEntry: state.entry.currentEntry
+  entrants: state.entry.tournamentEntries
 });
 
 export default connect(
   mapStateToProps,
-  { getTradesByEntryId }
+  { getEntriesByTournamentId }
 )(AllEntrants);

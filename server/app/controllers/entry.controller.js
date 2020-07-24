@@ -17,7 +17,6 @@ const EntryController = {
   showByTournamentId: async (req, res) => {
     const found = await EntryModel.find({ tournament: req.params.tournamentId })
       .populate({ path: 'user', select: 'username -_id' })
-      .populate("tournament");
     res.send(found);
   },
   showByUsernameAndTournamentName: async (req, res) => {
