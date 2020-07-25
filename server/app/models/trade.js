@@ -13,5 +13,4 @@ const TradeSchema = new Schema({
   amountOfShares: Number 
 });
 
-
 module.exports = mongoose.model("Trade", TradeSchema);

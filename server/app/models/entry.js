@@ -18,16 +18,17 @@ const EntrySchema = new Schema({
 });
 
 EntrySchema.methods.getPositions = async function() {
-  let allPositions = [];
-  await mongoose.model('Trade').find({entry: this._id}, (err, trades) => {
-    const allTickers = trades.map(t => t.stockTicker);
-    const uniqueTickers = allTickers.filter((val, index, self) => self.indexOf(val) === index);
-    const totalPositions = uniqueTickers.map(ticker => {
+  let allPositions = null;
+  await mongoose.model('Trade').find({entry: this._id}, async (err, trades) => {
+    if (err) {console.log("err",err)}
+    const allTickers = await trades.map(t => t.stockTicker);
+    const uniqueTickers = await allTickers.filter((val, index, self) => self.indexOf(val) === index);
+    allPositions = await uniqueTickers.map(ticker => {
       const position = {
         ticker: ticker,
         netShares: 0
       }
-      trades.forEach(trade => {
+      trades.forEach(async trade => {
         if (trade.stockTicker === ticker) {
           if (trade.buyOrSell === "buy") {
             position.netShares = position.netShares + trade.amountOfShares
@@ -38,8 +39,8 @@ EntrySchema.methods.getPositions = async function() {
       });
       return position;
     });
-    allPositions = totalPositions
   })
+  console.log(allPositions)
   return allPositions;
 }
 

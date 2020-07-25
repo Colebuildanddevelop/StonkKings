@@ -27,8 +27,13 @@ const tradeRestrictions = (req, res, next) => {
       } else {
         // if sell, then user must have enough shares of the stock to sell
         const positions = await entry.getPositions();
+        if (positions === null) {
+          res.status(400).send({ message: "no positions were found try again" })
+          return;
+        }
+        // console.log(positions)
         let eligibleToSell = true;
-        positions.forEach(position => {
+        await positions.forEach(position => {
           if (position.ticker === req.body.stockTicker) {
             if (position.netShares < req.body.amountOfShares) {
               eligibleToSell = false;
