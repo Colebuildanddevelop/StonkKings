@@ -25,7 +25,6 @@ const useStyles = (theme) => ({
 
 class NavBar extends React.Component {
   render() {
-    console.log("rendering nav")
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -43,7 +42,7 @@ class NavBar extends React.Component {
             <Typography component={Link} to={"/"} variant="h6" color="inherit" style={{flexGrow: 1}} className={classes.title}>
               Leaderboard        
             </Typography>
-            {this.props.currentUser ? 
+            {this.props.currentUser && !this.props.currentUser.message ? 
             (
               <Typography component={Link} to={"/"} variant="h6" color="inherit" className={classes.title}>
                 Stonk Credits: {this.props.currentUser.accountBalance}

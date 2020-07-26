@@ -11,7 +11,7 @@ import {
 } from "../actions/entry.actions";
 
 const initialState = {
-  createdEntry: {},
+  createdEntry: null,
   currentEntry: null,
   tournamentEntries: [],
   loadingCurrentEntry: false,

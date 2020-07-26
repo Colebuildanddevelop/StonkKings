@@ -17,8 +17,7 @@ const verifyPermissionToEnter = (req, res, next) => {
       Entry.find({ user: user.id })
         .exec((err, entries) => {
           if (err) {
-            res.status(500).send({ message: err });
-            return;
+            next(err);
           }
           const hasEntered = entries.some(entry => (req.body.tournamentId === entry.tournament.toString()))
           if (hasEntered) {
@@ -29,6 +28,7 @@ const verifyPermissionToEnter = (req, res, next) => {
             .exec((err, tournament) => {
               if (err) {
                 res.status(500).send({message: err});
+                return;
               }
               if (!tournament) {
                 res.status(400).send({ message: "Tournament was not found!" });

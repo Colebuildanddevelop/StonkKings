@@ -91,7 +91,10 @@ export const createEntry = (tournamentId, token) => {
       dispatch(createEntrySuccess(entryInfo))
       return entryInfo;
     })
-    .catch(err => dispatch(createEntryFailure(err)));
+    .catch(err => {
+      console.log(err.body)
+      dispatch(createEntryFailure(err))
+    });
   };
 };
 

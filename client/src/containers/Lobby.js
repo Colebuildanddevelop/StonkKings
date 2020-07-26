@@ -28,7 +28,7 @@ const useStyles = () => ({
 class Lobby extends React.Component {
 
   componentDidMount() {
-    this.props.getTournaments()
+    this.props.getTournaments();
   }
 
   handleEnter = async (tournamentId) => {

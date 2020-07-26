@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-
 // actions
 import { loginWithToken } from "./redux/actions/auth.actions";
-
+// components 
+import AlertDisplay from "./components/AlertDisplay";
 // containers 
 import Lobby from "./containers/Lobby";
 import Login from "./containers/Login";
@@ -13,11 +13,11 @@ import NavBar from "./containers/NavBar";
 import CreateTournament from "./containers/CreateTournament";
 
 
+
 class App extends React.Component {
 
   componentDidMount() {
     if (localStorage.token) {
-      console.log("getting user")
       this.props.loginWithToken(localStorage.token)
     }
   }
@@ -27,6 +27,7 @@ class App extends React.Component {
       <div className="App">
         <BrowserRouter>
           <NavBar />
+          <AlertDisplay />
           <Switch>
             <Route
               exact
@@ -64,7 +65,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser
+  currentUser: state.auth.currentUser,
 });
 
 export default connect(

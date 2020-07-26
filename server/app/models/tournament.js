@@ -15,7 +15,7 @@ const TournamentSchema = new Schema({
   entryLimit: Number,
   startTime: Date,
   endTime: Date,
-  Winners: [{
+  winners: [{
     type: Schema.Types.ObjectId,
     ref: "User"
   }] 
