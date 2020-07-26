@@ -42,6 +42,7 @@ class Tournament extends React.Component {
   }
 
   getPriceData = (searchString) => {
+    console.log("fetching")
     fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${searchString}&outputsize=compact&apikey=3VP9375JIOYD1569`)
       .then(res => res.json())
       .then(data => {
@@ -96,7 +97,9 @@ class Tournament extends React.Component {
   }
 
   handleSearchSubmit = (searchString) => {
-    this.getPriceData(searchString);
+    if (searchString !== undefined) {
+      this.getPriceData(searchString);
+    }
   }
   
   changeView = (view) => {
