@@ -17,6 +17,7 @@ import TradeHistory from "../components/TradeHistory";
 class Tournament extends React.Component {
 
   state = {
+    modalOpen: false,
     error: null,
     stockData: [{
       id: "IBM",
@@ -84,7 +85,7 @@ class Tournament extends React.Component {
           });
       });
   }
-
+  
   handleGetCurrentEntry = async () => {
     await this.props.getEntryByUsernameAndTournamentName(localStorage.userId, this.props.match.params.id);
     await this.props.getTradesByEntryId(this.props.currentEntry._id)
@@ -126,6 +127,7 @@ class Tournament extends React.Component {
               <div>
                 <TradeBar 
                   getCurrentEntry={this.handleGetCurrentEntry}
+                  currentEntry={this.props.currentEntry}
                   currentPrice={this.state.currentPrice}
                   stockTicker={this.state.stockInfo.symbol}
                   entryId={this.props.currentEntry._id || null} 

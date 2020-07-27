@@ -1,4 +1,5 @@
 import React from "react";
+import CreateTournamentModal from '../components/CreateTournamentModal';
 // MATERIAL UI
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
@@ -18,6 +19,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
+
 
 const useStyles = (theme) => ({
   paper: {
@@ -71,6 +73,7 @@ const DateAndTimeSelectors = (props) => {
 class CreateTournament extends React.Component {
 
   state = {
+    modalOpen: false,
     tournamentName: "",
     entryLimit: 20,
     entryFee: 100,
@@ -79,17 +82,23 @@ class CreateTournament extends React.Component {
     selectedDateForEnd: new Date(),
     selectedTimeForEnd: new Date() 
   }
+
+  handleModal = () => {
+    this.setState({
+      modalOpen: !this.state.modalOpen
+    });
+  }
   
   handleChangeTime = (value, name) => {
     this.setState({
       [name]: value 
-    })
+    });
   }
 
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
-    })
+    });
   }
 
   formatTime = (dateSelected, timeSelected) => {
@@ -97,9 +106,7 @@ class CreateTournament extends React.Component {
     return new Date(`${monthNames[dateSelected.getMonth()]} ${dateSelected.getDate()}, ${dateSelected.getFullYear()} ${timeSelected.getHours()}:${timeSelected.getMinutes()}:${timeSelected.getSeconds()}`).toString();
   }
 
-  createTournamentFetch = (e) => {
-    e.preventDefault()
-    console.log(this.formatTime(this.state.selectedDateForStart, this.state.selectedTimeForStart))
+  createTournamentFetch = () => {
     fetch("http://localhost:3000/api/tournaments", {
       method: "POST",
       headers: {
@@ -183,8 +190,7 @@ class CreateTournament extends React.Component {
               handleChangeTime={this.handleChangeTime}
             />
             <Button
-              onClick={this.createTournamentFetch}
-              type="submit"
+              onClick={this.handleModal}
               fullWidth
               variant="contained"
               color="primary"
@@ -194,12 +200,21 @@ class CreateTournament extends React.Component {
             </Button>
           </form>
         </div>
+        {/** I can pass props better than this but... */}
+        <CreateTournamentModal
+          open={this.state.modalOpen}
+          handleModal={this.handleModal}
+          createTournament={this.createTournamentFetch}
+          tournamentName={this.state.tournamentName}
+          entryLimit={this.state.entryLimit}
+          entryFee={this.state.entryFee}
+          startTime={this.formatTime(this.state.selectedDateForStart, this.state.selectedTimeForStart)}
+          endTime={this.formatTime(this.state.selectedDateForEnd, this.state.selectedTimeForEnd)}
+        />
       </Container>
     )
   }
 }
-
-
 
 export default withStyles(useStyles, {withTheme: true})(CreateTournament);
 

@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
+import TradeModal from "../components/TradeModal";
 import { connect } from "react-redux";
 import { createTrade, getTradesByEntryId } from "../redux/actions/trade.actions";
 // MATERIAL UI
@@ -15,13 +16,15 @@ const useStyles = () => ({
   sellButton: {
     backgroundColor: "red",
     color: "white"
-  }
+  },
+  buyOrSell: "buy"
 });
 
 class TradeBar extends React.Component {
 
   state = {
-    shareAmountField: 0
+    shareAmountField: 0,
+    openModal: false
   }
   
   handleShareField = (e) => {
@@ -29,13 +32,21 @@ class TradeBar extends React.Component {
       [e.target.name]: e.target.value
     });
   }
+
+  handleModal = (e) => {
+    this.setState({
+      openModal: !this.state.openModal,
+      buyOrSell: e.currentTarget.name
+    });
+  }
   
   handleTrade = async (e) => {
+    console.log(e.currentTarget.name)
     await this.props.createTrade({
       entryId: this.props.entryId,
       stockTicker: this.props.stockTicker,
       time: new Date(),
-      buyOrSell: e.currentTarget.name,
+      buyOrSell: this.state.buyOrSell,
       price: this.props.currentPrice,
       amountOfShares: parseInt(this.state.shareAmountField)
     }, localStorage.token)
@@ -47,8 +58,8 @@ class TradeBar extends React.Component {
     const { classes } = this.props
     return (
       <div>
-        <Button onClick={this.handleTrade} name="buy" className={classes.buyButton}>BUY</Button>
-        <Button onClick={this.handleTrade} name="sell" className={classes.sellButton}>SELL</Button>
+        <Button onClick={this.handleModal} name="buy" className={classes.buyButton}>BUY</Button>
+        <Button onClick={this.handleModal} name="sell" className={classes.sellButton}>SELL</Button>
         <TextField 
           onChange={this.handleShareField} 
           value={this.state.shareAmount} 
@@ -56,6 +67,16 @@ class TradeBar extends React.Component {
           type="number" 
           id="standard-basic" 
           label="Amount of shares"
+        />
+        <TradeModal
+          handleTrade={this.handleTrade}
+          handleModal={this.handleModal}
+          price={this.props.currentPrice}
+          stockTicker={this.props.stockTicker}
+          amountOfShares={parseInt(this.state.shareAmountField)}
+          buyOrSell={this.state.buyOrSell}
+          open={this.state.openModal}
+          currentEntry={this.props.currentEntry}
         />
       </div>
     )
