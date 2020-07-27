@@ -14,6 +14,9 @@ import TournamentBar from "../components/TournamentBar";
 import AllEntrants from "../components/AllEntrants";
 import TradeHistory from "../components/TradeHistory";
 
+// MATERIAL UI
+import Button from '@material-ui/core/Button';
+
 class Tournament extends React.Component {
 
   state = {
@@ -27,24 +30,26 @@ class Tournament extends React.Component {
       }]
     }],
     stockInfo: {
-      symbol: "IBM",
-      
+      symbol: "IBM"
     },
-    timeInterval: "Daily",
+    currentSearch: "IBM",
+    timeFunction: "TIME_SERIES_DAILY",
+    intradayInterval: "1min",
     currentPrice: "loading",
     currentView: "buy/sell"
   }
 
   componentDidMount() {
-    this.getPriceData("IBM");
+    this.getPriceData("IBM", "TIME_SERIES_DAILY");
     if (localStorage.userId) {
       this.handleGetCurrentEntry();
     }
   }
 
-  getPriceData = (searchString) => {
-    console.log("fetching")
-    fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${searchString}&outputsize=compact&apikey=3VP9375JIOYD1569`)
+  getPriceData = (searchString, timeFunction="IBM", intradayInterval="") => {
+    const queryString = this.formatPriceQuery(searchString, timeFunction, intradayInterval)
+    console.log(queryString)
+    fetch(queryString)
       .then(res => res.json())
       .then(data => {
         if (data["Error Message"]) {
@@ -53,7 +58,8 @@ class Tournament extends React.Component {
           })
           return;
         }
-        const timeSeriesHash = data[`Time Series (${this.state.timeInterval})`];
+        const dataKeys = Object.keys(data)
+        const timeSeriesHash = data[dataKeys[1]] 
         console.log(data)
         const formattedData = Object.keys(timeSeriesHash).map(key => {
           return {
@@ -99,7 +105,27 @@ class Tournament extends React.Component {
 
   handleSearchSubmit = (searchString) => {
     if (searchString !== undefined) {
-      this.getPriceData(searchString);
+      this.setState({
+        currentSearch: searchString
+      })
+      this.getPriceData(searchString, this.state.timeFunction);
+    }
+  }
+
+  handleChangeTimeFunction = (timeFunction, intradayInterval="") => {
+    console.log(intradayInterval)
+    this.setState({
+      timeFunction: timeFunction,
+      intradayInterval: intradayInterval
+    }, this.getPriceData(this.state.currentSearch, timeFunction, intradayInterval));
+  }
+
+  formatPriceQuery = (searchString, timeFunction, intradayInterval="") => {
+    console.log(intradayInterval)
+    if (timeFunction !== "TIME_SERIES_INTRADAY") {
+      return `https://www.alphavantage.co/query?function=${timeFunction}&symbol=${searchString}&outputsize=compact&apikey=3VP9375JIOYD1569`
+    } else {
+      return `https://www.alphavantage.co/query?function=${timeFunction}&symbol=${searchString}&interval=${intradayInterval}&apikey=3VP9375JIOYD1569`
     }
   }
   
@@ -119,6 +145,21 @@ class Tournament extends React.Component {
               handleSearchSubmit={this.handleSearchSubmit} 
               error={this.state.error} 
             />
+            <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_MONTHLY")}>
+              Monthly 
+            </Button>
+            <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_WEEKLY")}>
+              Weekly
+            </Button>
+            <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_DAILY")}>
+              Daily
+            </Button>
+            <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_INTRADAY", "60min")}>
+              Hourly
+            </Button>
+            <Button>
+              15 min
+            </Button>
             <Chart
               stockInfo={this.state.stockInfo}
               data={this.state.stockData}
