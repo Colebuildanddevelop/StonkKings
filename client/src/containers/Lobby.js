@@ -85,29 +85,23 @@ class Lobby extends React.Component {
                 <TableCell align="right">Total Prize</TableCell>
                 <TableCell align="right">Start</TableCell>
                 <TableCell align="right">End</TableCell>
-                <TableCell align="right"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {this.props.tournamentsArr.map((tournament) => {
                 return (
-                  <TableRow className={classes.row} key={tournament.id} >
-                    <TableCell scope="row" component={Link} to={`/tournament/${tournament.id}`} >
+                  <TableRow onClick={() => this.handleClickTournamentRow(tournament)} className={classes.row} key={tournament.id} >
+                    <TableCell scope="row">
                       {tournament.name}
                     </TableCell>
                     <TableCell align="right">{tournament.entryFee}</TableCell>
                     <TableCell align="right">{tournament.entries.length + " / " + tournament.entryLimit}</TableCell>
                     <TableCell align="right">{tournament.entryFee * tournament.entries.length}</TableCell>
-                    <Countdown countDownEnd={new Date(tournament.startTime).getTime()} overMsg={"Started!"}/>
-                    <Countdown countDownEnd={new Date(tournament.endTime).getTime()} overMsg={"Ended!"} />
                     <TableCell align="right">
-                      <Button
-                        variant="contained" 
-                        color="secondary" 
-                        onClick={() => this.handleClickTournamentRow(tournament)}
-                      >
-                        Enter
-                      </Button>
+                      <Countdown countDownEnd={new Date(tournament.startTime).getTime()} overMsg={"Started!"}/>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Countdown countDownEnd={new Date(tournament.endTime).getTime()} overMsg={"Ended!"} />
                     </TableCell>
                   </TableRow>
                 )
@@ -119,6 +113,8 @@ class Lobby extends React.Component {
           handleModal={this.handleModal}
           open={this.state.modalOpen}
           tournamentInfo={this.state.tournamentClickedInfo}
+          handleEnter={this.handleEnter}
+          currentUser={this.props.currentUser}
         />
       </div>
     );
@@ -127,7 +123,8 @@ class Lobby extends React.Component {
 
 const mapStateToProps = state => ({
   tournamentsArr: state.tournament.tournamentsArr,
-  entryData: state.entry
+  entryData: state.entry,
+  currentUser: state.auth.currentUser
 });
 
 export default connect(

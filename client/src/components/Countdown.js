@@ -43,7 +43,7 @@ class Countdown extends React.Component {
 
   render() {
     return (
-      <TableCell align="right">{this.state.countdown}</TableCell>
+      this.state.countdown
     )
   }
 }

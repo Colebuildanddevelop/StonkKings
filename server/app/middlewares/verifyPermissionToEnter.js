@@ -50,6 +50,7 @@ const verifyPermissionToEnter = (req, res, next) => {
               const priorBalance = user.accountBalance;
               user.accountBalance = priorBalance - tournament.entryFee;
               req.tournament = tournament;
+              req.user = user;
               user.save() 
               next();
             });

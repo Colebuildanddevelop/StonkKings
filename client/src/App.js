@@ -27,7 +27,6 @@ class App extends React.Component {
       <div className="App">
         <BrowserRouter>
           <NavBar />
-          <AlertDisplay />
           <Switch>
             <Route
               exact
