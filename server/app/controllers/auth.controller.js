@@ -22,6 +22,7 @@ exports.signup = (req, res) => {
 
     res.status(200).send({
       id: user._id,
+      avatar: user.avatar,
       username: user.username,
       accountBalance: user.accountBalance,
       friends: user.friends,
@@ -64,6 +65,7 @@ exports.signin = (req, res) => {
 
       res.status(200).send({
         id: user._id,
+        avatar: user.avatar,
         username: user.username,
         accountBalance: user.accountBalance,
         friends: user.friends,
@@ -84,6 +86,7 @@ exports.getUserWithToken = async (req, res) => {
 
   res.status(200).send({
     id: user._id,
+    avatar: user.avatar,
     username: user.username,
     accountBalance: user.accountBalance,
     friends: user.friends,

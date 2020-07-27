@@ -11,8 +11,18 @@ import Login from "./containers/Login";
 import Tournament from "./containers/Tournament";
 import NavBar from "./containers/NavBar";
 import CreateTournament from "./containers/CreateTournament";
+// MATERIAL UI 
+import { withStyles } from '@material-ui/core/styles';
 
-
+const useStyles = (theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  app: {
+    backgroundColor: theme.palette.primary.light,
+    height: '100vh'
+  }
+});
 
 class App extends React.Component {
 
@@ -23,8 +33,9 @@ class App extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div className="App">
+      <div className={classes.app}>
         <BrowserRouter>
           <NavBar />
           <Switch>
@@ -70,4 +81,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { loginWithToken }
-)(App);
+)(withStyles(useStyles, {withTheme: true})(App));

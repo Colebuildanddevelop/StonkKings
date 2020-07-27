@@ -117,7 +117,7 @@ const TournamentModal = (props) => {
             <AlertDisplay />
           </Dialog>
         </div>
-      ) : null};
+      ) : null}
     </div>
   );
 }
