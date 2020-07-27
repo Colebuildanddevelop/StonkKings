@@ -91,8 +91,6 @@ const useStyles = theme => ({
 const SearchBar = (props) => {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
-  const [currentSelected, setCurrentSelected] = React.useState({});
-  const [search, setSearch] = React.useState("")
   const loading = open && options.length === 0;
 
   React.useEffect(() => {
@@ -109,7 +107,6 @@ const SearchBar = (props) => {
         setOptions(results.bestMatches || []);
         console.log(options)
       })
-    setSearch(e.currentTarget.value)
     console.log(e.currentTarget.value)
   }
 

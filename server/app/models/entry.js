@@ -20,7 +20,10 @@ const EntrySchema = new Schema({
 EntrySchema.methods.getPositions = async function() {
   let allPositions = null;
   await mongoose.model('Trade').find({entry: this._id}, async (err, trades) => {
-    if (err) {console.log("err",err)}
+    if (err) {
+      console.log("err",err)
+      return;
+    }
     const allTickers = await trades.map(t => t.stockTicker);
     const uniqueTickers = await allTickers.filter((val, index, self) => self.indexOf(val) === index);
     allPositions = await uniqueTickers.map(ticker => {

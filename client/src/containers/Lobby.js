@@ -5,6 +5,7 @@ import { createEntry } from "../redux/actions/entry.actions";
 import { loginWithToken } from "../redux/actions/auth.actions";
 import Countdown from "../components/Countdown";
 import { Link } from "react-router-dom";
+import TournamentModal from "../components/TournamentModal";
 // MATERIAL UI 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
@@ -26,9 +27,20 @@ const useStyles = () => ({
 });
 
 class Lobby extends React.Component {
+  
+  state = {
+    modalOpen: false,
+    tournamentClickedInfo: {}
+  }
 
   componentDidMount() {
     this.props.getTournaments();
+    console.log("mount")
+    
+  }
+
+  componentWillUpdate() {
+  
   }
 
   handleEnter = async (tournamentId) => {
@@ -37,8 +49,22 @@ class Lobby extends React.Component {
     await this.props.loginWithToken(localStorage.token)
   }
 
+  handleClickTournamentRow = (tournamentInfo) => {
+    this.setState({
+      tournamentClickedInfo: tournamentInfo,
+      modalOpen: true
+    })
+  }
+
+  handleModal = () => {
+    this.setState({
+      modalOpen: !this.state.modalOpen
+    })
+  }
+
   render() {
     const { classes } = this.props;
+    console.log(this.state)
     return (
       <div>
         <Button 
@@ -65,7 +91,7 @@ class Lobby extends React.Component {
             <TableBody>
               {this.props.tournamentsArr.map((tournament) => {
                 return (
-                  <TableRow className={classes.row} key={tournament.id}   >
+                  <TableRow className={classes.row} key={tournament.id} >
                     <TableCell scope="row" component={Link} to={`/tournament/${tournament.id}`} >
                       {tournament.name}
                     </TableCell>
@@ -78,7 +104,7 @@ class Lobby extends React.Component {
                       <Button
                         variant="contained" 
                         color="secondary" 
-                        onClick={() => this.handleEnter(tournament.id)}
+                        onClick={() => this.handleClickTournamentRow(tournament)}
                       >
                         Enter
                       </Button>
@@ -89,6 +115,11 @@ class Lobby extends React.Component {
             </TableBody>
           </Table>
         </TableContainer>
+        <TournamentModal
+          handleModal={this.handleModal}
+          open={this.state.modalOpen}
+          tournamentInfo={this.state.tournamentClickedInfo}
+        />
       </div>
     );
   }
