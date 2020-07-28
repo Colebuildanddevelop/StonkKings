@@ -195,7 +195,6 @@ const LobbyTable = (props) => {
   }
 
   const rows = formatRows();
-  console.log(rows)
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>

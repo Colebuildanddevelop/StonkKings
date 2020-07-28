@@ -29,7 +29,6 @@ const TradeModal = (props) => {
   const classes = useStyles();
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  console.log(props)
 
   const calculateResultingBalance = (buyOrSell, currentBalance, amountOfShares, price) => {
       if (buyOrSell === "buy") {

@@ -9,14 +9,7 @@ import TournamentModal from "../components/TournamentModal";
 import LobbyTable from '../components/LobbyTable';
 // MATERIAL UI 
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+
 
 const useStyles = (theme) => ({
   mainContainer: {
@@ -47,12 +40,12 @@ class Lobby extends React.Component {
   
   state = {
     modalOpen: false,
+    entered: false,
     tournamentClickedInfo: {}
   }
 
   componentDidMount() {
     this.props.getTournaments();
-    console.log("mount")
     
   }
 
@@ -60,16 +53,29 @@ class Lobby extends React.Component {
     await this.props.createEntry(tournamentId, localStorage.token)
     await this.props.getTournaments()
     await this.props.loginWithToken(localStorage.token)
+    const updatedTournament = this.props.tournamentsArr.find(t => t.id === this.state.tournamentClickedInfo.id);
+    console.log("updated", updatedTournament);
+    this.handleClickTournamentRow(updatedTournament);
   }
 
   handleClickTournamentRow = (tournamentInfo) => {
+    let entered = false;
+    tournamentInfo.entries.forEach(entry => {
+      this.props.currentUser.entries.forEach(userEntry => {
+        if (entry === userEntry) {
+          entered = true
+        }
+      });
+    });
     this.setState({
       tournamentClickedInfo: tournamentInfo,
+      entered: entered,
       modalOpen: true
     })
   }
 
   handleModal = () => {
+
     this.setState({
       modalOpen: !this.state.modalOpen
     })
@@ -77,10 +83,10 @@ class Lobby extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.state)
     return (
       <div className={classes.mainContainer}>
         <TournamentModal
+          entered={this.state.entered}
           handleModal={this.handleModal}
           open={this.state.modalOpen}
           tournamentInfo={this.state.tournamentClickedInfo}

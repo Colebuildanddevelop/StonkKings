@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 class LatestPrice extends React.Component {
 
   componentDidMount() {
-    const intervalId = setInterval(this.fetchPrice, 1000000)
+    const intervalId = setInterval(this.fetchPrice, 1000)
     this.setState({ intervalId: intervalId });
   }
 
@@ -13,12 +13,10 @@ class LatestPrice extends React.Component {
   }
 
   fetchPrice = () => {
-    console.log(this.props.searchString)
-    fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${this.props.searchString}&apikey=3VP9375JIOYD1569`)
+    fetch(`https://api.polygon.io/v1/last_quote/stocks/${this.props.searchString}?apiKey=0HSD1_g6AHAZBDvy1MspyMzGZMlKjokSsoLoTB`)
       .then(res => res.json())
       .then(priceData => {
-        console.log(priceData)
-        this.props.setPrice(priceData["Global Quote"]["05. price"])
+        this.props.setPrice(priceData.last.askprice.toFixed(2))
       });
   }
 

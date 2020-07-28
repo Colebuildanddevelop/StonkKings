@@ -26,7 +26,17 @@ const tradeRestrictions = (req, res, next) => {
         
       } else {
         // if sell, then user must have enough shares of the stock to sell
-        const positions = await entry.getPositions();
+
+        
+
+
+
+
+
+
+
+
+        const positions = await entry.getPositions2();
         if (positions === null) {
           res.status(400).send({ message: "no positions were found try again" })
           return;

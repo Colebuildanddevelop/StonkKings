@@ -41,7 +41,7 @@ class MyPositions extends React.Component {
           <TableHead>
             <TableRow>
               <TableCell>Stock Name</TableCell>
-              <TableCell>Net Shares</TableCell>
+              <TableCell>Net Holdings</TableCell>
             </TableRow>
           </TableHead>
           {this.props.tradeData ? (

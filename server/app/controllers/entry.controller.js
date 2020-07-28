@@ -29,13 +29,17 @@ const EntryController = {
       user: req.userId,
       tournament: req.body.tournamentId,
     });
-    entry.save((err, entryCreated) => {
+    entry.save(async (err, entryCreated) => {
       if (err) return res.send({error: err});
       req.tournament.entries.push(entryCreated._id);
       req.user.entries.push(entryCreated._id);
-      req.user.save();
-      req.tournament.save();
-      res.send(entryCreated);
+      await req.user.save((err, userCreated => {
+        if (err) return res.send({error: err});
+        req.tournament.save((err, tournamentCreated) => {
+          if (err) return res.send({error: err});
+          res.send(entryCreated);
+        });
+      }));
     })
   }
 }

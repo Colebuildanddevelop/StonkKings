@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+// re renders with intraday format and daily data... 
 const Chart = (props) => {
   const classes = useStyles(); 
   return (
@@ -32,9 +33,10 @@ const Chart = (props) => {
           margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
           xScale={{
             type: "time",
-            format: "%Y-%m-%d"
+            format: props.xScaleFormat,
+            precision: "minute"
           }}
-          xFormat="time:%Y-%m-%d"
+          xFormat={props.xFormat}
           yScale={{
             type: "linear",
             min: "auto",

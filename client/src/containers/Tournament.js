@@ -36,7 +36,9 @@ class Tournament extends React.Component {
     timeFunction: "TIME_SERIES_DAILY",
     intradayInterval: "1min",
     currentPrice: "loading",
-    currentView: "buy/sell"
+    currentView: "buy/sell",
+    xScaleFormat: "%Y-%m-%d",
+    xFormat: "time:%Y-%m-%d"
   }
 
   componentDidMount() {
@@ -73,7 +75,12 @@ class Tournament extends React.Component {
             fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${searchString}&apikey=3VP9375JIOYD1569`)
               .then(res => res.json())
               .then(priceData => {
-                console.log(priceData["Global Quote"]["05. price"])
+                let xScaleFormat = "%Y-%m-%d"
+                let xFormat = "time:%Y-%m-%d"
+                if (intradayInterval !== "") {
+                  xScaleFormat = "%Y-%m-%d %H:%M:%S";
+                  xFormat = "time:%Y-%m-%d %H:%M:%S";
+                }
                 this.setState({
                   error: null,
                   stockData: [{
@@ -85,7 +92,9 @@ class Tournament extends React.Component {
                     name: stockInfo["Name"],
                     exchange: stockInfo["Exchange"]
                   },
-                  currentPrice: priceData["Global Quote"]["05. price"]
+                  currentPrice: priceData["Global Quote"]["05. price"],
+                  xFormat: xFormat,
+                  xScaleFormat: xScaleFormat
                 });
               });
           });
@@ -113,11 +122,12 @@ class Tournament extends React.Component {
   }
 
   handleChangeTimeFunction = (timeFunction, intradayInterval="") => {
-    console.log(intradayInterval)
-    this.setState({
-      timeFunction: timeFunction,
-      intradayInterval: intradayInterval
-    }, this.getPriceData(this.state.currentSearch, timeFunction, intradayInterval));
+    console.log("handle change time")
+    if (intradayInterval === "") {
+      this.getPriceData(this.state.currentSearch, timeFunction);
+    } else {
+      this.getPriceData(this.state.currentSearch, timeFunction, intradayInterval)
+    }
   }
 
   formatPriceQuery = (searchString, timeFunction, intradayInterval="") => {
@@ -157,12 +167,14 @@ class Tournament extends React.Component {
             <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_INTRADAY", "60min")}>
               Hourly
             </Button>
-            <Button>
+            <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_INTRADAY", "15min")}>
               15 min
             </Button>
             <Chart
               stockInfo={this.state.stockInfo}
               data={this.state.stockData}
+              xFormat={this.state.xFormat}
+              xScaleFormat={this.state.xScaleFormat}
             />
             {this.props.currentEntry && !this.props.currentEntry.message ? (
               <div>
