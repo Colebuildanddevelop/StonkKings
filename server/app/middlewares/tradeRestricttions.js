@@ -79,35 +79,6 @@ const tradeRestrictions = (req, res, next) => {
             req.entry = entry;
             next();
           })
-
-
-
-
-
-
-
-
-        // const positions = await entry.getPositions();
-        // if (positions === null) {
-          // res.status(400).send({ message: "no positions were found try again" })
-          // return;
-        // }
-        // // console.log(positions)
-        // let eligibleToSell = true;
-        // await positions.forEach(position => {
-          // if (position.ticker === req.body.stockTicker) {
-            // if (position.netShares < req.body.amountOfShares) {
-              // eligibleToSell = false;
-            // }
-          // }
-        // });
-        // if (!eligibleToSell) {
-          // res.status(400).send({ message: "You dont have enough shares to sell" })
-          // return;
-        // }
-      // }
-//      req.entry = entry;
-      //next();
       }
     })
 };

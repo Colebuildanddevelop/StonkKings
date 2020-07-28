@@ -64,7 +64,7 @@ class NavBar extends React.Component {
             (
               <div>
                 <Grid container className={classes.userContainer}>
-                  <Grid xs={4}>
+                  <Grid item xs={4}>
                   </Grid>
                   <Grid item xs={2}>
                     <Avatar src={this.props.currentUser.avatar}/>
@@ -74,7 +74,7 @@ class NavBar extends React.Component {
                       {this.props.currentUser.username}
                     </Typography>
                   </Grid>
-                  <Grid xs={12}>
+                  <Grid item xs={12}>
                     <Typography className={classes.credits} align="right" variant="h6" color="textPrimary">
                       Stonk Credits: {this.props.currentUser.accountBalance}
                     </Typography>
@@ -87,7 +87,6 @@ class NavBar extends React.Component {
                 variant="contained"
                 component={Link}
                 to={"/login"} 
-                color="textPrimary"
               >
                 Login
               </Button>

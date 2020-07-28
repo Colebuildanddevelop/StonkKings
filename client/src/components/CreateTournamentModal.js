@@ -14,15 +14,14 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: 400,
-    top: '50%',
-    left: '35%',
-    backgroundColor: "white",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+  dialogBox: {
+    backgroundColor: theme.palette.primary.light,
+    
+  },
+  title: {
+    backgroundColor: theme.palette.primary.dark
   }
+
 }));
 
 const CreateTournamentModal = (props) => {
@@ -37,39 +36,60 @@ const CreateTournamentModal = (props) => {
         open={props.open}
         onClose={props.handleModal}
       >
-        <Grid container>
-          <Grid item xs={12}>
+        <Grid container className={classes.dialogBox}>
+          <Grid item xs={12} className={classes.title}>
             <DialogTitle id="simple-dialog-title">Create Tournament</DialogTitle>
           </Grid>
-          <Grid item xs={12}>
-            <DialogContent>
-              <DialogContentText>
-                Tournament Name: {props.tournamentName}
-              </DialogContentText>
-              <DialogContentText>
-                Max Entries: {props.entryLimit}
-              </DialogContentText>
-              <DialogContentText>
-                Entry Fee: {props.entryFee}
-              </DialogContentText>
-              <DialogContentText>
-                Start Time: {props.startTime}
-              </DialogContentText>
-              <DialogContentText>
-                End Time: {props.endTime}
-              </DialogContentText>
-            </DialogContent>
-          </Grid>
-          <Grid item xs={12}>
-            <DialogActions>
-              <Button onClick={props.handleModal} autoFocus color="primary" >
-                Cancel
-              </Button>
-              <Button onClick={props.createTournament} color="primary" autoFocus>
-                Create
-              </Button>
-            </DialogActions>
-          </Grid>
+          {!props.createTournamentSuccess ? (
+            <div>
+              <Grid item xs={12}>
+                <DialogContent>
+                  <DialogContentText >
+                    Tournament Name: {props.tournamentName}
+                  </DialogContentText>
+                  <DialogContentText>
+                    Max Entries: {props.entryLimit}
+                  </DialogContentText>
+                  <DialogContentText>
+                    Entry Fee: {props.entryFee}
+                  </DialogContentText>
+                  <DialogContentText>
+                    Start Time: {props.startTime}
+                  </DialogContentText>
+                  <DialogContentText>
+                    End Time: {props.endTime}
+                  </DialogContentText>
+                </DialogContent>
+              </Grid>
+              <Grid item xs={12}>
+                <DialogActions>
+                  <Button variant="outlined" onClick={props.handleModal}>
+                    Cancel
+                  </Button>
+                  <Button variant="outlined" onClick={props.createTournament}>
+                    Create
+                  </Button>
+                </DialogActions>
+              </Grid>
+            </div>
+          ) : (
+            <div>
+              <Grid item xs={12}>
+                <DialogContent>
+                  <DialogContentText >
+                    Tournament was created! 
+                  </DialogContentText>
+                </DialogContent>
+              </Grid>
+              <Grid item xs={12}>
+                <DialogActions>
+                  <Button variant="outlined">
+                    Go to lobby!
+                  </Button>
+                </DialogActions>
+              </Grid>
+            </div>
+          )}
         </Grid>
       </Dialog>
     </div>

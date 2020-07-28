@@ -9,6 +9,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import Typography from "@material-ui/core/Typography";
+import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,20 +24,34 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 const useStyles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: 10,
+    padding: 20,
+    width: 600,
+    margin: 'auto'
+  },
+  titleContainer: {
+    marginLeft: '22%',
+    marginBottom: 10
   },
   avatar: {
-    margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
+  },
+  title: {
+    marginRight: 10,
+    color: theme.palette.text.secondary
   },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    marginTop: 20,
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.text.secondary,
+    '&:hover': {
+      backgroundColor: theme.palette.text.primary
+    }
   },
 });
 
@@ -44,27 +59,45 @@ const DateAndTimeSelectors = (props) => {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <KeyboardDatePicker
-        margin="normal"
-        id="date-picker-dialog"
-        label={props.dateLabel}
-        format="MM/dd/yyyy"
-        value={props.dateValue}
-        onChange={(value) => props.handleChangeTime(value, `selectedDateFor${props.name}`)}
-        KeyboardButtonProps={{
-          'aria-label': 'change date',
-        }}
-      />
-      <KeyboardTimePicker
-        margin="normal"
-        id="time-picker"
-        label={props.timeLabel}
-        value={props.timeValue}
-        onChange={(value) => props.handleChangeTime(value, `selectedTimeFor${props.name}`)}
-        KeyboardButtonProps={{
-          'aria-label': 'change time',
-        }}
-      />
+      <Grid container>
+        <Grid item xs={6} style={{padding: 5}}>
+          <KeyboardDatePicker
+            style={{width: '100%'}}
+            InputLabelProps={{
+              style: {
+                color: 'white'
+              }
+            }}
+            margin="normal"
+            id={props.dateLabel}
+            label={props.dateLabel}
+            format="MM/dd/yyyy"
+            value={props.dateValue}
+            onChange={(value) => props.handleChangeTime(value, `selectedDateFor${props.name}`)}
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
+          />
+        </Grid>
+        <Grid item xs={6} style={{padding: 5}}>
+          <KeyboardTimePicker
+            style={{width: '100%'}}
+            InputLabelProps={{
+              style: {
+                color: 'white'
+              }
+            }}
+            margin="normal"
+            id={props.timeLabel}
+            label={props.timeLabel}
+            value={props.timeValue}
+            onChange={(value) => props.handleChangeTime(value, `selectedTimeFor${props.name}`)}
+            KeyboardButtonProps={{
+              'aria-label': 'change time',
+            }}
+          />
+        </Grid>
+      </Grid>
     </MuiPickersUtilsProvider>
   );
 }
@@ -73,6 +106,8 @@ class CreateTournament extends React.Component {
 
   state = {
     modalOpen: false,
+    createTournamentLoading: false,
+    createTournamentSuccess: null,
     tournamentName: "",
     entryLimit: 20,
     entryFee: 100,
@@ -84,7 +119,8 @@ class CreateTournament extends React.Component {
 
   handleModal = () => {
     this.setState({
-      modalOpen: !this.state.modalOpen
+      modalOpen: !this.state.modalOpen,
+      createTournamentSuccess: false
     });
   }
   
@@ -106,6 +142,9 @@ class CreateTournament extends React.Component {
   }
 
   createTournamentFetch = () => {
+    this.setState({
+      createTournamentLoading: true
+    });
     fetch("http://localhost:3000/api/tournaments", {
       method: "POST",
       headers: {
@@ -121,7 +160,14 @@ class CreateTournament extends React.Component {
       })
     })
     .then(res => res.json())
-    .then(console.log)
+    .then(createdTournament => {
+      this.setState({
+        createTournamentLoading: false,
+        createTournamentSuccess: true
+      })
+      console.log("created", createdTournament)
+
+    })
     .catch(console.log)
   }
 
@@ -129,78 +175,107 @@ class CreateTournament extends React.Component {
     console.log(this.state)
     const { classes } = this.props;
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <AddCircleOutlineIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Tournament Details
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              value={this.state.name}
-              onChange={this.handleChange}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="tournamentName"
-              label="Tournament Name"
-              name="tournamentName"
-              autoFocus
-            />
-            <TextField
-              value={this.state.entryLimit}      
-              onChange={this.handleChange}        
-              variant="outlined"
-              type="number"
-              margin="normal"
-              required
-              name="entryLimit"
-              label="Max Players"
-              id=""
-            />
-            <InputLabel htmlFor="outlined-adornment-amount">Entry Fee</InputLabel>
-            <OutlinedInput
-              value={this.state.entryFee}      
-              onChange={this.handleChange}        
-              type="number"
-              required
-              startAdornment={<InputAdornment position="start">$</InputAdornment>}
-              name="entryFee"
-              id="outlined-adornment-amount"
-            />
-            <DateAndTimeSelectors 
-              name={"Start"}   
-              dateLabel={"Choose start date"}
-              timeLabel={"Choose start time"}
-              dateValue={this.state.selectedDateForStart}
-              timeValue={this.state.selectedTimeForStart}
-              handleChangeTime={this.handleChangeTime}
-            />
-            <DateAndTimeSelectors 
-              name={"End"}   
-              dateLabel={"Choose end date"}
-              timeLabel={"Choose end time"}
-              dateValue={this.state.selectedDateForEnd}
-              timeValue={this.state.selectedTimeForEnd}
-              handleChangeTime={this.handleChangeTime}
-            />
-            <Button
-              onClick={this.handleModal}
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Create Tournament
-            </Button>
-          </form>
-        </div>
+      <Grid container className={classes.paper}>
+        <Grid className={classes.titleContainer} item xs={12} container direction="row" alignItems="center">
+          <Grid item className={classes.title}>
+            <Typography color="" variant="h4">
+              Tournament Details
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Avatar className={classes.avatar}>
+              <AddCircleOutlineIcon />
+            </Avatar>
+          </Grid>
+        </Grid>
+        <TextField
+          InputLabelProps={{
+            style: {
+              color: 'white'
+            }
+          }}
+          style={{margin: 5}}
+          color="primary"
+          value={this.state.name}
+          onChange={this.handleChange}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="tournamentName"
+          label="Tournament Name"
+          name="tournamentName"
+          autoFocus
+        />
+        <Grid item xs={6} style={{padding: 5}}>
+          <TextField
+            InputLabelProps={{
+              style: {
+                color: 'white'
+              }
+            }}
+            fullWidth={true}
+            value={this.state.entryLimit}      
+            onChange={this.handleChange}        
+            variant="outlined"
+            type="number"
+            margin="normal"
+            required
+            name="entryLimit"
+            label="Max Players"
+            id=""
+          />
+        </Grid>
+        <Grid item xs={6} style={{padding: 5}}>
+          <TextField
+            InputLabelProps={{
+              style: {
+                color: 'white'
+              }
+            }}
+            value={this.state.entryFee}      
+            fullWidth={true}
+            onChange={this.handleChange}        
+            variant="outlined"
+            type="number"
+            margin="normal"
+            required
+            name="entryFee"
+            label="Entry Fee"
+            InputProps={{
+              startAdornment: <InputAdornment position="start">$</InputAdornment> 
+            }}
+            id=""
+          />
+        </Grid>
+        <DateAndTimeSelectors 
+          name={"Start"}   
+          dateLabel={"Choose start date"}
+          timeLabel={"Choose start time"}
+          dateValue={this.state.selectedDateForStart}
+          timeValue={this.state.selectedTimeForStart}
+          handleChangeTime={this.handleChangeTime}
+        />
+        <DateAndTimeSelectors 
+          name={"End"}   
+          dateLabel={"Choose end date"}
+          timeLabel={"Choose end time"}
+          dateValue={this.state.selectedDateForEnd}
+          timeValue={this.state.selectedTimeForEnd}
+          handleChangeTime={this.handleChangeTime}
+        />
+        <Button
+          onClick={this.handleModal}
+          fullWidth
+          variant="contained"
+          className={classes.submit}
+        >
+          Create Tournament
+        </Button>
         {/** I can pass props better than this but... */}
         <CreateTournamentModal
+          createTournamentLoading={this.state.createTournamentLoading}
+          createTournamentSuccess={this.state.createTournamentSuccess}
           open={this.state.modalOpen}
           handleModal={this.handleModal}
           createTournament={this.createTournamentFetch}
@@ -210,7 +285,8 @@ class CreateTournament extends React.Component {
           startTime={this.formatTime(this.state.selectedDateForStart, this.state.selectedTimeForStart)}
           endTime={this.formatTime(this.state.selectedDateForEnd, this.state.selectedTimeForEnd)}
         />
-      </Container>
+      </Grid>
+
     )
   }
 }
