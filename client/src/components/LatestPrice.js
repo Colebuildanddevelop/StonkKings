@@ -16,7 +16,7 @@ class LatestPrice extends React.Component {
     fetch(`https://api.polygon.io/v1/last_quote/stocks/${this.props.searchString}?apiKey=0HSD1_g6AHAZBDvy1MspyMzGZMlKjokSsoLoTB`)
       .then(res => res.json())
       .then(priceData => {
-        this.props.setPrice(priceData.last.askprice.toFixed(2))
+        this.props.setPrice((Math.round(priceData.last.askprice * 100) / 100).toFixed(2))
       });
   }
 

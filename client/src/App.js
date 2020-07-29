@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // actions
 import { loginWithToken } from "./redux/actions/auth.actions";
 // components 
-import AlertDisplay from "./components/AlertDisplay";
 // containers 
 import Lobby from "./containers/Lobby";
 import Login from "./containers/Login";

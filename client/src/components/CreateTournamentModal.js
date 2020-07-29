@@ -1,6 +1,5 @@
 import React from 'react';
 import Countdown from '../components/Countdown';
-import AlertDisplay from '../components/AlertDisplay';
 import { Link } from 'react-router-dom';
 // MATERIAL UI  
 import { makeStyles } from '@material-ui/core/styles';

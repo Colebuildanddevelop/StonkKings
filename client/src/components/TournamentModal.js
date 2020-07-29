@@ -1,6 +1,5 @@
 import React from 'react';
 import Countdown from '../components/Countdown';
-import AlertDisplay from '../components/AlertDisplay';
 import { Link } from 'react-router-dom';
 // MATERIAL UI  
 import { withStyles } from '@material-ui/core/styles';
@@ -113,7 +112,6 @@ class TournamentModal extends React.Component {
                   )}
                 </Grid>
               </Grid>
-              <AlertDisplay />
             </Dialog>
           </div>
         ) : null}

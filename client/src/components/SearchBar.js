@@ -33,9 +33,7 @@ const useStyles = makeStyles(theme => ({
   option: {
     backgroundColor: theme.palette.primary.main
   },
-  listBox: {
-    backgroundColor: theme.palette.primary.main,
-  },
+
   inputRoot: {
     backgroundColor: theme.palette.primary.main,
     "&.MuiFormLabel-root.Mui-focused": {

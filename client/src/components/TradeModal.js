@@ -1,6 +1,5 @@
 import React from 'react';
 import Countdown from '../components/Countdown';
-import AlertDisplay from '../components/AlertDisplay';
 import { Link } from 'react-router-dom';
 // MATERIAL UI  
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,14 +15,35 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   dialogContainer: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.light,
+  },
+  dialogHeader: {
+    backgroundColor: theme.palette.primary.dark
+  },
+  dialogTitle: {
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  dialogContent: {
+    color: theme.palette.primary.dark,
+    fontSize: 20,
+    fontWeight: 'bold',
+    border: 1,
+    borderColor: theme.palette.primary.dark
+  }, 
+  textFieldContainer: {
+    paddingLeft: 20
   },
   sharesField: {
+    width: "60%",
     backgroundColor: theme.palette.primary.main,
     borderRadius: 5
   },
   sharesFieldInput: {
-    fontSize: 30
+    padding: 10,
+    paddingLeft: 20,
+    fontSize: 30,
+    fontWeight: 'bold'
   },
   button: {
     borderColor: theme.palette.text.primary,
@@ -48,48 +68,52 @@ const TradeModal = (props) => {
       <Dialog
         open={props.open}
         onClose={props.handleModal}
+        style={{opacity: 10}}
       >
         <Grid className={classes.dialogContainer} container>
-          <Grid item xs={6}>
-            <DialogTitle id="simple-dialog-title">{props.buyOrSell === "buy" ? "Buy Transaction" : "Sell Transaction"}</DialogTitle>
+          <Grid item container xs={12} className={classes.dialogHeader}>
+            <Grid item xs={6}>
+              <DialogTitle className={classes.dialogTitle} id="simple-dialog-title">{props.buyOrSell === "buy" ? "Buy Transaction" : "Sell Transaction"}</DialogTitle>
+            </Grid>
+            <Grid container item alignItems="flex-start" justify="flex-end" direction="row" xs={6}>
+              <DialogTitle className={classes.dialogTitle} id="simple-dialog-title">{props.stockTicker}</DialogTitle>
+            </Grid>
           </Grid>
           <Grid item xs={6}>
-            <DialogTitle id="simple-dialog-title">{props.stockTicker}</DialogTitle>
-          </Grid>
-          <Grid item xs={6}>
-            <DialogContent>
-              <DialogContentText>
+            <DialogContent >
+              <DialogContentText className={classes.dialogContent}>
                 Price:
               </DialogContentText>
-              <DialogContentText>
+              <DialogContentText className={classes.dialogContent}>
                 Amount of shares:
               </DialogContentText>
-              <DialogContentText>
+              <DialogContentText className={classes.dialogContent}>
                 Total value:
               </DialogContentText>
-              <DialogContentText>
+              <DialogContentText className={classes.dialogContent}>
                 Resulting Balance:
               </DialogContentText>
             </DialogContent>
           </Grid>
           <Grid item xs={6}>
             <DialogContent>
-              <DialogContentText>
+              <DialogContentText className={classes.dialogContent}>
                 {props.price}
               </DialogContentText>
-              <DialogContentText>
+              <DialogContentText className={classes.dialogContent}>
                 {props.amountOfShares}
               </DialogContentText>
-              <DialogContentText>
+              <DialogContentText className={classes.dialogContent}>
                 {props.amountOfShares * props.price}
               </DialogContentText>
-              <DialogContentText>
+              <DialogContentText className={classes.dialogContent}>
                 {calculateResultingBalance(props.buyOrSell, props.currentEntry.tournamentBalance, props.amountOfShares, props.price)}
               </DialogContentText>
             </DialogContent>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className={classes.textFieldContainer}>
             <TextField 
+              defaultValue={1}
               className={classes.sharesField}
               onChange={props.handleShareField}
               inputProps={{
@@ -100,11 +124,13 @@ const TradeModal = (props) => {
               id="standard-basic" 
               label="Amount of shares"
             />
+          </Grid>
+          <Grid item xs={12}>
             <DialogActions>
-              <Button onClick={props.handleModal} className={classes.button} variant="outlined" autoFocus color="textPrimary" >
+              <Button onClick={props.handleModal} className={classes.button} variant="outlined" autoFocus color="inherit" >
                 Cancel
               </Button>
-              <Button onClick={props.handleTrade} className={classes.button} variant="outlined" color="textPrimary" autoFocus>
+              <Button onClick={props.handleTrade} className={classes.button} variant="outlined" color="inherit" autoFocus>
                 Confirm
               </Button>
             </DialogActions>

@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import TradeModal from "../components/TradeModal";
+import SnackBarDisplay from "../components/SnackBarDisplay";
 import { connect } from "react-redux";
 import { createTrade, getTradesByEntryId } from "../redux/actions/trade.actions";
 // MATERIAL UI
@@ -38,8 +39,9 @@ const useStyles = (theme) => ({
 class TradeBar extends React.Component {
 
   state = {
-    shareAmountField: 0,
-    openModal: false
+    shareAmountField: 1,
+    openModal: false,
+    openSnackBar: false
   }
   
   handleShareField = (e) => {
@@ -54,7 +56,22 @@ class TradeBar extends React.Component {
       buyOrSell: e.currentTarget.name
     });
   }
-  
+
+  handleCloseSnackBar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.setState({
+      openSnackBar: false
+    });
+  };
+
+  handleClickSnackBar = () => {
+    this.setState({
+      openSnackBar: true
+    });
+  };
+
   handleTrade = async (e) => {
     console.log(e.currentTarget.name)
     await this.props.createTrade({
@@ -67,16 +84,32 @@ class TradeBar extends React.Component {
     }, localStorage.token)
     await this.props.getTradesByEntryId(this.props.entryId)
     await this.props.getCurrentEntry();
+    this.handleModal(e);
+    this.handleClickSnackBar();
   }
 
   render() {
+    console.log(this.props.createdTrade)
     const { classes } = this.props
+    
+    let snackbarmessage = "";
+    let snackbarErr = false;
+    if (this.props.createdTrade !== []) {
+      if (this.props.createdTrade.message) {
+        snackbarmessage = this.props.createdTrade.message
+        snackbarErr = true;
+      } else {
+        let buyOrSell = this.props.createdTrade.buyOrSell === 'buy' ? "purchased" : "sold";
+        snackbarmessage = `You ${buyOrSell} ${this.props.createdTrade.amountOfShares} share(s) of ${this.props.createdTrade.stockTicker} for $${this.props.createdTrade.price}!`
+      }
+    }
     return (
       <div>
         <Button onClick={this.handleModal} size="large" name="buy" variant="outlined" className={classes.buyButton}>BUY</Button>
         <Button onClick={this.handleModal} size="large" name="sell" variant="outlined" className={classes.sellButton}>SELL</Button>
         <TradeModal
           handleShareField={this.handleShareField}
+
           handleTrade={this.handleTrade}
           handleModal={this.handleModal}
           price={this.props.currentPrice}
@@ -85,6 +118,12 @@ class TradeBar extends React.Component {
           buyOrSell={this.state.buyOrSell}
           open={this.state.openModal}
           currentEntry={this.props.currentEntry}
+        />
+        <SnackBarDisplay 
+          handleClose={this.handleCloseSnackBar}
+          open={this.state.openSnackBar}
+          message={snackbarmessage}
+          error={snackbarErr}
         />
       </div>
     )

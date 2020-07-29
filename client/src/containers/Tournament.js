@@ -66,7 +66,6 @@ class Tournament extends React.Component {
 
   getPriceData = (searchString, timeFunction="IBM", intradayInterval="") => {
     const queryString = this.formatPriceQuery(searchString, timeFunction, intradayInterval)
-    console.log(queryString)
     fetch(queryString)
       .then(res => res.json())
       .then(data => {
@@ -78,7 +77,6 @@ class Tournament extends React.Component {
         }
         const dataKeys = Object.keys(data)
         const timeSeriesHash = data[dataKeys[1]] 
-        console.log(data)
         const formattedData = Object.keys(timeSeriesHash).map(key => {
           return {
             x: key, 
@@ -88,7 +86,6 @@ class Tournament extends React.Component {
         fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${searchString}&apikey=3VP9375JIOYD1569`)
           .then(res => res.json())
           .then(stockInfo => {
-            console.log(stockInfo)
             fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${searchString}&apikey=3VP9375JIOYD1569`)
               .then(res => res.json())
               .then(priceData => {
@@ -149,7 +146,6 @@ class Tournament extends React.Component {
   }
 
   formatPriceQuery = (searchString, timeFunction, intradayInterval="") => {
-    console.log(intradayInterval)
     if (timeFunction !== "TIME_SERIES_INTRADAY") {
       return `https://www.alphavantage.co/query?function=${timeFunction}&symbol=${searchString}&outputsize=compact&apikey=3VP9375JIOYD1569`
     } else {
@@ -179,10 +175,10 @@ class Tournament extends React.Component {
               </Grid>
               <Grid container >
                 {this.state.stockInfo ? (
-                  <Grid justify="space-between" item xs={6}>
+                  <Grid container item justify="space-between" item xs={6}>
                     <div>
                       <div style={{display: 'flex'}}>
-                        <Typography inline variant="h5" className={classes.stockInfo}>
+                        <Typography variant="h5" className={classes.stockInfo}>
                           {this.state.stockInfo.name}
                         </Typography>
                         <Typography style={{marginLeft: 10}} variant="h6" className={classes.stockInfo}>
@@ -224,10 +220,11 @@ class Tournament extends React.Component {
                 />
               </Grid>
               {this.props.currentEntry && !this.props.currentEntry.message ? (
-                <Grid container xs={12}>
+                <Grid container item xs={12}>
                   <Grid item xs={6} style={{marginTop: 10}}>
                     <TradeBar 
                       getCurrentEntry={this.handleGetCurrentEntry}
+                      createdTrade={this.props.createdTrade}
                       currentEntry={this.props.currentEntry}
                       currentPrice={this.state.currentPrice}
                       stockTicker={this.state.stockInfo.symbol}

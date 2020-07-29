@@ -98,19 +98,6 @@ const useToolbarStyles = makeStyles((theme) => ({
   }
 }));
 
-// const EnhancedTableToolbar = () => {
-  // const classes = useToolbarStyles();
-
-  // return (
-    // <Toolbar className={classes.toolbar}>
-      // <Typography className={classes.title} variant="h4" id="tableTitle" component="div">
-        // My Positions
-      // </Typography>
-    // </Toolbar>
-  // );
-// };
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
