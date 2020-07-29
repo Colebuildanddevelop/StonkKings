@@ -1,4 +1,5 @@
 const TournamentModel = require("../models/tournament");
+const UserModel = require("../models/user");
 
 // scheduler
 const assignWinnerScheduler = () => {
@@ -11,12 +12,31 @@ const assignWinnerScheduler = () => {
           return;
         }
         tournaments.forEach(tournament => {
-          if (tournament.endTime < new Date() && (tournament.winners.length === 0)) {
+          
+          if (tournament.endTime < new Date() && (tournament.winners.length === 0) && tournament.entries.length !== 0) {
             const balances = tournament.entries.map(entry => entry.tournamentBalance);
             console.log(balances)
             const highestBalance = Math.max(...balances);
             console.log(highestBalance)
             const winners = tournament.entries.filter(entry => entry.tournamentBalance === highestBalance);
+            winners.forEach(winner => {
+              UserModel.findById(winner.user)
+                .exec((err, user) => {
+                  if (err) {
+                    console.log(err);
+                    return;
+                  }
+                  user.accountBalance += tournament.entryFee * tournament.entries.length;
+                  console.log("user", user)
+                  user.save(err => {
+                    if (err) {
+                      console.log(err);
+                      return;
+                    }
+                    console.log("user saved")
+                  });
+                })
+            })
             console.log(winners)
             tournament.winners = winners;
             tournament.save();

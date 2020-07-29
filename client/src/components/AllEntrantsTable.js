@@ -39,8 +39,8 @@ function stableSort(array, comparator) {
 
 const  headCells = [
   { id: 'username', numeric: false, disablePadding: false, label: 'Username' },
-  { id: 'tournamentBalance', numeric: false, disablePadding: false, label: 'Tournament Balance' },
-  { id: '# of Trades', numeric: false, disablePadding: false, label: 'Total Trades' },
+  { id: 'tournamentBalance', numeric: true, disablePadding: false, label: 'Tournament Balance' },
+  { id: '#OfTrades', numeric: true, disablePadding: false, label: 'Total Trades' },
 ];
 
 function EnhancedTableHead(props) {
@@ -176,10 +176,10 @@ const AllEntrantsTable = (props) => {
                       <TableCell className={classes.row} component="th" scope="row" >
                         {row.username}
                       </TableCell>
-                      <TableCell className={classes.row}>
+                      <TableCell className={classes.row} align="right">
                         {row.tournamentBalance}
                       </TableCell>
-                      <TableCell className={classes.row}>
+                      <TableCell className={classes.row} align="right">
                         {row.numOfTrades}
                       </TableCell>
                     </TableRow>

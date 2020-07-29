@@ -1,4 +1,5 @@
 import React from "react";
+import TableCell from '@material-ui/core/TableCell';
 
 class Countdown extends React.Component {
 
@@ -12,6 +13,7 @@ class Countdown extends React.Component {
   }
 
   componentWillUnmount() {
+    console.log("unmounting")
     clearInterval(this.state.intervalId)
   }
   
@@ -33,7 +35,7 @@ class Countdown extends React.Component {
       countdown: `${days} days, ${hours}:${minutes}:${seconds}`
     })
     if (timeleft < 0) {
-      clearInterval(this.state.intervalId);
+      // clearInterval(this.state.intervalId);
       this.setState({
         countdown: this.props.overMsg 
       })
@@ -41,8 +43,11 @@ class Countdown extends React.Component {
   }
 
   render() {
+    console.log("rendering countdown")
     return (
-      this.state.countdown
+      <TableCell align="right" className={this.props.className}>
+        {this.state.countdown}
+      </TableCell>
     )
   }
 }

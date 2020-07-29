@@ -39,6 +39,7 @@ function stableSort(array, comparator) {
     if (order !== 0) return order;
     return a[1] - b[1];
   });
+  console.log(stabilizedThis)
   return stabilizedThis.map((el) => el[0]);
 }
 
@@ -121,7 +122,6 @@ const EnhancedTableToolbar = () => {
   );
 };
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -158,8 +158,8 @@ const useStyles = makeStyles((theme) => ({
 
 const LobbyTable = (props) => {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('entryFee');
+  const [order, setOrder] = React.useState('desc');
+  const [orderBy, setOrderBy] = React.useState('start');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -214,6 +214,7 @@ const LobbyTable = (props) => {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
+                   
                   return (
                     <TableRow
                       hover
@@ -228,12 +229,8 @@ const LobbyTable = (props) => {
                       <TableCell className={classes.row} align="right">{row.entryFee}</TableCell>
                       <TableCell className={classes.row} align="right">{row.entries}</TableCell>
                       <TableCell className={classes.row} align="right">{row.totalPrize}</TableCell>
-                      <TableCell className={classes.row} align="right">
-                        <Countdown countDownEnd={new Date(row.start).getTime()} overMsg={"Started!"}/>
-                      </TableCell>
-                      <TableCell className={classes.row} align="right">
-                        <Countdown countDownEnd={new Date(row.end).getTime()} overMsg={"Tournament is Over!"}/>
-                      </TableCell>
+                      <Countdown className={classes.row} countDownEnd={new Date(row.start).getTime()} overMsg={"Started!"}/>
+                      <Countdown className={classes.row} countDownEnd={new Date(row.end).getTime()} overMsg={"Tournament is Over!"}/>
                     </TableRow>
                   );
                 })}
@@ -251,7 +248,6 @@ const LobbyTable = (props) => {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-
     </div>
   );
 }
