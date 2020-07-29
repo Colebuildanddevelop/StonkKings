@@ -2,93 +2,50 @@ import React from "react";
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const useStyles = theme => ({
-  search: {
-    position: "relative",
-    borderRadius: 10,
-    backgroundColor: fade(theme.palette.common.black, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.black, 0.25),
-    },
+const useStyles = makeStyles(theme => ({
+  root: {
+    backgroundColor: theme.palette.primary.main
   },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.palette.primary
+  paper: {
+    backgroundColor: theme.palette.primary.main
+  },
+  popper: {
+    backgroundColor: theme.palette.primary.main
+  },
+  input: {
+    backgroundColor: theme.palette.primary.main
+  },
+  inputFocused: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  groupLabel: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.text.secondary
+  },
+  option: {
+    backgroundColor: theme.palette.primary.main
+  },
+  listBox: {
+    backgroundColor: theme.palette.primary.main,
   },
   inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
+    backgroundColor: theme.palette.primary.main,
+    "&.MuiFormLabel-root.Mui-focused": {
+      color: theme.palette.text.secondary
+    }
   }
-});
-
-// class SearchBar extends React.Component {
-
-  // state = {
-    // search: ""
-  // }
-
-  // handleSearchTerm = (e) => {
-    // this.setState({
-      // [e.target.name]: e.target.value
-    // })
-  // }  
-
-  // render() {
-    // const { classes } = this.props; 
-    // return (
-      // <div>
-        // <div className={classes.search}  >
-          // <div className={classes.searchIcon} >
-            // <SearchIcon  />
-          // </div>
-          // <InputBase
-            // placeholder="Search..."
-            // name="search"
-            // classes={{
-              // root: classes.inputRoot,
-              // input: classes.inputInput,
-            // }}
-            // inputProps={{ 'aria-label': 'search' }}
-            // onChange={this.handleSearchTerm}
-            // value={this.state.search}
-          // />
-          // <Button onClick={() => this.props.handleSearchSubmit(this.state.search)}>Search</Button>
-        // </div>
-        // {this.props.error ? (
-          // <Typography>
-            // {this.props.error}
-          // </Typography>
-        // ) : (null)}
-      // </div>
-    // );
-  // }
-// }
-
-
+}));
 
 const SearchBar = (props) => {
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
@@ -119,8 +76,8 @@ const SearchBar = (props) => {
 
   return (
     <Autocomplete
+      classes={classes}
       id="asynchronous-demo"
-      style={{ width: 300 }}
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -134,6 +91,9 @@ const SearchBar = (props) => {
       loading={loading}
       onInputChange={handleInputChange}
       onChange={handleSelected}
+      ListboxProps={{
+        className: classes.listBox
+      }}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -155,7 +115,7 @@ const SearchBar = (props) => {
   );
 }
 
-export default withStyles(useStyles, {withTheme: true})(SearchBar);
+export default SearchBar;
 
 
 

@@ -15,7 +15,23 @@ import AllEntrants from "../components/AllEntrants";
 import TradeHistory from "../components/TradeHistory";
 
 // MATERIAL UI
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
+const useStyles = (theme) => ({
+  searchBar: {
+    backgroundColor: theme.palette.primary.main,
+    width: '100%',
+    marginTop: 30,
+    marginBottom: 30
+  },
+  chartContainer: {
+    backgroundColor: theme.palette.primary.dark,
+    borderRadius: 5
+  }
+});
 
 class Tournament extends React.Component {
 
@@ -72,6 +88,7 @@ class Tournament extends React.Component {
         fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${searchString}&apikey=3VP9375JIOYD1569`)
           .then(res => res.json())
           .then(stockInfo => {
+            console.log(stockInfo)
             fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${searchString}&apikey=3VP9375JIOYD1569`)
               .then(res => res.json())
               .then(priceData => {
@@ -90,7 +107,8 @@ class Tournament extends React.Component {
                   stockInfo: {
                     symbol: stockInfo["Symbol"],
                     name: stockInfo["Name"],
-                    exchange: stockInfo["Exchange"]
+                    exchange: stockInfo["Exchange"],
+                    sector: stockInfo["Sector"]
                   },
                   currentPrice: priceData["Global Quote"]["05. price"],
                   xFormat: xFormat,
@@ -146,36 +164,66 @@ class Tournament extends React.Component {
   }
   
   render() {
+    const { classes } = this.props;
     return (
       <div>
         <TournamentBar setView={this.changeView} />
         {this.state.currentView === "buy/sell" ? (
-          <div>
-            <SearchBar 
-              handleSearchSubmit={this.handleSearchSubmit} 
-              error={this.state.error} 
-            />
-            <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_MONTHLY")}>
-              Monthly 
-            </Button>
-            <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_WEEKLY")}>
-              Weekly
-            </Button>
-            <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_DAILY")}>
-              Daily
-            </Button>
-            <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_INTRADAY", "60min")}>
-              Hourly
-            </Button>
-            <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_INTRADAY", "15min")}>
-              15 min
-            </Button>
-            <Chart
-              stockInfo={this.state.stockInfo}
-              data={this.state.stockData}
-              xFormat={this.state.xFormat}
-              xScaleFormat={this.state.xScaleFormat}
-            />
+          <div style={{width: "95%", margin: "auto"}}>
+            <Grid container>
+              <Grid item className={classes.searchBar}>
+                <SearchBar 
+                  handleSearchSubmit={this.handleSearchSubmit} 
+                  error={this.state.error} 
+                />
+              </Grid>
+              <Grid container >
+                {this.state.stockInfo ? (
+                  <Grid justify="space-between" item xs={6}>
+                    <div>
+                      <div style={{display: 'flex'}}>
+                        <Typography inline variant="h5" className={classes.stockInfo}>
+                          {this.state.stockInfo.name}
+                        </Typography>
+                        <Typography style={{marginLeft: 10}} variant="h6" className={classes.stockInfo}>
+                          {this.state.stockInfo.symbol}
+                        </Typography>
+                      </div>
+                      <div>
+                        <Typography>
+                          {this.state.stockInfo.sector}
+                        </Typography>
+                      </div>
+                    </div>
+                  </Grid>
+                ) : null}
+                <Grid container item xs={6} style={{marginTop: 30}} alignItems="flex-start" justify="flex-end" direction="row">
+                  <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_MONTHLY")}>
+                    Monthly 
+                  </Button>
+                  <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_WEEKLY")}>
+                    Weekly
+                  </Button>
+                  <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_DAILY")}>
+                    Daily
+                  </Button>
+                  <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_INTRADAY", "60min")}>
+                    Hourly
+                  </Button>
+                  <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_INTRADAY", "15min")}>
+                    15 min
+                  </Button>
+                </Grid>
+              </Grid>
+              <Grid item xs={12} className={classes.chartContainer}>
+                <Chart
+                  stockInfo={this.state.stockInfo}
+                  data={this.state.stockData}
+                  xFormat={this.state.xFormat}
+                  xScaleFormat={this.state.xScaleFormat}
+                />
+              </Grid>
+            </Grid>
             {this.props.currentEntry && !this.props.currentEntry.message ? (
               <div>
                 <TradeBar 
@@ -219,5 +267,5 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getEntryByUsernameAndTournamentName, getTradesByEntryId }
-)(Tournament);
+)(withStyles(useStyles, {withTheme: true})(Tournament));
   
