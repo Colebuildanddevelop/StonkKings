@@ -6,18 +6,33 @@ import { createTrade, getTradesByEntryId } from "../redux/actions/trade.actions"
 // MATERIAL UI
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 
 
-const useStyles = () => ({
+const useStyles = (theme) => ({
   buyButton: {
-    backgroundColor: "green",
-    color: "white"
+    width: "30%",
+    padding: 8,
+    marginRight: 10,
+    backgroundColor: theme.palette.text.primary,
+    borderColor: theme.palette.text.primary,
+    color: theme.palette.primary.dark
   },
   sellButton: {
+    width: "30%",
+    padding: 8,
+    marginRight: 10,
     backgroundColor: "red",
-    color: "white"
+    borderColor: "red",
+    color: theme.palette.primary.dark
   },
-  buyOrSell: "buy"
+  sharesField: {
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: 5
+  },
+  sharesFieldInput: {
+    fontSize: 30
+  }
 });
 
 class TradeBar extends React.Component {
@@ -58,17 +73,10 @@ class TradeBar extends React.Component {
     const { classes } = this.props
     return (
       <div>
-        <Button onClick={this.handleModal} name="buy" className={classes.buyButton}>BUY</Button>
-        <Button onClick={this.handleModal} name="sell" className={classes.sellButton}>SELL</Button>
-        <TextField 
-          onChange={this.handleShareField} 
-          value={this.state.shareAmount} 
-          name="shareAmountField"
-          type="number" 
-          id="standard-basic" 
-          label="Amount of shares"
-        />
+        <Button onClick={this.handleModal} size="large" name="buy" variant="outlined" className={classes.buyButton}>BUY</Button>
+        <Button onClick={this.handleModal} size="large" name="sell" variant="outlined" className={classes.sellButton}>SELL</Button>
         <TradeModal
+          handleShareField={this.handleShareField}
           handleTrade={this.handleTrade}
           handleModal={this.handleModal}
           price={this.props.currentPrice}
@@ -86,4 +94,4 @@ class TradeBar extends React.Component {
 export default connect(
   null,
   { createTrade, getTradesByEntryId }
-)(withStyles(useStyles)(TradeBar));
+)(withStyles(useStyles, {withTheme: true})(TradeBar));

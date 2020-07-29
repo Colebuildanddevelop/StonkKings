@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import Countdown from './Countdown';
 import { Link } from "react-router-dom";
 // MATERIAL UI 

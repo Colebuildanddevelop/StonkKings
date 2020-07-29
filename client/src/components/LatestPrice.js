@@ -22,9 +22,14 @@ class LatestPrice extends React.Component {
 
   render() {
     return (
-      <Typography>
-        {this.props.currentPrice}
-      </Typography>
+      <div>
+        <Typography variant="h5">
+          Current Price
+        </Typography>
+        <Typography variant="h6">
+          {this.props.currentPrice}
+        </Typography>
+      </div>
     );
   }
 }

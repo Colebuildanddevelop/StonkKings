@@ -11,17 +11,22 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: 400,
-    top: '50%',
-    left: '35%',
-    backgroundColor: "white",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+  dialogContainer: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  sharesField: {
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: 5
+  },
+  sharesFieldInput: {
+    fontSize: 30
+  },
+  button: {
+    borderColor: theme.palette.text.primary,
   }
 }));
 
@@ -44,7 +49,7 @@ const TradeModal = (props) => {
         open={props.open}
         onClose={props.handleModal}
       >
-        <Grid container>
+        <Grid className={classes.dialogContainer} container>
           <Grid item xs={6}>
             <DialogTitle id="simple-dialog-title">{props.buyOrSell === "buy" ? "Buy Transaction" : "Sell Transaction"}</DialogTitle>
           </Grid>
@@ -84,11 +89,22 @@ const TradeModal = (props) => {
             </DialogContent>
           </Grid>
           <Grid item xs={12}>
+            <TextField 
+              className={classes.sharesField}
+              onChange={props.handleShareField}
+              inputProps={{
+                className: classes.sharesFieldInput
+              }}
+              name="shareAmountField"
+              type="number" 
+              id="standard-basic" 
+              label="Amount of shares"
+            />
             <DialogActions>
-              <Button onClick={props.handleModal} autoFocus color="primary" >
+              <Button onClick={props.handleModal} className={classes.button} variant="outlined" autoFocus color="textPrimary" >
                 Cancel
               </Button>
-              <Button onClick={props.handleTrade} color="primary" autoFocus>
+              <Button onClick={props.handleTrade} className={classes.button} variant="outlined" color="textPrimary" autoFocus>
                 Confirm
               </Button>
             </DialogActions>

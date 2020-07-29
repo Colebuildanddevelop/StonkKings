@@ -223,24 +223,30 @@ class Tournament extends React.Component {
                   xScaleFormat={this.state.xScaleFormat}
                 />
               </Grid>
+              {this.props.currentEntry && !this.props.currentEntry.message ? (
+                <Grid container xs={12}>
+                  <Grid item xs={6} style={{marginTop: 10}}>
+                    <TradeBar 
+                      getCurrentEntry={this.handleGetCurrentEntry}
+                      currentEntry={this.props.currentEntry}
+                      currentPrice={this.state.currentPrice}
+                      stockTicker={this.state.stockInfo.symbol}
+                      entryId={this.props.currentEntry._id || null} 
+                    />
+                  </Grid>
+                  <Grid container item alignItems="flex-start" justify="flex-end" direction="row" xs={6}>
+                    <LatestPrice 
+                      searchString={this.state.stockInfo.symbol}
+                      setPrice={this.setPrice}
+                      currentPrice={this.state.currentPrice}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <MyPositions currentEntry={this.props.currentEntry} tradeData={this.props.tradeData} />
+                  </Grid>
+                </Grid>
+              ): (null)}
             </Grid>
-            {this.props.currentEntry && !this.props.currentEntry.message ? (
-              <div>
-                <TradeBar 
-                  getCurrentEntry={this.handleGetCurrentEntry}
-                  currentEntry={this.props.currentEntry}
-                  currentPrice={this.state.currentPrice}
-                  stockTicker={this.state.stockInfo.symbol}
-                  entryId={this.props.currentEntry._id || null} 
-                />
-                <LatestPrice 
-                  searchString={this.state.stockInfo.symbol}
-                  setPrice={this.setPrice}
-                  currentPrice={this.state.currentPrice}
-                />
-                <MyPositions currentEntry={this.props.currentEntry}  />
-              </div>
-            ): (null)}
           </div>
         ) : null}
         {this.state.currentView === "tradeHistory" ? (
@@ -261,7 +267,8 @@ class Tournament extends React.Component {
 const mapStateToProps = state => ({
   currentEntry: state.entry.currentEntry,
   currentUser: state.auth.currentUser,
-  createdTrade: state.trade.createdTrade
+  createdTrade: state.trade.createdTrade,
+  tradeData: state.trade
 });
 
 export default connect(
