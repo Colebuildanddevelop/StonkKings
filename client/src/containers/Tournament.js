@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { getEntryByUsernameAndTournamentName } from "../redux/actions/entry.actions";
 import { getTradesByEntryId } from "../redux/actions/trade.actions";
+import { getEntriesByTournamentId } from "../redux/actions/entry.actions"
 
 // COMPONENTS
 import SearchBar from "../components/SearchBar";
@@ -10,8 +11,8 @@ import TradeBar from "../components/TradeBar";
 import LatestPrice from "../components/LatestPrice";
 import MyPositions from "../components/MyPositions";
 import TournamentBar from "../components/TournamentBar";
-import AllEntrants from "../components/AllEntrants";
 import TradeHistoryTable from "../components/TradeHistoryTable";
+import AllEntrantsTable from "../components/AllEntrantsTable";
 
 // MATERIAL UI
 import { withStyles } from '@material-ui/core/styles';
@@ -58,9 +59,11 @@ class Tournament extends React.Component {
 
   componentDidMount() {
     this.getPriceData("IBM", "TIME_SERIES_DAILY");
+    this.props.getEntriesByTournamentId(this.props.match.params.id)
     if (localStorage.userId) {
       this.handleGetCurrentEntry();
     }
+
   }
 
   getPriceData = (searchString, timeFunction="IBM", intradayInterval="") => {
@@ -252,8 +255,7 @@ class Tournament extends React.Component {
         ) : null}
         {this.state.currentView === "allEntrants" ? (
           <div>
-            <AllEntrants tournamentId={this.props.match.params.id} />
-            
+            <AllEntrantsTable data={this.props.entries} /> 
           </div>
         ) : null}
       </div>
@@ -263,6 +265,7 @@ class Tournament extends React.Component {
 
 const mapStateToProps = state => ({
   currentEntry: state.entry.currentEntry,
+  entries: state.entry.tournamentEntries,
   currentUser: state.auth.currentUser,
   createdTrade: state.trade.createdTrade,
   tradeData: state.trade
@@ -270,6 +273,6 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getEntryByUsernameAndTournamentName, getTradesByEntryId }
+  { getEntryByUsernameAndTournamentName, getTradesByEntryId, getEntriesByTournamentId }
 )(withStyles(useStyles, {withTheme: true})(Tournament));
   

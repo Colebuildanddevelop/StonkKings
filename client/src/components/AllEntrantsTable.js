@@ -38,11 +38,9 @@ function stableSort(array, comparator) {
 }
 
 const  headCells = [
-  { id: 'ticker', numeric: false, disablePadding: false, label: 'Ticker Symbol' },
-  { id: 'timeTraded', numeric: false, disablePadding: false, label: 'Time of Trade' },
-  { id: 'buyOrSell', numeric: false, disablePadding: false, label: 'Transaction Type' },
-  { id: 'numOfShares', numeric: true, disablePadding: false, label: '# of Shares' },
-  { id: 'price', numeric: true, disablePadding: false, label: 'Price' },
+  { id: 'username', numeric: false, disablePadding: false, label: 'Username' },
+  { id: 'tournamentBalance', numeric: false, disablePadding: false, label: 'Tournament Balance' },
+  { id: '# of Trades', numeric: false, disablePadding: false, label: 'Total Trades' },
 ];
 
 function EnhancedTableHead(props) {
@@ -115,10 +113,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TradeHistoryTable = (props) => {
+const AllEntrantsTable = (props) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('timeTraded');
+  const [orderBy, setOrderBy] = React.useState('username');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -137,26 +135,12 @@ const TradeHistoryTable = (props) => {
     setPage(0);
   };
 
-  const formatDate = (date) => {
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let ampm = hours >= 12 ? 'pm' : 'am';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
-    let strTime = hours + ':' + minutes + ' ' + ampm;
-    return (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
-  }
-
   const formatRows = () => {
-    return props.data.map(trade => {
-      const formattedDate = formatDate(new Date(trade.time));
+    return props.data.map(entry=> {
       return {
-        ticker: trade.stockTicker,
-        timeTraded: formattedDate,
-        buyOrSell: trade.buyOrSell,
-        amountOfShares: parseFloat(trade.amountOfShares),
-        price: trade.price 
+        username: entry.user.username,
+        tournamentBalance: (Math.round(entry.tournamentBalance * 100) / 100).toFixed(2),
+        numOfTrades: entry.trades.length,
       }
     })
   }
@@ -190,19 +174,13 @@ const TradeHistoryTable = (props) => {
                       key={index}
                     >
                       <TableCell className={classes.row} component="th" scope="row" >
-                        {row.ticker}
+                        {row.username}
                       </TableCell>
-                      <TableCell className={classes.row}  >
-                        {row.timeTraded}
+                      <TableCell className={classes.row}>
+                        {row.tournamentBalance}
                       </TableCell>
-                      <TableCell className={classes.row}  >
-                        {row.buyOrSell}
-                      </TableCell>
-                      <TableCell className={classes.row} align="right">
-                        {row.amountOfShares}
-                      </TableCell>
-                      <TableCell className={classes.row} align="right">
-                        {row.price}
+                      <TableCell className={classes.row}>
+                        {row.numOfTrades}
                       </TableCell>
                     </TableRow>
                   );
@@ -226,4 +204,4 @@ const TradeHistoryTable = (props) => {
   );
 }
 
-export default TradeHistoryTable;
+export default AllEntrantsTable;
