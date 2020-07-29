@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { getEntryByUsernameAndTournamentName } from "../redux/actions/entry.actions";
 import { getTradesByEntryId } from "../redux/actions/trade.actions";
-import { getPriceData } from "../helpers/fetchPriceData";
 
 // COMPONENTS
 import SearchBar from "../components/SearchBar";
@@ -12,7 +11,7 @@ import LatestPrice from "../components/LatestPrice";
 import MyPositions from "../components/MyPositions";
 import TournamentBar from "../components/TournamentBar";
 import AllEntrants from "../components/AllEntrants";
-import TradeHistory from "../components/TradeHistory";
+import TradeHistoryTable from "../components/TradeHistoryTable";
 
 // MATERIAL UI
 import { withStyles } from '@material-ui/core/styles';
@@ -239,7 +238,7 @@ class Tournament extends React.Component {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <MyPositions currentEntry={this.props.currentEntry} tradeData={this.props.tradeData} />
+                    <MyPositions tradeData={this.props.tradeData} />
                   </Grid>
                 </Grid>
               ): (null)}
@@ -248,12 +247,13 @@ class Tournament extends React.Component {
         ) : null}
         {this.state.currentView === "tradeHistory" ? (
           <div>
-            <TradeHistory />
+            <TradeHistoryTable data={this.props.tradeData.tradesByEntry}/>
           </div>
         ) : null}
         {this.state.currentView === "allEntrants" ? (
           <div>
             <AllEntrants tournamentId={this.props.match.params.id} />
+            
           </div>
         ) : null}
       </div>

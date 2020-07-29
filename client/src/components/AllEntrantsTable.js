@@ -1,12 +1,7 @@
 import React from "react";
-import { connect } from "react-redux";
-import { getTradesByEntryId } from "../redux/actions/trade.actions";
 // MATERIAL UI  
-import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -15,8 +10,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -46,7 +39,10 @@ function stableSort(array, comparator) {
 
 const  headCells = [
   { id: 'ticker', numeric: false, disablePadding: false, label: 'Ticker Symbol' },
-  { id: 'netShares', numeric: true, disablePadding: false, label: 'Net Shares' },
+  { id: 'timeTraded', numeric: false, disablePadding: false, label: 'Time of Trade' },
+  { id: 'buyOrSell', numeric: false, disablePadding: false, label: 'Transaction Type' },
+  { id: 'numOfShares', numeric: true, disablePadding: false, label: '# of Shares' },
+  { id: 'price', numeric: true, disablePadding: false, label: 'Price' },
 ];
 
 function EnhancedTableHead(props) {
@@ -119,34 +115,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MyPositions = (props) => {
+const TradeHistoryTable = (props) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('entryFee');
+  const [orderBy, setOrderBy] = React.useState('timeTraded');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  const consolidatePositionsArr = () => {
-    const allTickers = props.tradeData.tradesByEntry.map(t => t.stockTicker);
-    const uniqueTickers = allTickers.filter((val, index, self) => self.indexOf(val) === index);
-    const positions = uniqueTickers.map(ticker => {
-      const position = {
-        ticker: ticker,
-        netShares: 0
-      }
-      props.tradeData.tradesByEntry.forEach(trade => {
-        if (trade.stockTicker === ticker) {
-          if (trade.buyOrSell === "buy") {
-            position.netShares = position.netShares + trade.amountOfShares
-          } else {
-            position.netShares = position.netShares - trade.amountOfShares
-          }
-        }
-      });
-      return position;
-    })
-    return positions
-  }
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -163,11 +137,26 @@ const MyPositions = (props) => {
     setPage(0);
   };
 
+  const formatDate = (date) => {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    let strTime = hours + ':' + minutes + ' ' + ampm;
+    return (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
+  }
+
   const formatRows = () => {
-    return consolidatePositionsArr().map(position => {
+    return props.data.map(trade => {
+      const formattedDate = formatDate(new Date(trade.time));
       return {
-        ticker: position.ticker,
-        netShares: position.netShares
+        ticker: trade.stockTicker,
+        timeTraded: formattedDate,
+        buyOrSell: trade.buyOrSell,
+        amountOfShares: parseFloat(trade.amountOfShares),
+        price: trade.price 
       }
     })
   }
@@ -203,7 +192,18 @@ const MyPositions = (props) => {
                       <TableCell className={classes.row} component="th" scope="row" >
                         {row.ticker}
                       </TableCell>
-                      <TableCell className={classes.row} align="right">{row.netShares}</TableCell>
+                      <TableCell className={classes.row}  >
+                        {row.timeTraded}
+                      </TableCell>
+                      <TableCell className={classes.row}  >
+                        {row.buyOrSell}
+                      </TableCell>
+                      <TableCell className={classes.row} align="right">
+                        {row.amountOfShares}
+                      </TableCell>
+                      <TableCell className={classes.row} align="right">
+                        {row.price}
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -226,4 +226,4 @@ const MyPositions = (props) => {
   );
 }
 
-export default MyPositions;
+export default TradeHistoryTable;

@@ -89,9 +89,7 @@ class TradeBar extends React.Component {
   }
 
   render() {
-    console.log(this.props.createdTrade)
     const { classes } = this.props
-    
     let snackbarmessage = "";
     let snackbarErr = false;
     if (this.props.createdTrade !== []) {
