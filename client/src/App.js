@@ -27,6 +27,16 @@ const useStyles = (theme) => ({
 
 class App extends React.Component {
 
+  state = {
+    loggedIn: false,
+  }
+
+  logIn = () => {
+    this.setState({
+      loggedIn: true
+    })
+  }
+
   componentDidMount() {
     if (localStorage.token) {
       this.props.loginWithToken(localStorage.token)
@@ -34,17 +44,27 @@ class App extends React.Component {
   }
   
   render() {
+    console.log(this.state)
     const { classes } = this.props;
     return (
       <div className={classes.app}>
         <BrowserRouter>
-          <NavBar  />
+          {this.state.loggedIn || localStorage.token ? (
+            <NavBar />
+          ) : null}
           <Switch>
+            <Route
+              exact
+              path="/lobby"
+              render={(routeProps) => (
+                <Lobby {...routeProps} />
+              )}
+            />
             <Route
               exact
               path="/"
               render={(routeProps) => (
-                <Lobby {...routeProps} />
+                <Login logIn={this.logIn} {...routeProps} />
               )}
             />
             <Route

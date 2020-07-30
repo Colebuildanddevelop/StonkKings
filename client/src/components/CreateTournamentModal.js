@@ -107,7 +107,7 @@ const CreateTournamentModal = (props) => {
               </Grid>
               <Grid item xs={12}>
                 <DialogActions>
-                  <Button className={classes.lobbyButton} onClick={() => history.push('/')} variant="contained">
+                  <Button className={classes.lobbyButton} onClick={() => history.push('/lobby')} variant="contained">
                     Go to lobby!
                   </Button>
                 </DialogActions>

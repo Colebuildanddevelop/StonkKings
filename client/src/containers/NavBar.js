@@ -48,10 +48,10 @@ class NavBar extends React.Component {
       <div className={classes.root}>
         <AppBar position="static" className={classes.nav}>
           <Toolbar>
-            <Typography component={Link} to={"/"} variant="h4" color="textPrimary" className={classes.title}>
+            <Typography component={Link} to={"/lobby"} variant="h4" color="textPrimary" className={classes.title}>
               STONKKINGS
             </Typography>
-            <Typography component={Link} to={"/"} variant="h6" color="textPrimary" className={classes.title}>
+            <Typography component={Link} to={"/lobby"} variant="h6" color="textPrimary" className={classes.title}>
               Lobby
             </Typography>
             <Typography component={Link} to={"/my-tournaments"} variant="h6" color="textPrimary" className={classes.title}>
