@@ -61,7 +61,8 @@ class TradeBar extends React.Component {
   handleModal = (e) => {
     this.setState({
       openModal: !this.state.openModal,
-      buyOrSell: e.currentTarget.name
+      buyOrSell: e.currentTarget.name,
+      shareAmountField: 1
     });
   }
 

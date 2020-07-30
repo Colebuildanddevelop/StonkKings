@@ -2,7 +2,9 @@ import React from "react";
 // MATERIAL UI  
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
+import Typography from '@material-ui/core/Typography';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -10,6 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Avatar from '@material-ui/core/Avatar';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -101,11 +104,13 @@ const useStyles = makeStyles((theme) => ({
     width: 1,
   },
   tableHead: {
+    fontWeight: 'bold',
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.text.secondary,
     width: "100%"
   },
   row: {
+    fontWeight: 'bold',
     color: theme.palette.primary.dark
   },
   tablePagination: {
@@ -141,6 +146,7 @@ const AllEntrantsTable = (props) => {
         username: entry.user.username,
         tournamentBalance: (Math.round(entry.tournamentBalance * 100) / 100).toFixed(2),
         numOfTrades: entry.trades.length,
+        avatar: entry.user.avatar
       }
     })
   }
@@ -174,7 +180,12 @@ const AllEntrantsTable = (props) => {
                       key={index}
                     >
                       <TableCell className={classes.row} component="th" scope="row" >
-                        {row.username}
+                        <Grid container alignItems="flex-start" direction="row">
+                          <Avatar src={row.avatar} />
+                          <Typography variant="h5" style={{marginTop: 10, paddingLeft: 10}}>
+                            {row.username}
+                          </Typography>
+                        </Grid>
                       </TableCell>
                       <TableCell className={classes.row} align="right">
                         {row.tournamentBalance}

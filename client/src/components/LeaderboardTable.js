@@ -217,7 +217,6 @@ const LeaderboardTable = (props) => {
                             {row.username}
                           </Typography>
                         </Grid>
-
                       </TableCell>
                       <TableCell className={classes.row} align="right">{row.numOfEntries}</TableCell>
                       <TableCell className={classes.row} align="right">{row.wins}</TableCell>
