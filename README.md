@@ -321,3 +321,16 @@ how would i seed data
 
   - create trades 
 
+// presentation flow
+
+--- 
+
+- login as cole
+
+- show lobby table
+
+- go to stock kings monthly
+
+- show trade history
+
+- 

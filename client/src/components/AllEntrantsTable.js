@@ -42,8 +42,8 @@ function stableSort(array, comparator) {
 
 const  headCells = [
   { id: 'username', numeric: false, disablePadding: false, label: 'Username' },
-  { id: 'tournamentBalance', numeric: true, disablePadding: false, label: 'Tournament Balance' },
   { id: '#OfTrades', numeric: true, disablePadding: false, label: 'Total Trades' },
+  { id: 'tournamentBalance', numeric: true, disablePadding: false, label: 'Tournament Balance' }
 ];
 
 function EnhancedTableHead(props) {
@@ -121,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
 const AllEntrantsTable = (props) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('username');
+  const [orderBy, setOrderBy] = React.useState('tournamentBalance');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -188,10 +188,10 @@ const AllEntrantsTable = (props) => {
                         </Grid>
                       </TableCell>
                       <TableCell className={classes.row} align="right">
-                        {row.tournamentBalance}
+                        {row.numOfTrades}
                       </TableCell>
                       <TableCell className={classes.row} align="right">
-                        {row.numOfTrades}
+                        {row.tournamentBalance}
                       </TableCell>
                     </TableRow>
                   );

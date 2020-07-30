@@ -128,7 +128,9 @@ const MyPositions = (props) => {
   const [orderBy, setOrderBy] = React.useState('entryFee');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  
 
+  let hasPositions = false; 
   const consolidatePositionsArr = () => {
     const allTickers = props.tradeData.tradesByEntry.map(t => t.stockTicker);
     const uniqueTickers = allTickers.filter((val, index, self) => self.indexOf(val) === index);
@@ -154,8 +156,12 @@ const MyPositions = (props) => {
         }
       });
       position.averagePrice = sharePriceXNumOfSharesSum / totalShares
+      if (position.netShares > 0) {
+        hasPositions = true
+      }
       return position;
     })
+
     return positions
   }
 
@@ -175,65 +181,73 @@ const MyPositions = (props) => {
   };
 
   const formatRows = () => {
-    return consolidatePositionsArr().map(position => {
-      return {
-        ticker: position.ticker,
-        netShares: position.netShares,
-        averagePrice: (Math.round(position.averagePrice * 100) / 100).toFixed(2)
+    return consolidatePositionsArr().filter(position => {
+      if (position.netShares > 0) {
+        return {
+          ticker: position.ticker,
+          netShares: position.netShares,
+          averagePrice: (Math.round(position.averagePrice * 100) / 100).toFixed(2)
+        }
       }
     })
   }
 
   const rows = formatRows();
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+    <div>
+      {hasPositions ? (
+        <div className={classes.root}>
+          <Paper className={classes.paper}>
+            <TableContainer>
+              <Table
+                className={classes.table}
+                aria-labelledby="tableTitle"
+                aria-label="enhanced table"
+              >
+                <EnhancedTableHead
+                  classes={classes}
+                  order={order}
+                  orderBy={orderBy}
+                  onRequestSort={handleRequestSort}
+                  rowCount={rows.length}
+                />
+                <TableBody>
+                  {stableSort(rows, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      return (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={index}
+                        >
+                          <TableCell className={classes.row} component="th" scope="row" >
+                            {row.ticker}
+                          </TableCell>
+                          <TableCell className={classes.row} align="left">{row.averagePrice.toFixed(2)}</TableCell>
+                          <TableCell className={classes.row} align="left">{row.netShares}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              className={classes.tablePagination}
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
             />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={index}
-                    >
-                      <TableCell className={classes.row} component="th" scope="row" >
-                        {row.ticker}
-                      </TableCell>
-                      <TableCell className={classes.row} align="left">{row.averagePrice}</TableCell>
-                      <TableCell className={classes.row} align="left">{row.netShares}</TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          className={classes.tablePagination}
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
+          </Paper>
+
+        </div>
+
+      ) : null}
 
     </div>
   );

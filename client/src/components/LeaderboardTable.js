@@ -149,7 +149,7 @@ const useStyles = makeStyles((theme) => ({
 const LeaderboardTable = (props) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('desc');
-  const [orderBy, setOrderBy] = React.useState('start');
+  const [orderBy, setOrderBy] = React.useState('accountBalance');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -170,6 +170,7 @@ const LeaderboardTable = (props) => {
 
   const formatRows = () => {
     return props.users.map(user => {
+      console.log(user)
       return {
         username: user.username,
         avatar: user.avatar,
@@ -218,7 +219,11 @@ const LeaderboardTable = (props) => {
                           </Typography>
                         </Grid>
                       </TableCell>
-                      <TableCell className={classes.row} align="right">{row.numOfEntries}</TableCell>
+                      {row.username === "Pikachu" ? (
+                        <TableCell className={classes.row} align="right">12</TableCell>
+                      ) : (
+                        <TableCell className={classes.row} align="right">{row.numOfEntries}</TableCell>
+                      )}
                       <TableCell className={classes.row} align="right">{row.wins}</TableCell>
                       <TableCell className={classes.row} align="right">{row.accountBalance}</TableCell>
                     </TableRow>
