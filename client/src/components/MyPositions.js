@@ -46,7 +46,8 @@ function stableSort(array, comparator) {
 
 const  headCells = [
   { id: 'ticker', numeric: false, disablePadding: false, label: 'Ticker Symbol' },
-  { id: 'netShares', numeric: true, disablePadding: false, label: 'Net Shares' },
+  { id: 'averagePrice', numeric: false, disablePadding: false, label: 'Average Price' },
+  { id: 'netShares', numeric: false, disablePadding: false, label: 'Net Shares' },
 ];
 
 function EnhancedTableHead(props) {
@@ -132,17 +133,25 @@ const MyPositions = (props) => {
     const positions = uniqueTickers.map(ticker => {
       const position = {
         ticker: ticker,
-        netShares: 0
+        netShares: 0,
+        averagePrice: 0
       }
+      let sharePriceXNumOfSharesSum = 0; 
+      let totalShares = 0;
       props.tradeData.tradesByEntry.forEach(trade => {
         if (trade.stockTicker === ticker) {
+
           if (trade.buyOrSell === "buy") {
+            sharePriceXNumOfSharesSum += (trade.amountOfShares * trade.price);
+            totalShares += trade.amountOfShares
+
             position.netShares = position.netShares + trade.amountOfShares
           } else {
             position.netShares = position.netShares - trade.amountOfShares
           }
         }
       });
+      position.averagePrice = sharePriceXNumOfSharesSum / totalShares
       return position;
     })
     return positions
@@ -167,7 +176,8 @@ const MyPositions = (props) => {
     return consolidatePositionsArr().map(position => {
       return {
         ticker: position.ticker,
-        netShares: position.netShares
+        netShares: position.netShares,
+        averagePrice: (Math.round(position.averagePrice * 100) / 100).toFixed(2)
       }
     })
   }
@@ -203,7 +213,8 @@ const MyPositions = (props) => {
                       <TableCell className={classes.row} component="th" scope="row" >
                         {row.ticker}
                       </TableCell>
-                      <TableCell className={classes.row} align="right">{row.netShares}</TableCell>
+                      <TableCell className={classes.row} align="left">{row.averagePrice}</TableCell>
+                      <TableCell className={classes.row} align="left">{row.netShares}</TableCell>
                     </TableRow>
                   );
                 })}

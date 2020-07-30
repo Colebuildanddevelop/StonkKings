@@ -220,8 +220,12 @@ const LobbyTable = (props) => {
                       <TableCell className={classes.row} align="right">{row.entryFee}</TableCell>
                       <TableCell className={classes.row} align="right">{row.entries}</TableCell>
                       <TableCell className={classes.row} align="right">{row.totalPrize}</TableCell>
-                      <Countdown className={classes.row} countDownEnd={new Date(row.start).getTime()} overMsg={"Started!"}/>
-                      <Countdown className={classes.row} countDownEnd={new Date(row.end).getTime()} overMsg={"Tournament is Over!"}/>
+                      <TableCell className={classes.row} align="right">
+                        <Countdown className={classes.row} countDownEnd={new Date(row.start).getTime()} overMsg={"Started!"}/>
+                      </TableCell>
+                      <TableCell className={classes.row} align="right">
+                        <Countdown className={classes.row} countDownEnd={new Date(row.end).getTime()} overMsg={"Ended!"}/>
+                      </TableCell>
                     </TableRow>
                   );
                 })}

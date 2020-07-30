@@ -44,9 +44,7 @@ class Countdown extends React.Component {
 
   render() {
     return (
-      <TableCell align="right" className={this.props.className}>
-        {this.state.countdown}
-      </TableCell>
+      this.state.countdown
     )
   }
 }
