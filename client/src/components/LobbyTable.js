@@ -178,6 +178,7 @@ const LobbyTable = (props) => {
         tournament: tournament,
         name: tournament.name,
         entryFee: tournament.entryFee,
+        entryLimit: tournament.entryLimit,
         entries: tournament.entries.length,
         totalPrize: tournament.entryFee * tournament.entries.length,
         start: tournament.startTime,
@@ -221,7 +222,7 @@ const LobbyTable = (props) => {
                         {row.name}
                       </TableCell>
                       <TableCell className={classes.row} align="right">{row.entryFee}</TableCell>
-                      <TableCell className={classes.row} align="right">{row.entries}</TableCell>
+                      <TableCell className={classes.row} align="right">{row.entries} / {row.entryLimit}</TableCell>
                       <TableCell className={classes.row} align="right">{row.totalPrize}</TableCell>
                       <TableCell className={classes.row} align="right">
                         <Countdown className={classes.row} countDownEnd={new Date(row.start).getTime()} overMsg={"Started!"}/>

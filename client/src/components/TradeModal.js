@@ -57,9 +57,9 @@ const TradeModal = (props) => {
 
   const calculateResultingBalance = (buyOrSell, currentBalance, amountOfShares, price) => {
       if (buyOrSell === "buy") {
-        return (Math.round(currentBalance - (price * amountOfShares) * 100) / 100).toFixed(2);
+        return (Math.round(currentBalance - (price * amountOfShares) ) * 100 / 100).toFixed(2);
       } else {
-        return (Math.round(currentBalance + (price * amountOfShares) * 100) / 100).toFixed(2);
+        return (Math.round(currentBalance + (price * amountOfShares) ) * 100 / 100).toFixed(2);
       }
   }
 

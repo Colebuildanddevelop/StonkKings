@@ -49,6 +49,7 @@ const  headCells = [
   { id: 'totalPrize', numeric: true, disablePadding: false, label: 'Total Prize' },
   { id: 'start', numeric: true, disablePadding: false, label: 'Start' },
   { id: 'end', numeric: true, disablePadding: false, label: 'End' },
+  { id: 'enter', numeric: true, disablePadding: false, label: 'Enter' },
 ];
 
 function EnhancedTableHead(props) {
@@ -145,6 +146,14 @@ const useStyles = makeStyles((theme) => ({
   },
   tablePagination: {
     color: theme.palette.primary.dark
+  },
+  enterButton: {
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.primary.dark,
+    width: 20,
+    '&:hover': {
+      backgroundColor: theme.palette.text.primary
+    }
   }
 }));
 
@@ -225,6 +234,11 @@ const MyTournamentsTable = (props) => {
                       </TableCell>
                       <TableCell className={classes.row} align="right">
                         <Countdown className={classes.row} countDownEnd={new Date(row.end).getTime()} overMsg={"Ended!"}/>
+                      </TableCell>
+                      <TableCell className={classes.row} align="right">
+                        <Button className={classes.enterButton} variant="outlined" autoFocus component={Link} to={`/tournament/${row.tournament.id}`}>
+                          Enter
+                        </Button>
                       </TableCell>
                     </TableRow>
                   );
