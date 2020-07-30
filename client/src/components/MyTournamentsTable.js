@@ -39,7 +39,6 @@ function stableSort(array, comparator) {
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  console.log(stabilizedThis)
   return stabilizedThis.map((el) => el[0]);
 }
 
@@ -101,13 +100,13 @@ const useToolbarStyles = makeStyles((theme) => ({
   }
 }));
 
-const EnhancedTableToolbar = (props) => {
+const EnhancedTableToolbar = () => {
   const classes = useToolbarStyles();
 
   return (
     <Toolbar className={classes.toolbar}>
       <Typography className={classes.title} variant="h4" id="tableTitle" component="div">
-        LOBBY
+        My Tournaments
       </Typography>
     </Toolbar>
   );
@@ -147,7 +146,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const LobbyTable = (props) => {
+const MyTournamentsTable = (props) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('desc');
   const [orderBy, setOrderBy] = React.useState('start');
@@ -182,12 +181,12 @@ const LobbyTable = (props) => {
       }
     })
   }
-  console.log(props)
+
   const rows = formatRows();
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar tableHeader={props.tableHeader} />
+        <EnhancedTableToolbar  />
         <TableContainer>
           <Table
             className={classes.table}
@@ -212,7 +211,6 @@ const LobbyTable = (props) => {
                       role="checkbox"
                       tabIndex={-1}
                       key={index}
-                      onClick={() => props.handleClickTournamentRow(row.tournament)}
                     >
                       <TableCell className={classes.row} component="th" scope="row" >
                         {row.name}
@@ -243,4 +241,4 @@ const LobbyTable = (props) => {
   );
 }
 
-export default LobbyTable;
+export default MyTournamentsTable;

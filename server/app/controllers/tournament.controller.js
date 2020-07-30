@@ -3,7 +3,8 @@ const TournamentModel = require("../models/tournament");
 const TournamentController = {
   index: async (req, res) => {
     const tournaments = await TournamentModel.find({})
-      .populate({ path: 'createdBy', select: 'username -_id' })
+      .populate({ path: 'createdBy' })
+      .populate({ path: 'entries' })
     tournamentsFormatted = tournaments.map(tournament => {
       return {
         id: tournament._id,

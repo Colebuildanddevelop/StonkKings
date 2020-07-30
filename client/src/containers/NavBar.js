@@ -54,12 +54,23 @@ class NavBar extends React.Component {
             <Typography component={Link} to={"/"} variant="h6" color="textPrimary" className={classes.title}>
               Lobby
             </Typography>
-            <Typography component={Link} to={"/"} variant="h6" color="textPrimary" className={classes.title}>
+            <Typography component={Link} to={"/my-tournaments"} variant="h6" color="textPrimary" className={classes.title}>
               My Tournaments
             </Typography>
-            <Typography component={Link} to={"/"} variant="h6" color="textPrimary" style={{flexGrow: 1}} className={classes.title}>
+            <Typography component={Link} to={"/"} variant="h6" color="textPrimary" className={classes.title}>
               Leaderboard        
             </Typography>
+            <div style={{flexGrow: 1}}>
+              <Button 
+                variant="outlined" 
+                color="secondary"
+                component={Link}
+                to={`/create-tournament`}
+              >
+                Create a Tournament
+              </Button>
+
+            </div>
             {this.props.currentUser && !this.props.currentUser.message ? 
             (
               <div>

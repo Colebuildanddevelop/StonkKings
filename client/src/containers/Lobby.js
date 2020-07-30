@@ -39,6 +39,7 @@ const useStyles = (theme) => ({
 class Lobby extends React.Component {
   
   state = {
+    tableHeader: "LOBBY",
     modalOpen: false,
     entered: false,
     tournamentClickedInfo: {}
@@ -62,7 +63,7 @@ class Lobby extends React.Component {
     let entered = false;
     tournamentInfo.entries.forEach(entry => {
       this.props.currentUser.entries.forEach(userEntry => {
-        if (entry === userEntry) {
+        if (entry._id === userEntry) {
           entered = true
         }
       });
@@ -75,7 +76,6 @@ class Lobby extends React.Component {
   }
 
   handleModal = () => {
-
     this.setState({
       modalOpen: !this.state.modalOpen
     })
@@ -94,6 +94,7 @@ class Lobby extends React.Component {
           currentUser={this.props.currentUser}
         />
         <LobbyTable 
+          tableHeader={this.props.mainTableHeader}
           tournamentsArr={this.props.tournamentsArr}
           handleClickTournamentRow={this.handleClickTournamentRow}
         />

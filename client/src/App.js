@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { loginWithToken } from "./redux/actions/auth.actions";
 // components 
 // containers 
+import MyTournaments from './containers/MyTournaments';
 import Lobby from "./containers/Lobby";
 import Login from "./containers/Login";
 import Tournament from "./containers/Tournament";
@@ -30,19 +31,26 @@ class App extends React.Component {
       this.props.loginWithToken(localStorage.token)
     }
   }
-
+  
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.app}>
         <BrowserRouter>
-          <NavBar />
+          <NavBar  />
           <Switch>
             <Route
               exact
               path="/"
               render={(routeProps) => (
                 <Lobby {...routeProps} />
+              )}
+            />
+            <Route
+              exact
+              path="/my-tournaments"
+              render={(routeProps) => (
+                <MyTournaments {...routeProps} />
               )}
             />
             <Route

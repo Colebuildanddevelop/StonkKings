@@ -12,7 +12,6 @@ const assignWinnerScheduler = () => {
           return;
         }
         tournaments.forEach(tournament => {
-          
           if (tournament.endTime < new Date() && (tournament.winners.length === 0) && tournament.entries.length !== 0) {
             const balances = tournament.entries.map(entry => entry.tournamentBalance);
             console.log(balances)
