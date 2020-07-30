@@ -63,8 +63,3 @@ class SnackBarDisplay extends React.Component {
 }
 
 export default withStyles(useStyles, {withTheme: true})(SnackBarDisplay);
-
-
-        // <Alert severity="warning">This is a warning message!</Alert>
-        // <Alert severity="info">This is an information message!</Alert>
-        // <Alert severity="success">This is a success message!</Alert>

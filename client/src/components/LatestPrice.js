@@ -27,7 +27,7 @@ class LatestPrice extends React.Component {
           Current Price
         </Typography>
         <Typography variant="h6">
-          {this.props.currentPrice}
+          ${this.props.currentPrice}
         </Typography>
       </div>
     );

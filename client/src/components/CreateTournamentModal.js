@@ -1,6 +1,7 @@
 import React from 'react';
 import Countdown from '../components/Countdown';
 import { Link } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 // MATERIAL UI  
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -19,12 +20,40 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     backgroundColor: theme.palette.primary.dark
+  },
+  textContainer: {
+    display: 'flex'  
+  },
+  text: {
+    fontWeight: 'bold',
+    color: theme.palette.primary.dark
+  },
+  lobbyButton: {
+    width: '100%',
+    fontWeight: 'bold',
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.text.secondary,
+   '&:hover': {
+     backgroundColor: theme.palette.text.primary,
+   }
+  },
+  createButton: {
+    backgroundColor: theme.palette.text.primary,
+    color: theme.palette.primary.dark,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+      color: theme.palette.text.secondary
+   }
+  },
+  cancelButton: {
+    backgroundColor: theme.palette.primary.main
   }
 
 }));
 
 const CreateTournamentModal = (props) => {
   const classes = useStyles();
+  const history = useHistory();
 
   // getModalStyle is not a pure function, we roll the style only on the first render
   console.log(props)
@@ -36,36 +65,36 @@ const CreateTournamentModal = (props) => {
         onClose={props.handleModal}
       >
         <Grid container className={classes.dialogBox}>
-          <Grid item xs={12} className={classes.title}>
-            <DialogTitle id="simple-dialog-title">Create Tournament</DialogTitle>
-          </Grid>
           {!props.createTournamentSuccess ? (
             <div>
-              <Grid item xs={12}>
+              <Grid item xs={12} className={classes.title}>
+                <DialogTitle id="simple-dialog-title">Create Tournament</DialogTitle>
+              </Grid>
+              <Grid item container xs={12}>
                 <DialogContent>
-                  <DialogContentText >
+                  <DialogContentText className={classes.text}>
                     Tournament Name: {props.tournamentName}
                   </DialogContentText>
-                  <DialogContentText>
+                  <DialogContentText className={classes.text}>
                     Max Entries: {props.entryLimit}
                   </DialogContentText>
-                  <DialogContentText>
+                  <DialogContentText className={classes.text}>
                     Entry Fee: {props.entryFee}
                   </DialogContentText>
-                  <DialogContentText>
+                  <DialogContentText className={classes.text}>
                     Start Time: {props.startTime}
                   </DialogContentText>
-                  <DialogContentText>
+                  <DialogContentText className={classes.text}>
                     End Time: {props.endTime}
                   </DialogContentText>
                 </DialogContent>
               </Grid>
               <Grid item xs={12}>
                 <DialogActions>
-                  <Button variant="outlined" onClick={props.handleModal}>
+                  <Button className={classes.cancelButton}variant="outlined" onClick={props.handleModal}>
                     Cancel
                   </Button>
-                  <Button variant="outlined" onClick={props.createTournament}>
+                  <Button className={classes.createButton} variant="primary" onClick={props.createTournament}>
                     Create
                   </Button>
                 </DialogActions>
@@ -73,16 +102,12 @@ const CreateTournamentModal = (props) => {
             </div>
           ) : (
             <div>
-              <Grid item xs={12}>
-                <DialogContent>
-                  <DialogContentText >
-                    Tournament was created! 
-                  </DialogContentText>
-                </DialogContent>
+              <Grid item xs={12} className={classes.title}>
+                <DialogTitle id="simple-dialog-title">Tournament Successfully Created!</DialogTitle>
               </Grid>
               <Grid item xs={12}>
                 <DialogActions>
-                  <Button variant="outlined">
+                  <Button className={classes.lobbyButton} onClick={() => history.push('/')} variant="contained">
                     Go to lobby!
                   </Button>
                 </DialogActions>

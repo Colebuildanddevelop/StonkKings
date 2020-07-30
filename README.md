@@ -309,3 +309,15 @@ HANDLING SUCCESS AND ERRORS
 MISC
 
   - right now when we reflect dom changes we dispatch a whole action rather than initally setting component state then updating that state which would be more optimal  
+
+
+how would i seed data 
+
+  - create touranemnts
+
+  - create users
+
+  - create entries
+
+  - create trades 
+

@@ -32,7 +32,8 @@ const useStyles = (theme) => ({
   },
   titleContainer: {
     marginLeft: '22%',
-    marginBottom: 10
+    marginBottom: 10,
+    
   },
   avatar: {
     backgroundColor: theme.palette.secondary.main,

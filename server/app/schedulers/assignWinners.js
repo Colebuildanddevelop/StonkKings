@@ -26,6 +26,7 @@ const assignWinnerScheduler = () => {
                     return;
                   }
                   user.accountBalance += tournament.entryFee * tournament.entries.length;
+                  user.wins += 1;
                   console.log("user", user)
                   user.save(err => {
                     if (err) {

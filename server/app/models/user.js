@@ -8,6 +8,7 @@ const UserSchema = new Schema({
   profilePicture: String,
   avatar: { type: String, default: "https://img.favpng.com/3/11/25/avatar-youtube-cat-png-favpng-PRA6iZsrgWAqXFqmjMsfSvuPG.jpg" },
   accountBalance: { type: Number, default: 10000 },
+  wins: {type: Number, default: 0},
   friends: [{
     type: Schema.Types.ObjectId,
     ref: "User"

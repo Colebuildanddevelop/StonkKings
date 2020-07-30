@@ -57,7 +57,7 @@ class NavBar extends React.Component {
             <Typography component={Link} to={"/my-tournaments"} variant="h6" color="textPrimary" className={classes.title}>
               My Tournaments
             </Typography>
-            <Typography component={Link} to={"/"} variant="h6" color="textPrimary" className={classes.title}>
+            <Typography component={Link} to={"/leaderboard"} variant="h6" color="textPrimary" className={classes.title}>
               Leaderboard        
             </Typography>
             <div style={{flexGrow: 1}}>

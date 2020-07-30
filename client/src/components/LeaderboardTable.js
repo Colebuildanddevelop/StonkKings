@@ -1,10 +1,10 @@
 import React from 'react';
 import Countdown from './Countdown';
-import { Link } from "react-router-dom";
 // MATERIAL UI 
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
+import Avatar from '@material-ui/core/Avatar';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -43,12 +43,10 @@ function stableSort(array, comparator) {
 }
 
 const  headCells = [
-  { id: 'name', numeric: false, disablePadding: false, label: 'Tournament Name' },
-  { id: 'entryFee', numeric: true, disablePadding: false, label: 'Entry Fee' },
-  { id: 'entries', numeric: true, disablePadding: false, label: 'Entries'},
-  { id: 'totalPrize', numeric: true, disablePadding: false, label: 'Total Prize' },
-  { id: 'start', numeric: true, disablePadding: false, label: 'Start' },
-  { id: 'end', numeric: true, disablePadding: false, label: 'End' },
+  { id: 'username', numeric: false, disablePadding: false, label: 'Username' },
+  { id: 'numOfEntries', numeric: true, disablePadding: false, label: 'Number of Entries' },
+  { id: 'wins', numeric: true, disablePadding: false, label: 'Wins' },
+  { id: 'accountBalance', numeric: true, disablePadding: false, label: 'Account Balance'}
 ];
 
 function EnhancedTableHead(props) {
@@ -106,7 +104,7 @@ const EnhancedTableToolbar = () => {
   return (
     <Toolbar className={classes.toolbar}>
       <Typography className={classes.title} variant="h4" id="tableTitle" component="div">
-        My Tournaments
+        Leaderboard
       </Typography>
     </Toolbar>
   );
@@ -146,7 +144,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MyTournamentsTable = (props) => {
+const LeaderboardTable = (props) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('desc');
   const [orderBy, setOrderBy] = React.useState('start');
@@ -169,15 +167,13 @@ const MyTournamentsTable = (props) => {
   };
 
   const formatRows = () => {
-    return props.tournamentsArr.map(tournament => {
+    return props.users.map(user => {
       return {
-        tournament: tournament,
-        name: tournament.name,
-        entryFee: tournament.entryFee,
-        entries: tournament.entries.length,
-        totalPrize: tournament.entryFee * tournament.entries.length,
-        start: tournament.startTime,
-        end: tournament.endTime
+        username: user.username,
+        avatar: user.avatar,
+        wins: user.wins,
+        accountBalance: user.accountBalance,
+        numOfEntries: user.entries.length
       }
     })
   }
@@ -213,17 +209,17 @@ const MyTournamentsTable = (props) => {
                       key={index}
                     >
                       <TableCell className={classes.row} component="th" scope="row" >
-                        {row.name}
+                        <Grid container alignItems="flex-start" direction="row">
+                          <Avatar src={row.avatar} />
+                          <Typography variant="h5" style={{marginTop: 10, paddingLeft: 10}}>
+                            {row.username}
+                          </Typography>
+                        </Grid>
+
                       </TableCell>
-                      <TableCell className={classes.row} align="right">{row.entryFee}</TableCell>
-                      <TableCell className={classes.row} align="right">{row.entries}</TableCell>
-                      <TableCell className={classes.row} align="right">{row.totalPrize}</TableCell>
-                      <TableCell className={classes.row} align="right">
-                        <Countdown className={classes.row} countDownEnd={new Date(row.start).getTime()} overMsg={"Started!"}/>
-                      </TableCell>
-                      <TableCell className={classes.row} align="right">
-                        <Countdown className={classes.row} countDownEnd={new Date(row.end).getTime()} overMsg={"Ended!"}/>
-                      </TableCell>
+                      <TableCell className={classes.row} align="right">{row.numOfEntries}</TableCell>
+                      <TableCell className={classes.row} align="right">{row.wins}</TableCell>
+                      <TableCell className={classes.row} align="right">{row.accountBalance}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -245,4 +241,4 @@ const MyTournamentsTable = (props) => {
   );
 }
 
-export default MyTournamentsTable;
+export default LeaderboardTable;

@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { loginWithToken } from "./redux/actions/auth.actions";
 // components 
 // containers 
+import Leaderboard from './containers/Leaderboard';
 import MyTournaments from './containers/MyTournaments';
 import Lobby from "./containers/Lobby";
 import Login from "./containers/Login";
@@ -51,6 +52,13 @@ class App extends React.Component {
               path="/my-tournaments"
               render={(routeProps) => (
                 <MyTournaments {...routeProps} />
+              )}
+            />
+            <Route
+              exact
+              path="/leaderboard"
+              render={(routeProps) => (
+                <Leaderboard {...routeProps} />
               )}
             />
             <Route
