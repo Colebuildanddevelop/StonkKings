@@ -108,11 +108,13 @@ const useStyles = makeStyles((theme) => ({
     width: 1,
   },
   tableHead: {
+    fontWeight: 'bold',
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.text.secondary,
     width: "100%"
   },
   row: {
+    fontWeight: 'bold',
     color: theme.palette.primary.dark
   },
   tablePagination: {

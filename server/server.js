@@ -46,6 +46,7 @@ require("./app/routes/trade.routes")(app);
 
 require("./app/schedulers/assignWinners")();
 
+
 // set port, listen for requests
 const PORT = dbConfig.PORT || 8080;
 app.listen(PORT, () => {

@@ -17,7 +17,11 @@ const useStyles = (theme) => ({
     marginRight: 10,
     backgroundColor: theme.palette.text.primary,
     borderColor: theme.palette.text.primary,
-    color: theme.palette.primary.dark
+    color: theme.palette.primary.dark,
+    '&:hover': {
+      color: theme.palette.text.primary,
+      backgroundColor: theme.palette.primary.main
+    }
   },
   sellButton: {
     width: "30%",
@@ -25,7 +29,11 @@ const useStyles = (theme) => ({
     marginRight: 10,
     backgroundColor: "red",
     borderColor: "red",
-    color: theme.palette.primary.dark
+    color: theme.palette.primary.dark,
+    '&:hover': {
+      color: 'red',
+      backgroundColor: theme.palette.primary.main
+    }
   },
   sharesField: {
     backgroundColor: theme.palette.primary.main,

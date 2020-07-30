@@ -63,6 +63,7 @@ function EnhancedTableHead(props) {
       <TableRow className={classes.tableHead}>
         {headCells.map((headCell) => (
           <TableCell
+            style={{fontWeight: "bold"}}
             key={headCell.id}
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'default'}
@@ -115,7 +116,7 @@ const EnhancedTableToolbar = (props) => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: '100%'
   },
   paper: {
     width: '100%',
@@ -140,9 +141,11 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary
   },
   row: {
-    color: theme.palette.primary.dark
+    color: theme.palette.primary.dark,
+    fontWeight: 'bold'
   },
   tablePagination: {
+    fontWeight: 'bold',
     color: theme.palette.primary.dark
   }
 }));

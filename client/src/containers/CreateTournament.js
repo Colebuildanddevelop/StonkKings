@@ -54,6 +54,20 @@ const useStyles = (theme) => ({
       backgroundColor: theme.palette.text.primary
     }
   },
+  cssOutlinedInput: {
+    '&$cssFocused $notchedOutline': {
+      borderColor: `${theme.palette.text.primary} !important`,
+    }
+  },
+  cssLabel: {
+    color: 'white'
+  },
+  cssFocused: {
+  },
+  notchedOutline: {
+    borderWidth: '1px',
+    borderColor: `${theme.palette.primary.dark} !important`
+  },
 });
 
 const DateAndTimeSelectors = (props) => {
@@ -190,11 +204,6 @@ class CreateTournament extends React.Component {
           </Grid>
         </Grid>
         <TextField
-          InputLabelProps={{
-            style: {
-              color: 'white'
-            }
-          }}
           style={{margin: 5}}
           color="primary"
           value={this.state.name}
@@ -207,14 +216,23 @@ class CreateTournament extends React.Component {
           label="Tournament Name"
           name="tournamentName"
           autoFocus
+          InputLabelProps={{
+            classes: {
+              root: classes.cssLabel,
+              focused: classes.cssFocused,
+            },
+          }}
+          InputProps={{
+            classes: {
+              root: classes.cssOutlinedInput,
+              focused: classes.cssFocused,
+              notchedOutline: classes.notchedOutline,
+            },
+          }}
+
         />
         <Grid item xs={6} style={{padding: 5}}>
           <TextField
-            InputLabelProps={{
-              style: {
-                color: 'white'
-              }
-            }}
             fullWidth={true}
             value={this.state.entryLimit}      
             onChange={this.handleChange}        
@@ -225,6 +243,20 @@ class CreateTournament extends React.Component {
             name="entryLimit"
             label="Max Players"
             id=""
+            InputLabelProps={{
+              classes: {
+                root: classes.cssLabel,
+                focused: classes.cssFocused,
+              },
+            }}
+            InputProps={{
+              classes: {
+                root: classes.cssOutlinedInput,
+                focused: classes.cssFocused,
+                notchedOutline: classes.notchedOutline,
+              },
+            }}
+
           />
         </Grid>
         <Grid item xs={6} style={{padding: 5}}>
@@ -243,8 +275,18 @@ class CreateTournament extends React.Component {
             required
             name="entryFee"
             label="Entry Fee"
+            InputLabelProps={{
+              classes: {
+                root: classes.cssLabel,
+                focused: classes.cssFocused,
+              },
+            }}
             InputProps={{
-              startAdornment: <InputAdornment position="start">$</InputAdornment> 
+              classes: {
+                root: classes.cssOutlinedInput,
+                focused: classes.cssFocused,
+                notchedOutline: classes.notchedOutline,
+              },
             }}
             id=""
           />

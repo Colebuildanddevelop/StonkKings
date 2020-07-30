@@ -63,6 +63,27 @@ const useStyles = (theme) => ({
     backgroundColor: theme.palette.primary.dark,
     margin: theme.spacing(3, 0, 2),
   },
+  input: {
+    '&$cssFocused $notchedOutline': {
+      borderColor: `${theme.palette.text.primary} !important`,
+    }
+  },
+  cssOutlinedInput: {
+    '&$cssFocused $notchedOutline': {
+      borderColor: `${theme.palette.text.primary} !important`,
+    }
+  },
+  cssLabel: {
+    color: 'white'
+  },
+  cssFocused: {
+    color: 'white'
+  },
+  notchedOutline: {
+    borderWidth: '1px',
+    borderColor: `${theme.palette.primary.dark} !important`
+  },
+
 });
 
 class Login extends React.Component {
@@ -112,17 +133,23 @@ class Login extends React.Component {
             <TextField
               variant="outlined"
               margin="normal"
-              required
               fullWidth
               id="username"
               label="Username"
               name="username"
               onChange={this.handleField}
-              autoFocus
-              inputProps={{
-                style: {
-                  color: 'white'
-                }
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline,
+                },
               }}
             />
             {!this.state.signIn ? (
@@ -136,10 +163,18 @@ class Login extends React.Component {
                 label="Email Address"
                 name="email"
                 autoFocus
-                inputProps={{
-                  style: {
-                    color: 'white'
-                  }
+                InputLabelProps={{
+                  classes: {
+                    root: classes.cssLabel,
+                    focused: classes.cssFocused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    root: classes.cssOutlinedInput,
+                    focused: classes.cssFocused,
+                    notchedOutline: classes.notchedOutline,
+                  },
                 }}
               />
             ) : null}
@@ -154,10 +189,18 @@ class Login extends React.Component {
               type="password"
               id="password"
               autoComplete="current-password"
-              inputProps={{
-                style: {
-                  color: 'white'
-                }
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline,
+                },
               }}
             />
             

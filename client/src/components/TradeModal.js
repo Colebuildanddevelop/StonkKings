@@ -57,9 +57,9 @@ const TradeModal = (props) => {
 
   const calculateResultingBalance = (buyOrSell, currentBalance, amountOfShares, price) => {
       if (buyOrSell === "buy") {
-        return (currentBalance - (price * amountOfShares));
+        return (Math.round(currentBalance - (price * amountOfShares) * 100) / 100).toFixed(2);
       } else {
-        return (currentBalance + (price * amountOfShares));
+        return (Math.round(currentBalance + (price * amountOfShares) * 100) / 100).toFixed(2);
       }
   }
 
@@ -104,7 +104,7 @@ const TradeModal = (props) => {
                 {props.amountOfShares}
               </DialogContentText>
               <DialogContentText className={classes.dialogContent}>
-                {props.amountOfShares * props.price}
+                {(Math.round(props.amountOfShares * props.price * 100) / 100).toFixed(2)}
               </DialogContentText>
               <DialogContentText className={classes.dialogContent}>
                 {calculateResultingBalance(props.buyOrSell, props.currentEntry.tournamentBalance, props.amountOfShares, props.price)}

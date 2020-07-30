@@ -5,7 +5,6 @@ const UserSchema = new Schema({
   username: { type: String, unique: true },
   email: String,
   password: String,
-  profilePicture: String,
   avatar: { type: String, default: "https://img.favpng.com/3/11/25/avatar-youtube-cat-png-favpng-PRA6iZsrgWAqXFqmjMsfSvuPG.jpg" },
   accountBalance: { type: Number, default: 10000 },
   wins: {type: Number, default: 0},

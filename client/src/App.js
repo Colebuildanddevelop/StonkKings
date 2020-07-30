@@ -52,7 +52,6 @@ class App extends React.Component {
     console.log(this.state)
     const { classes } = this.props;
     return (
-      
       <div className={classes.app}>
         <BrowserRouter>
           {this.state.loggedIn || localStorage.token ? (
@@ -90,13 +89,6 @@ class App extends React.Component {
               />
               <Route
                 exact
-                path="/login"
-                render={(routeProps) => (
-                  <Login {...routeProps} />
-                )}
-              />
-              <Route
-                exact
                 path="/create-tournament"
                 render={(routeProps) => (
                   <CreateTournament {...routeProps} />
@@ -112,7 +104,9 @@ class App extends React.Component {
             </Switch>
 
           </div>
-          <Footer />
+          {this.state.loggedIn || localStorage.token ? (
+            <Footer />
+          ) : null}
         </BrowserRouter>
       </div>
     );
