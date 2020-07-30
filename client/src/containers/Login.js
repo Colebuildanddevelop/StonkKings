@@ -22,7 +22,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Stonk Kings
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -117,52 +117,27 @@ class Login extends React.Component {
   const { classes } = this.props;
   console.log(this.props)
 
-  return (
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square className={classes.mainContainer}>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              onChange={this.handleField}
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-            />
-            {!this.state.signIn ? (
+    return (
+      <Grid container component="main" className={classes.root}>
+        <CssBaseline />
+        <Grid item xs={false} sm={4} md={7} className={classes.image} />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square className={classes.mainContainer}>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form className={classes.form} noValidate>
               <TextField
-                onChange={this.handleField}
                 variant="outlined"
                 margin="normal"
-                required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoFocus
+                id="username"
+                label="Username"
+                name="username"
+                onChange={this.handleField}
                 InputLabelProps={{
                   classes: {
                     root: classes.cssLabel,
@@ -177,80 +152,105 @@ class Login extends React.Component {
                   },
                 }}
               />
-            ) : null}
-            <TextField
-              onChange={this.handleField}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              InputLabelProps={{
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline,
-                },
-              }}
-            />
+              {!this.state.signIn ? (
+                <TextField
+                  onChange={this.handleField}
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoFocus
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      root: classes.cssOutlinedInput,
+                      focused: classes.cssFocused,
+                      notchedOutline: classes.notchedOutline,
+                    },
+                  }}
+                />
+              ) : null}
+              <TextField
+                onChange={this.handleField}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                InputLabelProps={{
+                  classes: {
+                    root: classes.cssLabel,
+                    focused: classes.cssFocused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    root: classes.cssOutlinedInput,
+                    focused: classes.cssFocused,
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+              />
             
-            <FormControlLabel
-              control={<Checkbox value="remember" color="secondary" />}
-              label="Remember me"
-            />
-            {this.state.signIn ? (
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={() => this.handleLogin()}
-              >
-                Sign In
-              </Button>
+              <FormControlLabel
+                control={<Checkbox value="remember" color="secondary" />}
+                label="Remember me"
+              />
+              {this.state.signIn ? (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={() => this.handleLogin()}
+                >
+                  Sign In
+                </Button>
 
-            ) : (
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={() => this.handleSignUp()}
-              >
-                Sign up 
-              </Button>
-            )}
-            <Grid container>
-              <Grid item>
-                {this.state.signIn ? (
-                  <Link onClick={() => this.setSignIn(false)} style={{color: 'white'}} variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                ) : (
-                  <Link onClick={() => this.setSignIn(true)} style={{color: 'white'}} variant="body2">
-                    {"Already have an account? Sign in"}
-                  </Link>
-                )}
+              ) : (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={() => this.handleSignUp()}
+                >
+                  Sign up 
+                </Button>
+              )}
+              <Grid container>
+                <Grid item>
+                  {this.state.signIn ? (
+                    <Link onClick={() => this.setSignIn(false)} style={{color: 'white'}} variant="body2">
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  ) : (
+                    <Link onClick={() => this.setSignIn(true)} style={{color: 'white'}} variant="body2">
+                      {"Already have an account? Sign in"}
+                    </Link>
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
-          </form>
-        </div>
+              <Box mt={5}>
+                <Copyright />
+              </Box>
+            </form>
+          </div>
+        </Grid>
       </Grid>
-    </Grid>
-  );
+    );
 
   }
 }

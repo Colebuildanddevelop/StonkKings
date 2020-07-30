@@ -27,10 +27,6 @@ class Countdown extends React.Component {
     let hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
     let seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
-        
-    // Result is output to the specific element
-      
-    // Display the message when countdown is over
     this.setState({
       countdown: `${days} days, ${hours}:${minutes}:${seconds}`
     })
