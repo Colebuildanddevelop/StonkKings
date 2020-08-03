@@ -194,12 +194,18 @@ const TradeHistoryTable = (props) => {
                       <TableCell className={classes.row} component="th" scope="row" >
                         {row.ticker}
                       </TableCell>
-                      <TableCell className={classes.row}  >
+                      <TableCell className={classes.row}>
                         {row.timeTraded}
                       </TableCell>
-                      <TableCell className={classes.row}  >
-                        {row.buyOrSell}
-                      </TableCell>
+                      {row.buyOrSell === "buy" ? (
+                        <TableCell style={{color: "green"}} className={classes.row}>
+                          Bought
+                        </TableCell>
+                      ) : (
+                        <TableCell style={{color: 'red'}} className={classes.row}>
+                          Sold
+                        </TableCell>
+                      )}
                       <TableCell className={classes.row} align="right">
                         {row.amountOfShares}
                       </TableCell>

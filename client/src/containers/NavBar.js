@@ -23,6 +23,7 @@ const useStyles = (theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
+    fontWeight: 'bold',
     textDecoration: 'none',
     marginRight: 30
   },
@@ -81,7 +82,7 @@ class NavBar extends React.Component {
                     <Avatar src={this.props.currentUser.avatar}/>
                   </Grid>
                   <Grid item xs={3} className={classes.username}>
-                    <Typography variant="h6" align="left">
+                    <Typography style={{fontWeight: 'bold'}} variant="h6" align="left">
                       {this.props.currentUser.username}
                     </Typography>
                   </Grid>

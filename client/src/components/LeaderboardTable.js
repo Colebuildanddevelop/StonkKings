@@ -94,8 +94,14 @@ const useToolbarStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.dark
   },
   title: {
+    fontWeight: 'bold',
     flexGrow: 1,
-  }
+  },
+  stonkKing: {
+    fontWeight: 'bold',
+    color: theme.palette.secondary.main,
+    paddingRight: 10
+  },
 }));
 
 const EnhancedTableToolbar = () => {
@@ -103,9 +109,17 @@ const EnhancedTableToolbar = () => {
 
   return (
     <Toolbar className={classes.toolbar}>
-      <Typography className={classes.title} variant="h4" id="tableTitle" component="div">
-        Leaderboard
-      </Typography>
+
+      <Grid container item alignItems="flex-start" justify="flex-end" direction="row" xs={12}>
+        <Typography style={{flexGrow: 1}} className={classes.title} variant="h4" id="tableTitle" component="div">
+          Leaderboard
+        </Typography>
+
+        <Typography align="right" className={classes.stonkKing} variant="h6" id="tableTitle" component="div">
+          L33TPikachu
+        </Typography>
+        <Avatar src={'https://i1.sndcdn.com/avatars-000547985256-ntiz46-t500x500.jpg'} />
+      </Grid>
     </Toolbar>
   );
 };

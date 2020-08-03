@@ -13,10 +13,12 @@ class LatestPrice extends React.Component {
   }
 
   fetchPrice = () => {
-    fetch(`https://api.polygon.io/v1/last_quote/stocks/${this.props.searchString}?apiKey=0HSD1_g6AHAZBDvy1MspyMzGZMlKjokSsoLoTB`)
+    console.log(this.props.searchString)
+    fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${this.props.searchString}&apikey=3VP9375JIOYD1569`)
       .then(res => res.json())
       .then(priceData => {
-        this.props.setPrice((Math.round(priceData.last.askprice * 100) / 100).toFixed(2))
+        console.log(priceData)
+        this.props.setPrice(priceData["Global Quote"]["05. price"])
       });
   }
 

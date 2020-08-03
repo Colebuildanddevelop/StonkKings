@@ -325,6 +325,15 @@ how would i seed data
 
 --- 
 
+- stonk kings aims to solve 
+
+  - allows users to compete against other known users instead of a large unknown player pool
+  - barriers to entry, no large amount of capital required to purchase shares 
+  - transparency, know who the winners are
+  - stock gurus can prove their ability
+
+
+
 - login as cole
 
 - show lobby table
@@ -333,4 +342,31 @@ how would i seed data
 
 - show trade history
 
-- 
+- show all entrants
+
+- show time frame
+
+- show search
+
+- show buy
+
+- show buy others
+
+- show buy too many
+
+- show sell
+
+- show sell too many
+
+- show my tournaments 
+
+- show leaderboard
+
+- show create tournament
+
+- show enter tournament
+
+- show win tournament
+
+
+

@@ -123,6 +123,9 @@ class Login extends React.Component {
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square className={classes.mainContainer}>
           <div className={classes.paper}>
+            <Typography style={{marginBottom: 100, fontWeight: 'bold'}} component="h3" variant="h1">
+              Stonk Kings!
+            </Typography>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
@@ -162,7 +165,7 @@ class Login extends React.Component {
                   id="email"
                   label="Email Address"
                   name="email"
-                  autoFocus
+                  
                   InputLabelProps={{
                     classes: {
                       root: classes.cssLabel,

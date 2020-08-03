@@ -98,6 +98,7 @@ const useToolbarStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.dark
   },
   title: {
+    fontWeight: 'bold',
     flexGrow: 1,
   }
 }));

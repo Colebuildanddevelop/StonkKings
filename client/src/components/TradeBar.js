@@ -9,7 +9,6 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
-
 const useStyles = (theme) => ({
   buyButton: {
     width: "30%",
@@ -107,7 +106,7 @@ class TradeBar extends React.Component {
         snackbarErr = true;
       } else {
         let buyOrSell = this.props.createdTrade.buyOrSell === 'buy' ? "purchased" : "sold";
-        snackbarmessage = `You ${buyOrSell} ${this.props.createdTrade.amountOfShares} share(s) of ${this.props.createdTrade.stockTicker} for $${this.props.createdTrade.price}!`
+        snackbarmessage = `You ${buyOrSell} ${this.props.createdTrade.amountOfShares} share(s) of ${this.props.createdTrade.stockTicker} @ $${this.props.createdTrade.price}!`
       }
     }
     return (

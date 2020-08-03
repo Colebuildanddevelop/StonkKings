@@ -73,7 +73,13 @@ const TradeModal = (props) => {
         <Grid className={classes.dialogContainer} container>
           <Grid item container xs={12} className={classes.dialogHeader}>
             <Grid item xs={6}>
-              <DialogTitle className={classes.dialogTitle} id="simple-dialog-title">{props.buyOrSell === "buy" ? "Buy Transaction" : "Sell Transaction"}</DialogTitle>
+              {props.buyOrSell === "buy" ? (
+
+                <DialogTitle className={classes.dialogTitle} id="simple-dialog-title">Buy Transaction</DialogTitle>
+              ) : (
+
+                <DialogTitle style={{color: "red"}} className={classes.dialogTitle} id="simple-dialog-title">Sell Transaction</DialogTitle>
+              )}
             </Grid>
             <Grid container item alignItems="flex-start" justify="flex-end" direction="row" xs={6}>
               <DialogTitle className={classes.dialogTitle} id="simple-dialog-title">{props.stockTicker}</DialogTitle>
