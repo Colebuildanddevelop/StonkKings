@@ -13,7 +13,6 @@ class Countdown extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log("unmounting")
     clearInterval(this.state.intervalId)
   }
   

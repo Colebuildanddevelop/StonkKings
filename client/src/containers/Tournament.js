@@ -139,7 +139,6 @@ class Tournament extends React.Component {
   }
 
   handleChangeTimeFunction = (timeFunction, intradayInterval="") => {
-    console.log("handle change time")
     if (intradayInterval === "") {
       this.getPriceData(this.state.currentSearch, timeFunction);
     } else {

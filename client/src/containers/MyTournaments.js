@@ -20,7 +20,6 @@ class MyTournaments extends React.Component {
       this.props.tournamentsArr.forEach(tournament => {
         tournament.entries.forEach(entry => {
           if (entry.user === localStorage.userId) {
-            console.log("found")
             userTournaments.push(tournament);
           }
         })  
@@ -30,8 +29,6 @@ class MyTournaments extends React.Component {
   }
 
   render() {
-    console.log(this.getUserTournaments())
-    console.log(this.props.tournamentsArr)
     return (
       <div style={{padding: 100}}>
         <MyTournamentsTable tournamentsArr={this.getUserTournaments()} />

@@ -58,7 +58,6 @@ const tradeRestrictions = (req, res, next) => {
               });
               return position;
             });
-            console.log("positions", positions)
             if (positions === null) {
               res.status(400).send({ message: "no positions were found try again" })
               return;

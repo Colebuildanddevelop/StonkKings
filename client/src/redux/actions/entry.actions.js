@@ -22,7 +22,6 @@ export const getEntryByUsernameAndTournamentName = (userId, tournamentId) => {
     return fetch(`http://localhost:3000/api/entries/${userId}/${tournamentId}`)
     .then(res => res.json())
     .then(entryInfo => {
-      console.log(entryInfo)
       dispatch(fetchEntryInfoSuccess(entryInfo));
       return entryInfo;
     })
@@ -92,7 +91,6 @@ export const createEntry = (tournamentId, token) => {
       return entryInfo;
     })
     .catch(err => {
-      console.log(err.body)
       dispatch(createEntryFailure(err))
     });
   };

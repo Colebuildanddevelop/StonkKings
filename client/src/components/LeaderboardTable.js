@@ -184,7 +184,6 @@ const LeaderboardTable = (props) => {
 
   const formatRows = () => {
     return props.users.map(user => {
-      console.log(user)
       return {
         username: user.username,
         avatar: user.avatar,

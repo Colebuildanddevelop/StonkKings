@@ -13,11 +13,9 @@ class LatestPrice extends React.Component {
   }
 
   fetchPrice = () => {
-    console.log(this.props.searchString)
     fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${this.props.searchString}&apikey=3VP9375JIOYD1569`)
       .then(res => res.json())
       .then(priceData => {
-        console.log(priceData)
         this.props.setPrice(priceData["Global Quote"]["05. price"])
       });
   }

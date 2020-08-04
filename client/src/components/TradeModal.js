@@ -74,10 +74,8 @@ const TradeModal = (props) => {
           <Grid item container xs={12} className={classes.dialogHeader}>
             <Grid item xs={6}>
               {props.buyOrSell === "buy" ? (
-
                 <DialogTitle className={classes.dialogTitle} id="simple-dialog-title">Buy Transaction</DialogTitle>
               ) : (
-
                 <DialogTitle style={{color: "red"}} className={classes.dialogTitle} id="simple-dialog-title">Sell Transaction</DialogTitle>
               )}
             </Grid>

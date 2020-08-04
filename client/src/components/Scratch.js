@@ -203,10 +203,7 @@ export default function EnhancedTable() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
   
-  console.log(rows)
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>

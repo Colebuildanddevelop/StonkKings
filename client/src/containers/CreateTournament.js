@@ -180,14 +180,11 @@ class CreateTournament extends React.Component {
         createTournamentLoading: false,
         createTournamentSuccess: true
       })
-      console.log("created", createdTournament)
-
     })
     .catch(console.log)
   }
 
   render() {
-    console.log(this.state)
     const { classes } = this.props;
     return (
       <Grid container className={classes.paper}>

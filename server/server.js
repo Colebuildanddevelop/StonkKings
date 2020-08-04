@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -46,6 +47,12 @@ require("./app/routes/trade.routes")(app);
 
 require("./app/schedulers/assignWinners")();
 
+// Serve React
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 
 // set port, listen for requests

@@ -18,7 +18,6 @@ const createTradeFailure = err => ({
 
 export const createTrade = (tradeObj, token) => {
   return dispatch => {
-    console.log("tradeObj", tradeObj)
     dispatch(createTradeBegin());
     return fetch("http://localhost:3000/api/trades", {
       method: "POST",

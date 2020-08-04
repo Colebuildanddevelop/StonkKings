@@ -55,7 +55,6 @@ const createUsers = () => {
     })
     .then(console.log)
     .catch(err => {
-      console.log(err);
       return;
     })
   }

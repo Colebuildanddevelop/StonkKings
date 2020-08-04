@@ -57,10 +57,10 @@ class TradeBar extends React.Component {
     });
   }
 
-  handleModal = (e) => {
+  handleModal = (buyOrSell="buy") => {
     this.setState({
       openModal: !this.state.openModal,
-      buyOrSell: e.currentTarget.name,
+      buyOrSell: buyOrSell,
       shareAmountField: 1
     });
   }
@@ -80,8 +80,7 @@ class TradeBar extends React.Component {
     });
   };
 
-  handleTrade = async (e) => {
-    console.log(e.currentTarget.name)
+  handleTrade = async () => {
     await this.props.createTrade({
       entryId: this.props.entryId,
       stockTicker: this.props.stockTicker,
@@ -92,7 +91,7 @@ class TradeBar extends React.Component {
     }, localStorage.token)
     await this.props.getTradesByEntryId(this.props.entryId)
     await this.props.getCurrentEntry();
-    this.handleModal(e);
+    this.handleModal(this.state.buyOrSell);
     this.handleClickSnackBar();
   }
 
@@ -109,13 +108,13 @@ class TradeBar extends React.Component {
         snackbarmessage = `You ${buyOrSell} ${this.props.createdTrade.amountOfShares} share(s) of ${this.props.createdTrade.stockTicker} @ $${this.props.createdTrade.price}!`
       }
     }
+    console.log("tradebar state", this.state)
     return (
       <div>
-        <Button onClick={this.handleModal} size="large" name="buy" variant="outlined" className={classes.buyButton}>BUY</Button>
-        <Button onClick={this.handleModal} size="large" name="sell" variant="outlined" className={classes.sellButton}>SELL</Button>
+        <Button onClick={() => this.handleModal("buy")} size="large" name="buy" variant="outlined" className={classes.buyButton}>BUY</Button>
+        <Button onClick={() => this.handleModal("sell")} size="large" name="sell" variant="outlined" className={classes.sellButton}>SELL</Button>
         <TradeModal
           handleShareField={this.handleShareField}
-
           handleTrade={this.handleTrade}
           handleModal={this.handleModal}
           price={this.props.currentPrice}

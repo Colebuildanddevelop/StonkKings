@@ -19,7 +19,6 @@ class Leaderboard extends React.Component {
 
 
   render() {
-    console.log(this.state)
     return (
       <div style={{padding: 100}}>
         <LeaderboardTable users={this.state.users} />

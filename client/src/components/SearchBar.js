@@ -58,15 +58,11 @@ const SearchBar = (props) => {
     fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=3VP9375JIOYD1569`)
       .then(res => res.json())
       .then(results => {
-        console.log(results.bestMatches)
         setOptions(results.bestMatches || []);
-        console.log(options)
       })
-    console.log(e.currentTarget.value)
   }
 
   const handleSelected = (e, val) => {
-    console.log(val)
     if (val !== null) {
       props.handleSearchSubmit(val["1. symbol"]);
     }

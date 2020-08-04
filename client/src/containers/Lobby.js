@@ -55,7 +55,6 @@ class Lobby extends React.Component {
     await this.props.getTournaments()
     await this.props.loginWithToken(localStorage.token)
     const updatedTournament = this.props.tournamentsArr.find(t => t.id === this.state.tournamentClickedInfo.id);
-    console.log("updated", updatedTournament);
     this.handleClickTournamentRow(updatedTournament);
   }
 

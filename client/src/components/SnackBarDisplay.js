@@ -27,7 +27,6 @@ class SnackBarDisplay extends React.Component {
     open: false
   }
 
-
   render() {
     const { classes } = this.props;
     return (

@@ -56,7 +56,6 @@ const CreateTournamentModal = (props) => {
   const history = useHistory();
 
   // getModalStyle is not a pure function, we roll the style only on the first render
-  console.log(props)
 
   return (
     <div>
