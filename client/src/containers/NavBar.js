@@ -38,7 +38,7 @@ const useStyles = (theme) => ({
   },
   listItem: {
     backgroundColor: theme.palette.primary.main,
-    border: '1px solid black'
+    borderBottom: '1px solid black'
   },
   listText: {
     color: theme.palette.text.primary

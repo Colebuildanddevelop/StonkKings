@@ -2,7 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getTournaments } from "../redux/actions/tournament.actions";
 import MyTournamentsTable from "../components/MyTournamentsTable";
-import { isThursday } from 'date-fns';
+import { withStyles } from '@material-ui/core/styles';
+
+const useStyles = theme => ({
+  mainContainer: {
+    [theme.breakpoints.up('lg')]:{
+      padding: 100
+    }
+  }
+});
 
 class MyTournaments extends React.Component {
 
@@ -29,8 +37,9 @@ class MyTournaments extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div style={{padding: 100}}>
+      <div className={classes.mainContainer}>
         <MyTournamentsTable tournamentsArr={this.getUserTournaments()} />
       </div>
     )
@@ -44,4 +53,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getTournaments }
-)(MyTournaments);
+)(withStyles(useStyles, {withTheme: true})(MyTournaments));

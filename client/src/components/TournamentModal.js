@@ -16,6 +16,9 @@ const useStyles = (theme) => ({
   timer: {
     textAlign: 'right'
   },
+  paper: {
+    margin: 0
+  },
   dialogTitle: {
     backgroundColor: theme.palette.primary.dark,
   },
@@ -84,6 +87,9 @@ class TournamentModal extends React.Component {
         {this.props.tournamentInfo ? (
           <div>
             <Dialog
+              classes={{
+                paper: classes.paper
+              }}
               open={this.props.open}
               onClose={this.props.handleModal}
             >

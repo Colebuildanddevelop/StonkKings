@@ -109,7 +109,6 @@ const EnhancedTableToolbar = () => {
 
   return (
     <Toolbar className={classes.toolbar}>
-
       <Grid container item alignItems="flex-start" justify="flex-end" direction="row" xs={12}>
         <Typography style={{flexGrow: 1}} className={classes.title} variant="h4" id="tableTitle" component="div">
           Leaderboard

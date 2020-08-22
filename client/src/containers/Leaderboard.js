@@ -1,6 +1,15 @@
 import React from 'react';
 import LeaderboardTable from '../components/LeaderboardTable';
 import URL from '../config';
+import { withStyles } from '@material-ui/core/styles';
+
+const useStyles = theme => ({
+  mainContainer: {
+    [theme.breakpoints.up('lg')]:{
+      padding: 100
+    }
+  }
+});
 
 class Leaderboard extends React.Component {
 
@@ -20,12 +29,13 @@ class Leaderboard extends React.Component {
 
 
   render() {
+    const { classes } = this.props;
     return (
-      <div style={{padding: 100}}>
+      <div className={classes.mainContainer}>
         <LeaderboardTable users={this.state.users} />
       </div>
     )
   }
 }
 
-export default Leaderboard;
+export default withStyles(useStyles, {withTheme: true})(Leaderboard);

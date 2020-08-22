@@ -13,7 +13,9 @@ import { withStyles } from '@material-ui/core/styles';
 
 const useStyles = (theme) => ({
   mainContainer: {
-    padding: 100
+    [theme.breakpoints.up('lg')]: {
+      padding: 100
+    }
   }, 
   table: {
     backgroundColor: theme.palette.text.secondary,

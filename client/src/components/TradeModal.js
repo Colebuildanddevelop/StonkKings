@@ -14,6 +14,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
+  paper: {
+    margin: 0
+  },
   dialogContainer: {
     backgroundColor: theme.palette.primary.light,
   },
@@ -68,7 +71,9 @@ const TradeModal = (props) => {
       <Dialog
         open={props.open}
         onClose={props.handleModal}
-        style={{opacity: 10}}
+        classes={{
+          paper: classes.paper
+        }}
       >
         <Grid className={classes.dialogContainer} container>
           <Grid item container xs={12} className={classes.dialogHeader}>
