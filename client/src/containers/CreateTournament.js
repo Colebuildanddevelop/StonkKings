@@ -1,5 +1,6 @@
 import React from "react";
 import CreateTournamentModal from '../components/CreateTournamentModal';
+import URL from '../config';
 // MATERIAL UI
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
@@ -160,7 +161,7 @@ class CreateTournament extends React.Component {
     this.setState({
       createTournamentLoading: true
     });
-    fetch("http://localhost:3000/api/tournaments", {
+    fetch(`${URL}/api/tournaments`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -312,7 +313,6 @@ class CreateTournament extends React.Component {
         >
           Create Tournament
         </Button>
-        {/** I can pass props better than this but... */}
         <CreateTournamentModal
           createTournamentLoading={this.state.createTournamentLoading}
           createTournamentSuccess={this.state.createTournamentSuccess}
@@ -326,7 +326,6 @@ class CreateTournament extends React.Component {
           endTime={this.formatTime(this.state.selectedDateForEnd, this.state.selectedTimeForEnd)}
         />
       </Grid>
-
     )
   }
 }

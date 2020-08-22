@@ -1,5 +1,6 @@
 import React from 'react';
 import LeaderboardTable from '../components/LeaderboardTable';
+import URL from '../config';
 
 class Leaderboard extends React.Component {
 
@@ -8,7 +9,7 @@ class Leaderboard extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/users')
+    fetch(`${URL}/api/users`)
       .then(res => res.json())
       .then(users => {
         this.setState({

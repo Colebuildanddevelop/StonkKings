@@ -1,3 +1,4 @@
+import URL from '../../config';
 export const FETCH_TOURNAMENTS_BEGIN = "FETCH_TOURNAMENTS_BEGIN";
 export const FETCH_TOURNAMENTS_SUCCESS = "FETCH_TOURNAMENTS_SUCCESS";
 export const FETCH_TOURNAMENTS_FAILURE = "FETCH_TOURNAMENTS_FAILURE";
@@ -18,7 +19,7 @@ const fetchTournamentsFailure = err => ({
 
 export const getTournaments = () => dispatch => {
   dispatch(fetchTouranmentsBegin())
-  return fetch("http://localhost:3000/api/tournaments")
+  return fetch(`${URL}/api/tournaments`)
     .then(res => res.json())
     .then(tournamentsArr => {
       dispatch(fetchTournamentsSuccess(tournamentsArr))

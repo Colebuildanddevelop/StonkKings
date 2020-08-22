@@ -1,0 +1,1 @@
+export default URL = "https://stonk-kings.herokuapp.com"; 

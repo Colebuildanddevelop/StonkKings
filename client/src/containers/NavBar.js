@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import LogoutModal from '../components/LogoutModal';
 // Material UI 
 import { withStyles } from '@material-ui/core/styles';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -13,19 +15,13 @@ import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = (theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   nav: {
     backgroundColor: theme.palette.primary.dark
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
   },
   title: {
     fontWeight: 'bold',
     textDecoration: 'none',
-    marginRight: 30
+    paddingRight: 30
   },
   userContainer: {
     padding: 10,
@@ -42,11 +38,23 @@ const useStyles = (theme) => ({
   }
 });
 
-class NavBar extends React.Component {
+class NavBar extends React.Component { 
+
+  state = { 
+    modalOpen: false
+  }
+
+  handleLogoutModal = () => {
+    this.setState({
+      modalOpen: !this.state.modalOpen
+    })
+  }
+
   render() {
     const { classes } = this.props;
+    console.log(this.state)
     return (
-      <div className={classes.root}>
+      <div >
         <AppBar position="static" className={classes.nav}>
           <Toolbar>
             <Typography component={Link} to={"/lobby"} variant="h4" color="textPrimary" className={classes.title}>
@@ -75,11 +83,11 @@ class NavBar extends React.Component {
             {this.props.currentUser && !this.props.currentUser.message ? 
             (
               <div>
-                <Grid container className={classes.userContainer}>
+                <Grid className={classes.userContainer} container>
                   <Grid item xs={4}>
                   </Grid>
                   <Grid item xs={2}>
-                    <Avatar src={this.props.currentUser.avatar}/>
+                    <Avatar onClick={this.handleLogoutModal} src={this.props.currentUser.avatar}/>
                   </Grid>
                   <Grid item xs={3} className={classes.username}>
                     <Typography style={{fontWeight: 'bold'}} variant="h6" align="left">
@@ -91,6 +99,7 @@ class NavBar extends React.Component {
                       Stonk Credits: {this.props.currentUser.accountBalance}
                     </Typography>
                   </Grid>
+                  <LogoutModal handleModal={this.handleLogoutModal} open={this.state.modalOpen} />
                 </Grid>
               </div>
             ) : (

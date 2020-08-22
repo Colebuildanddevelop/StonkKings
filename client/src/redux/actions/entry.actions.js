@@ -1,3 +1,4 @@
+import URL from '../../config'
 export const FETCH_ENTRY_INFORMATION_BEGIN = "FETCH_ENTRY_INFORMATION_BEGIN";
 export const FETCH_ENTRY_INFORMATION_SUCCESS = "FETCH_ENTRY_INFORMATION_SUCCESS";
 export const FETCH_ENTRY_INFORMATION_FAILURE = "FETCH_ENTRY_INFORMATION_FAILURE";
@@ -19,7 +20,7 @@ const fetchEntryInfoFailure = err => ({
 export const getEntryByUsernameAndTournamentName = (userId, tournamentId) => {
   return dispatch => {
     dispatch(fetchEntryInfoBegin());
-    return fetch(`http://localhost:3000/api/entries/${userId}/${tournamentId}`)
+    return fetch(`${URL}/api/entries/${userId}/${tournamentId}`)
     .then(res => res.json())
     .then(entryInfo => {
       dispatch(fetchEntryInfoSuccess(entryInfo));
@@ -75,7 +76,7 @@ const createEntryFailure = err => ({
 export const createEntry = (tournamentId, token) => {
   return dispatch => {
     dispatch(createEntryBegin());
-    return fetch("http://localhost:3000/api/entries", {
+    return fetch(`${URL}/api/entries`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -116,7 +117,7 @@ const fetchEntriesByTournamentIdFailure = error => ({
 
 export const getEntriesByTournamentId = (tournamentId) => dispatch => {
   dispatch(fetchEntriesByTournamentIdBegin())
-  return fetch(`http://localhost:3000/api/entries/tournament/${tournamentId}`)
+  return fetch(`${URL}/api/entries/tournament/${tournamentId}`)
     .then(res => res.json())
     .then(entriesArr => {
       dispatch(fetchEntriesByTournamentIdSuccess(entriesArr))

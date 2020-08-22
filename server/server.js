@@ -23,7 +23,6 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 mongoose
   .connect(`mongodb+srv://user:${dbConfig.PASSWORD}@cluster0-4isuu.mongodb.net/${dbConfig.DB}?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
@@ -44,16 +43,14 @@ require("./app/routes/user.routes")(app);
 require("./app/routes/tournament.routes")(app);
 require("./app/routes/entry.routes")(app);
 require("./app/routes/trade.routes")(app);
-
 require("./app/schedulers/assignWinners")();
 
-// Serve React
+// serve React
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-
 
 // set port, listen for requests
 const PORT = dbConfig.PORT || 8080;

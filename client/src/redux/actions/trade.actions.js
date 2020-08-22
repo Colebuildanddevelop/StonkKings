@@ -1,3 +1,4 @@
+import URL from '../../config';
 export const CREATE_TRADE_BEGIN = "CREATE_TRADE_BEGIN";
 export const CREATE_TRADE_SUCCESS = "CREATE_TRADE_SUCCESS";
 export const CREATE_TRADE_FAILURE = "CREATE_TRADE_FAILURE";
@@ -19,7 +20,7 @@ const createTradeFailure = err => ({
 export const createTrade = (tradeObj, token) => {
   return dispatch => {
     dispatch(createTradeBegin());
-    return fetch("http://localhost:3000/api/trades", {
+    return fetch(`${URL}/api/trades`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +64,7 @@ const fetchTradesByEntryFailure = err => ({
 
 export const getTradesByEntryId = (entryId) => dispatch => {
   dispatch(fetchTradesByEntryBegin())
-  return fetch(`http://localhost:3000/api/trades/${entryId}`)
+  return fetch(`${URL}/api/trades/${entryId}`)
     .then(res => res.json())
     .then(tradesByEntry => {
       dispatch(fetchTradesByEntrySuccess(tradesByEntry))

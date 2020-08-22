@@ -91,6 +91,12 @@ class Login extends React.Component {
     signIn: true
   }
 
+  componentDidMount() {
+    if (localStorage.token) {
+      this.props.history.push('/lobby')
+    }
+  }
+
   setSignIn = (bool) => {
     this.setState({signIn: bool})
   }

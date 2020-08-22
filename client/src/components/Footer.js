@@ -41,7 +41,7 @@ const Footer = () => {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
+    <React.Fragment >
       {/* Footer */}
       <footer className={classes.footer}>
         <Grid container xs={12}>

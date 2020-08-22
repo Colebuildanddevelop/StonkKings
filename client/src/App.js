@@ -18,15 +18,13 @@ import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 const useStyles = (theme) => ({
-  root: {
-    flexGrow: 1,
-  },
   app: {
-    minHeight: '100vh',
     backgroundColor: theme.palette.primary.light
   },
   mainContainer: {
-    height: '85vh'
+    minHeight: '100vh',
+    width: '100%',
+    height: '100%'
   }
 });
 
@@ -45,7 +43,7 @@ class App extends React.Component {
   componentDidMount() {
     if (localStorage.token) {
       this.props.loginWithToken(localStorage.token)
-    }
+    } 
   }
   
   render() {
@@ -67,7 +65,7 @@ class App extends React.Component {
               />
               <Route
                 exact
-                path="/"
+                path="/login"
                 render={(routeProps) => (
                   <Login logIn={this.logIn} {...routeProps} />
                 )}
@@ -104,7 +102,7 @@ class App extends React.Component {
 
           </div>
           {this.state.loggedIn || localStorage.token ? (
-            <Footer />
+            <Footer className={classes.footer}/>
           ) : null}
         </BrowserRouter>
       </div>

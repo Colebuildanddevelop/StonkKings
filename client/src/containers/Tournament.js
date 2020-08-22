@@ -63,7 +63,6 @@ class Tournament extends React.Component {
     if (localStorage.userId) {
       this.handleGetCurrentEntry();
     }
-
   }
 
   getPriceData = (searchString, timeFunction="IBM", intradayInterval="") => {
@@ -176,7 +175,7 @@ class Tournament extends React.Component {
               </Grid>
               <Grid container >
                 {this.state.stockInfo ? (
-                  <Grid container item justify="space-between" item xs={6}>
+                  <Grid container item justify="space-between" item xs={12} md={6}>
                     <div>
                       <div style={{display: 'flex'}}>
                         <Typography variant="h5" className={classes.stockInfo}>
@@ -194,7 +193,7 @@ class Tournament extends React.Component {
                     </div>
                   </Grid>
                 ) : null}
-                <Grid container item xs={6} style={{marginTop: 30}} alignItems="flex-start" justify="flex-end" direction="row">
+                <Grid container item xs={12} md={6} style={{marginTop: 30}} alignItems="flex-start" justify="flex-end" direction="row">
                   <Button onClick={() => this.handleChangeTimeFunction("TIME_SERIES_MONTHLY")}>
                     Monthly 
                   </Button>

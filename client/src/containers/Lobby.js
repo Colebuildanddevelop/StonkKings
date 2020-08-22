@@ -47,7 +47,6 @@ class Lobby extends React.Component {
 
   componentDidMount() {
     this.props.getTournaments();
-    
   }
 
   handleEnter = async (tournamentId) => {

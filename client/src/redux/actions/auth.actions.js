@@ -1,3 +1,4 @@
+import URL from '../../config';
 export const FETCH_USER_INFORMATION_BEGIN = "FETCH_USER_INFORMATION_BEGIN";
 export const FETCH_USER_INFORMATION_SUCCESS = "FETCH_USER_INFORMATION_SUCCESS";
 export const FETCH_USER_INFORMATION_FAILURE = "FETCH_USER_INFORMATION_FAILURE";
@@ -19,7 +20,7 @@ const fetchUserInfoFailure = err => ({
 export const auth = (credentials, signInOrUp) => {
   return dispatch => {
     dispatch(fetchUserInfoBegin());
-    return fetch(`http://localhost:3000/api/auth/${signInOrUp}`, {
+    return fetch(`${URL}/api/auth/${signInOrUp}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -42,7 +43,7 @@ export const auth = (credentials, signInOrUp) => {
 export const loginWithToken = (token) => {
   return dispatch => {
     dispatch(fetchUserInfoBegin());
-    return fetch("http://localhost:3000/api/auth/loginWithToken", {
+    return fetch(`${URL}/api/auth/loginWithToken`, {
       method: "GET",
       headers: {
         "x-access-token": token
