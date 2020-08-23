@@ -42,7 +42,8 @@ class App extends React.Component {
 
   componentDidMount() {
     if (localStorage.token) {
-      this.props.loginWithToken(localStorage.token)
+      this.props.loginWithToken(localStorage.token);
+      this.logIn();
     } 
   }
   
@@ -65,9 +66,9 @@ class App extends React.Component {
               />
               <Route
                 exact
-                path="/login"
+                path="/"
                 render={(routeProps) => (
-                  <Login logIn={this.logIn} {...routeProps} />
+                  <Login logIn={this.logIn} loggedIn={this.state.loggedIn} {...routeProps} />
                 )}
               />
               <Route

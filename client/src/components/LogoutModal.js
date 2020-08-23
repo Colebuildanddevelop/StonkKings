@@ -25,7 +25,7 @@ const LogoutModal = (props) => {
 
   const handleLogout = () => {
     localStorage.clear();
-    history.push('/login');
+    history.push('/');
     props.handleModal();
   }
   

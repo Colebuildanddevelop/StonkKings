@@ -30,7 +30,6 @@ const useStyles = (theme) => ({
   },
   mobileTitles: {
 
-
   },
   button: {
     backgroundColor: theme.palette.primary.dark,

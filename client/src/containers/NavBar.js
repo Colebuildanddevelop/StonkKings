@@ -133,7 +133,7 @@ class NavBar extends React.Component {
                     className={classes.loginButton}
                     variant="contained"
                     component={Link}
-                    to={"/login"} 
+                    to={"/"} 
                   >
                     Login
                   </Button>
@@ -143,17 +143,47 @@ class NavBar extends React.Component {
               <>
                 <MenuIcon className={classes.menuIcon} onClick={() => this.setState({ drawerOpen: true })}/>
                 <SwipeableDrawer classes={{ paper: classes.paper }} open={this.state.drawerOpen} onClose={() => this.setState({ drawerOpen: false })} anchor="right">
+                  {this.props.currentUser && !this.props.currentUser.message ? 
+                  (
+                    <div>
+                      <Grid className={classes.userContainer} container>
+                        <Grid item xs={2}>
+                          <Avatar onClick={this.handleLogoutModal} src={this.props.currentUser.avatar}/>
+                        </Grid>
+                        <Grid item xs={3} className={classes.username}>
+                          <Typography style={{fontWeight: 'bold'}} variant="h6" align="left">
+                            {this.props.currentUser.username}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Typography className={classes.credits} align="left" variant="h6" color="textPrimary">
+                            Stonk Credits: {this.props.currentUser.accountBalance}
+                          </Typography>
+                        </Grid>
+                        <LogoutModal handleModal={this.handleLogoutModal} open={this.state.modalOpen} />
+                      </Grid>
+                    </div>
+                  ) : (
+                    <Button 
+                      className={classes.loginButton}
+                      variant="contained"
+                      component={Link}
+                      to={"/"} 
+                    >
+                      Login
+                    </Button>
+                  )}
                   <List className={classes.list} style={{padding: 0}}>
-                    <ListItem className={classes.listItem} key={"Lobby"} component={Link} to={"/lobby"}>
+                    <ListItem className={classes.listItem} onClick={() => this.setState({ drawerOpen: false })} key={"Lobby"} component={Link} to={"/lobby"}>
                       <ListItemText className={classes.listText} primary={"Lobby"} />
                     </ListItem>
-                    <ListItem className={classes.listItem} key={"My Tournaments"} component={Link} to={"/my-tournaments"}>
+                    <ListItem className={classes.listItem} onClick={() => this.setState({ drawerOpen: false })} key={"My Tournaments"} component={Link} to={"/my-tournaments"}>
                       <ListItemText className={classes.listText} primary={"My Tournaments"} />
                     </ListItem>
-                    <ListItem className={classes.listItem} key={"LeaderBoard"} component={Link} to={"/leaderboard"}>
+                    <ListItem className={classes.listItem} onClick={() => this.setState({ drawerOpen: false })} key={"LeaderBoard"} component={Link} to={"/leaderboard"}>
                       <ListItemText className={classes.listText} primary={"LeaderBoard"} />
                     </ListItem>
-                    <ListItem className={classes.listItem} key={"Create Tournament"} component={Link} to={"/create-tournament"}>
+                    <ListItem className={classes.listItem} onClick={() => this.setState({ drawerOpen: false })} key={"Create Tournament"} component={Link} to={"/create-tournament"}>
                       <ListItemText className={classes.listText} primary={"Create Tournament"} />
                     </ListItem>
                   </List>

@@ -91,8 +91,9 @@ class Login extends React.Component {
     signIn: true
   }
 
-  componentDidMount() {
-    if (localStorage.token) {
+  componentDidUpdate() {
+    if (this.props.loggedIn) {
+      console.log("pushing")
       this.props.history.push('/lobby')
     }
   }
@@ -120,7 +121,8 @@ class Login extends React.Component {
   }
    
   render() {
-  const { classes } = this.props;
+    const { classes } = this.props;
+    console.log(this.props.loggedIn)
 
     return (
       <Grid container component="main" className={classes.root}>

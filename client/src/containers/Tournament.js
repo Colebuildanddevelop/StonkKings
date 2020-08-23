@@ -59,10 +59,15 @@ class Tournament extends React.Component {
 
   componentDidMount() {
     this.getPriceData("IBM", "TIME_SERIES_DAILY");
-    this.props.getEntriesByTournamentId(this.props.match.params.id)
+    this.props.getEntriesByTournamentId(this.props.match.params.id);
+    console.log(this.props.tournaments.filter(tournament => tournament.id === this.props.match.params.id));
     if (localStorage.userId) {
       this.handleGetCurrentEntry();
     }
+  }
+
+  componentDidUpdate() { 
+
   }
 
   getPriceData = (searchString, timeFunction="IBM", intradayInterval="") => {
@@ -266,7 +271,8 @@ const mapStateToProps = state => ({
   entries: state.entry.tournamentEntries,
   currentUser: state.auth.currentUser,
   createdTrade: state.trade.createdTrade,
-  tradeData: state.trade
+  tradeData: state.trade,
+  tournaments: state.tournament.tournamentsArr,
 });
 
 export default connect(
