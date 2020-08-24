@@ -1,10 +1,5 @@
+# Stonk Kings
 
-                                     .__          
-  ____ ___  ________    _____ ______ |  |   ____  
-_/ __ \\  \/  /\__  \  /     \\____ \|  | _/ __ \ 
-\  ___/ >    <  / __ \|  Y Y  \  |_> >  |_\  ___/ 
- \___  >__/\_ \(____  /__|_|  /   __/|____/\___  >
-     \/      \/     \/      \/|__|             \/ 
 **https://stonk-kings.herokuapp.com/**
 
 > A platform to create and compete in stock trading competitions that redefine open market competition. 
