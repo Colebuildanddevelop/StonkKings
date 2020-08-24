@@ -1,15 +1,15 @@
-# StonkKings
+# Stonk Kings
 
 **https://stonk-kings.herokuapp.com/**
 
 > A platform to create and compete in stock trading competitions that redefine open market competition. 
 
 ![npm](https://img.shields.io/npm/v/npm)
-![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/colebuildanddevelop/TKings/client/react)
-![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/colebuildanddevelop/TKings/client/redux)
-![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/colebuildanddevelop/TKings/client/react-router-dom)
-![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/colebuildanddevelop/TKings/client/@nivo/line)
-![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/colebuildanddevelop/TKings/client/@material-ui/core)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/colebuildanddevelop/friendswithvids/react)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/colebuildanddevelop/friendswithvids/redux)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/colebuildanddevelop/friendswithvids/react-router-dom)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/colebuildanddevelop/friendswithvids/express)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/colebuildanddevelop/friendswithvids/@material-ui/core)
 
 ---
 
