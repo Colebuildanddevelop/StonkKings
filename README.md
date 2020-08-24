@@ -21,7 +21,7 @@ StonkKings is a platform to create and compete in stock trading competitions. Pl
 
 ## Step 1: Login or Create an Account 
 
-![chose](https://github.com/Colebuildanddevelop/PredictBR/blob/master/src/static/choseProduct.gif)
+![chose](https://github.com/Colebuildanddevelop/TKings/blob/master/static/login.gif)
 
 JWT handled authentication with a node js backend
 
@@ -29,7 +29,7 @@ JWT handled authentication with a node js backend
 
 ## Step 2: Find a Competition and Sign Up
 
-![choseGame](https://github.com/Colebuildanddevelop/PredictBR/blob/master/src/static/choseGame.gif)
+![choseGame](https://github.com/Colebuildanddevelop/TKings/blob/master/static/enterComp.gif)
 
 Competition Attributes
 
@@ -47,7 +47,7 @@ Competition Attributes
 
 ## Step 3: Make Trades
 
-![placePrediction](https://github.com/Colebuildanddevelop/PredictBR/blob/master/src/static/predict.gif)
+![placePrediction](https://github.com/Colebuildanddevelop/TKings/blob/master/static/makeTrades.gif)
 
 Rules & Considerations
 
@@ -57,7 +57,7 @@ Rules & Considerations
 
 ## Step 4: Profit
 
-![claim](https://github.com/Colebuildanddevelop/PredictBR/blob/master/src/static/claimWinning.gif)
+![claim](https://github.com/Colebuildanddevelop/TKings/blob/master/static/profit.gif)
 
 - At the end of a competition, the player with the highest simulated account balance gets assigned the total prize
 
@@ -65,7 +65,7 @@ Rules & Considerations
 
 ## Monitor Your Trades and Current Standings  
 
-![collect](https://github.com/Colebuildanddevelop/PredictBR/blob/master/src/static/collectEarnings.gif)
+![collect](https://github.com/Colebuildanddevelop/TKings/blob/master/static/monitor.gif)
 
 - Chose all of the competitions attributes 
 
@@ -73,7 +73,7 @@ Rules & Considerations
 
 ## Create a Competition
 
-![collect](https://github.com/Colebuildanddevelop/PredictBR/blob/master/src/static/collectEarnings.gif)
+![collect](https://github.com/Colebuildanddevelop/TKings/blob/master/static/createComp.gif)
 
 - Chose all of the competitions attributes 
 
