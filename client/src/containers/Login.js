@@ -32,7 +32,7 @@ function Copyright() {
 
 const useStyles = (theme) => ({
   root: {
-    height: '100vh',
+    
   },
   image: {
     backgroundImage: 'url(https://images.pexels.com/photos/189528/pexels-photo-189528.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)',
@@ -109,15 +109,23 @@ class Login extends React.Component {
   }
   
   handleLogin = async () => {
-    await this.props.auth({username: this.state.username, password: this.state.password}, "signIn")
-    this.props.logIn();
-    this.props.history.push('/lobby')
+    const log = await this.props.auth({username: this.state.username, password: this.state.password}, "signIn")
+    if (log.message) {
+      console.log(log.message)
+    } else {
+      this.props.logIn();
+      this.props.history.push('/lobby')
+    }
   }
 
   handleSignUp = async () => {
-    await this.props.auth({username: this.state.username, password: this.state.password, email: this.state.email}, "signUp")
-    this.props.logIn()
-    this.props.history.push('/lobby')
+    const log = await this.props.auth({username: this.state.username, password: this.state.password, email: this.state.email}, "signUp")
+    if (log.message) {
+      console.log(log.message)
+    } else {
+      this.props.logIn()
+      this.props.history.push('/lobby')
+    }
   }
    
   render() {

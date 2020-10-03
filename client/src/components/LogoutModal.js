@@ -27,6 +27,7 @@ const LogoutModal = (props) => {
     localStorage.clear();
     history.push('/');
     props.handleModal();
+    window.location.reload(false);
   }
   
   const classes = useStyles();
