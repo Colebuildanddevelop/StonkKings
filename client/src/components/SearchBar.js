@@ -1,45 +1,39 @@
 import React from "react";
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
-import { fade } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
   },
   paper: {
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
   },
   popper: {
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
   },
   input: {
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
   },
   inputFocused: {
     backgroundColor: theme.palette.primary.main,
   },
   groupLabel: {
     backgroundColor: theme.palette.primary.main,
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   option: {
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
   },
 
   inputRoot: {
     backgroundColor: theme.palette.primary.main,
     "&.MuiFormLabel-root.Mui-focused": {
-      color: theme.palette.text.secondary
-    }
-  }
+      color: theme.palette.text.secondary,
+    },
+  },
 }));
 
 const SearchBar = (props) => {
@@ -55,18 +49,20 @@ const SearchBar = (props) => {
   }, [open]);
 
   const handleInputChange = (e, value) => {
-    fetch(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=3VP9375JIOYD1569`)
-      .then(res => res.json())
-      .then(results => {
+    fetch(
+      `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=3VP9375JIOYD1569`
+    )
+      .then((res) => res.json())
+      .then((results) => {
         setOptions(results.bestMatches || []);
-      })
-  }
+      });
+  };
 
   const handleSelected = (e, val) => {
     if (val !== null) {
       props.handleSearchSubmit(val["1. symbol"]);
     }
-  }
+  };
 
   return (
     <Autocomplete
@@ -86,7 +82,7 @@ const SearchBar = (props) => {
       onInputChange={handleInputChange}
       onChange={handleSelected}
       ListboxProps={{
-        className: classes.listBox
+        className: classes.listBox,
       }}
       renderInput={(params) => (
         <TextField
@@ -98,7 +94,9 @@ const SearchBar = (props) => {
             ...params.InputProps,
             endAdornment: (
               <React.Fragment>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {loading ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
                 {params.InputProps.endAdornment}
               </React.Fragment>
             ),
@@ -107,9 +105,6 @@ const SearchBar = (props) => {
       )}
     />
   );
-}
+};
 
 export default SearchBar;
-
-
-

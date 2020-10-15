@@ -1,54 +1,49 @@
-import React from 'react';
-import Countdown from '../components/Countdown';
-import { Link } from 'react-router-dom';
+import React from "react";
 import { useHistory } from "react-router-dom";
-// MATERIAL UI  
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+// MATERIAL UI
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   dialogBox: {
     backgroundColor: theme.palette.primary.light,
-    
   },
   title: {
-    backgroundColor: theme.palette.primary.dark
+    backgroundColor: theme.palette.primary.dark,
   },
   textContainer: {
-    display: 'flex'  
+    display: "flex",
   },
   text: {
-    fontWeight: 'bold',
-    color: theme.palette.primary.dark
+    fontWeight: "bold",
+    color: theme.palette.primary.dark,
   },
   lobbyButton: {
-    width: '100%',
-    fontWeight: 'bold',
+    width: "100%",
+    fontWeight: "bold",
     backgroundColor: theme.palette.primary.dark,
     color: theme.palette.text.secondary,
-   '&:hover': {
-     backgroundColor: theme.palette.text.primary,
-   }
+    "&:hover": {
+      backgroundColor: theme.palette.text.primary,
+    },
   },
   createButton: {
     backgroundColor: theme.palette.text.primary,
     color: theme.palette.primary.dark,
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.palette.primary.dark,
-      color: theme.palette.text.secondary
-   }
+      color: theme.palette.text.secondary,
+    },
   },
   cancelButton: {
-    backgroundColor: theme.palette.primary.main
-  }
-
+    backgroundColor: theme.palette.primary.main,
+  },
 }));
 
 const CreateTournamentModal = (props) => {
@@ -59,15 +54,14 @@ const CreateTournamentModal = (props) => {
 
   return (
     <div>
-      <Dialog
-        open={props.open}
-        onClose={props.handleModal}
-      >
+      <Dialog open={props.open} onClose={props.handleModal}>
         <Grid container className={classes.dialogBox}>
           {!props.createTournamentSuccess ? (
             <div>
               <Grid item xs={12} className={classes.title}>
-                <DialogTitle id="simple-dialog-title">Create Tournament</DialogTitle>
+                <DialogTitle id="simple-dialog-title">
+                  Create Tournament
+                </DialogTitle>
               </Grid>
               <Grid item container xs={12}>
                 <DialogContent>
@@ -90,10 +84,18 @@ const CreateTournamentModal = (props) => {
               </Grid>
               <Grid item xs={12}>
                 <DialogActions>
-                  <Button className={classes.cancelButton}variant="outlined" onClick={props.handleModal}>
+                  <Button
+                    className={classes.cancelButton}
+                    variant="outlined"
+                    onClick={props.handleModal}
+                  >
                     Cancel
                   </Button>
-                  <Button className={classes.createButton} variant="primary" onClick={props.createTournament}>
+                  <Button
+                    className={classes.createButton}
+                    variant="primary"
+                    onClick={props.createTournament}
+                  >
                     Create
                   </Button>
                 </DialogActions>
@@ -102,11 +104,17 @@ const CreateTournamentModal = (props) => {
           ) : (
             <div>
               <Grid item xs={12} className={classes.title}>
-                <DialogTitle id="simple-dialog-title">Tournament Successfully Created!</DialogTitle>
+                <DialogTitle id="simple-dialog-title">
+                  Tournament Successfully Created!
+                </DialogTitle>
               </Grid>
               <Grid item xs={12}>
                 <DialogActions>
-                  <Button className={classes.lobbyButton} onClick={() => history.push('/lobby')} variant="contained">
+                  <Button
+                    className={classes.lobbyButton}
+                    onClick={() => history.push("/lobby")}
+                    variant="contained"
+                  >
                     Go to lobby!
                   </Button>
                 </DialogActions>
@@ -117,6 +125,6 @@ const CreateTournamentModal = (props) => {
       </Dialog>
     </div>
   );
-}
+};
 
 export default CreateTournamentModal;

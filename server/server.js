@@ -30,7 +30,6 @@ mongoose
   })
   .then(() => {
     console.log("Successfully connected to MongoDB.");
-  
   })
   .catch(err => {
     console.error("Connection error", err);
@@ -43,9 +42,9 @@ require("./app/routes/user.routes")(app);
 require("./app/routes/tournament.routes")(app);
 require("./app/routes/entry.routes")(app);
 require("./app/routes/trade.routes")(app);
-require("./app/schedulers/assignWinners")();
 
-// serve React
+require("./app/schedulers/assignWinners")();
+// Serve React
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/*', (req, res) => {
@@ -53,7 +52,6 @@ app.get('/*', (req, res) => {
 });
 
 // set port, listen for requests
-const PORT = dbConfig.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.port}.`);
 });

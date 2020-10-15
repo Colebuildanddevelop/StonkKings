@@ -1,62 +1,41 @@
 import React from "react";
-import { ResponsiveLine } from '@nivo/line';
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from '@material-ui/core/styles';
+import { ResponsiveLine } from "@nivo/line";
 
-const useStyles = makeStyles((theme) => ({
-  stockInfo: {
-    display: 'inline-block'
-  }
-}));
-
-// re renders with intraday format and daily data... 
+// re renders with intraday format and daily data...
 const Chart = (props) => {
-  const theme = {
-  axis: {
-    textColor: '#eee',
-    fontSize: '20px',
-    tickColor: '#eee',
-  },
-  grid: {
-    stroke: 'black',
-    strokeWidth: 1
-  },
-};
-  const classes = useStyles(); 
   return (
-    <div style={{height: 400}}>
+    <div style={{ height: 400 }}>
       <ResponsiveLine
         theme={{
           grid: {
             line: {
-              stroke: "grey"
-            }
+              stroke: "grey",
+            },
           },
           axis: {
             ticks: {
               text: {
-                fill: "white"
-              }
+                fill: "white",
+              },
             },
             legend: {
               text: {
-                fill: "white"
-              }
-            }
+                fill: "white",
+              },
+            },
           },
           crosshair: {
             line: {
-              stroke: "white"
-            }
-          }
-          
+              stroke: "white",
+            },
+          },
         }}
         data={props.data}
-        margin={{ top: 50, right: 50, bottom: 50, left: 60}}
+        margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
         xScale={{
           type: "time",
           format: props.xScaleFormat,
-          precision: "minute"
+          precision: "minute",
         }}
         xFormat={props.xFormat}
         yScale={{
@@ -64,7 +43,7 @@ const Chart = (props) => {
           min: "auto",
           max: "auto",
           stacked: false,
-          reverse: false
+          reverse: false,
         }}
         axisTop={null}
         axisRight={null}
@@ -75,7 +54,7 @@ const Chart = (props) => {
           tickRotation: 0,
           legend: "price",
           legendOffset: -40,
-          legendPosition: "middle"
+          legendPosition: "middle",
         }}
         axisBottom={{
           format: "%b %d",
@@ -85,7 +64,7 @@ const Chart = (props) => {
           orient: "bottom",
           legendPosition: "middle",
           legend: "date",
-          legendOffset: 36
+          legendOffset: 36,
         }}
         colors={["#64dd17"]}
         pointSize={10}
@@ -96,8 +75,8 @@ const Chart = (props) => {
         pointLabelYOffset={-12}
         useMesh={true}
       />
-    </div> 
-  )
-}
+    </div>
+  );
+};
 
 export default Chart;

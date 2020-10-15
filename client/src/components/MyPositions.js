@@ -1,22 +1,15 @@
 import React from "react";
-import { connect } from "react-redux";
-import { getTradesByEntryId } from "../redux/actions/trade.actions";
-// MATERIAL UI  
-import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import { Link } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+// MATERIAL UI
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -29,7 +22,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc'
+  return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -44,14 +37,29 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const  headCells = [
-  { id: 'ticker', numeric: false, disablePadding: false, label: 'Ticker Symbol' },
-  { id: 'averagePrice', numeric: false, disablePadding: false, label: 'Average Price' },
-  { id: 'netShares', numeric: false, disablePadding: false, label: 'Net Shares' },
+const headCells = [
+  {
+    id: "ticker",
+    numeric: false,
+    disablePadding: false,
+    label: "Ticker Symbol",
+  },
+  {
+    id: "averagePrice",
+    numeric: false,
+    disablePadding: false,
+    label: "Average Price",
+  },
+  {
+    id: "netShares",
+    numeric: false,
+    disablePadding: false,
+    label: "Net Shares",
+  },
 ];
 
 function EnhancedTableHead(props) {
-  const { classes, order, orderBy, rowCount, onRequestSort } = props;
+  const { classes, order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -62,19 +70,19 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            align={headCell.numeric ? "right" : "left"}
+            padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
+              direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </span>
               ) : null}
             </TableSortLabel>
@@ -87,10 +95,10 @@ function EnhancedTableHead(props) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: "100%",
   },
   paper: {
-    width: '100%',
+    width: "100%",
     marginBottom: theme.spacing(2),
   },
   table: {
@@ -98,76 +106,76 @@ const useStyles = makeStyles((theme) => ({
   },
   visuallyHidden: {
     border: 0,
-    clip: 'rect(0 0 0 0)',
+    clip: "rect(0 0 0 0)",
     height: 1,
     margin: -1,
-    overflow: 'hidden',
+    overflow: "hidden",
     padding: 0,
-    position: 'absolute',
+    position: "absolute",
     top: 20,
     width: 1,
   },
   tableHead: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.text.secondary,
-    width: "100%"
+    width: "100%",
   },
   row: {
-    fontWeight: 'bold',
-    color: theme.palette.primary.dark
+    fontWeight: "bold",
+    color: theme.palette.primary.dark,
   },
   tablePagination: {
-    color: theme.palette.primary.dark
-  }
+    color: theme.palette.primary.dark,
+  },
 }));
 
 const MyPositions = (props) => {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('entryFee');
+  const [order, setOrder] = React.useState("asc");
+  const [orderBy, setOrderBy] = React.useState("entryFee");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  
 
-  let hasPositions = false; 
+  let hasPositions = false;
   const consolidatePositionsArr = () => {
-    const allTickers = props.tradeData.tradesByEntry.map(t => t.stockTicker);
-    const uniqueTickers = allTickers.filter((val, index, self) => self.indexOf(val) === index);
-    const positions = uniqueTickers.map(ticker => {
+    const allTickers = props.tradeData.tradesByEntry.map((t) => t.stockTicker);
+    const uniqueTickers = allTickers.filter(
+      (val, index, self) => self.indexOf(val) === index
+    );
+    const positions = uniqueTickers.map((ticker) => {
       const position = {
         ticker: ticker,
         netShares: 0,
-        averagePrice: 0
-      }
-      let sharePriceXNumOfSharesSum = 0; 
+        averagePrice: 0,
+      };
+      let sharePriceXNumOfSharesSum = 0;
       let totalShares = 0;
-      props.tradeData.tradesByEntry.forEach(trade => {
+      props.tradeData.tradesByEntry.forEach((trade) => {
         if (trade.stockTicker === ticker) {
-
           if (trade.buyOrSell === "buy") {
-            sharePriceXNumOfSharesSum += (trade.amountOfShares * trade.price);
-            totalShares += trade.amountOfShares
+            sharePriceXNumOfSharesSum += trade.amountOfShares * trade.price;
+            totalShares += trade.amountOfShares;
 
-            position.netShares = position.netShares + trade.amountOfShares
+            position.netShares = position.netShares + trade.amountOfShares;
           } else {
-            position.netShares = position.netShares - trade.amountOfShares
+            position.netShares = position.netShares - trade.amountOfShares;
           }
         }
       });
-      position.averagePrice = sharePriceXNumOfSharesSum / totalShares
+      position.averagePrice = sharePriceXNumOfSharesSum / totalShares;
       if (position.netShares > 0) {
-        hasPositions = true
+        hasPositions = true;
       }
       return position;
-    })
+    });
 
-    return positions
-  }
+    return positions;
+  };
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
@@ -181,16 +189,19 @@ const MyPositions = (props) => {
   };
 
   const formatRows = () => {
-    return consolidatePositionsArr().filter(position => {
+    return consolidatePositionsArr().filter((position) => {
       if (position.netShares > 0) {
         return {
           ticker: position.ticker,
           netShares: position.netShares,
-          averagePrice: (Math.round(position.averagePrice * 100) / 100).toFixed(2)
-        }
+          averagePrice: (Math.round(position.averagePrice * 100) / 100).toFixed(
+            2
+          ),
+        };
       }
-    })
-  }
+      return;
+    });
+  };
 
   const rows = formatRows();
   return (
@@ -222,11 +233,19 @@ const MyPositions = (props) => {
                           tabIndex={-1}
                           key={index}
                         >
-                          <TableCell className={classes.row} component="th" scope="row" >
+                          <TableCell
+                            className={classes.row}
+                            component="th"
+                            scope="row"
+                          >
                             {row.ticker}
                           </TableCell>
-                          <TableCell className={classes.row} align="left">{row.averagePrice.toFixed(2)}</TableCell>
-                          <TableCell className={classes.row} align="left">{row.netShares}</TableCell>
+                          <TableCell className={classes.row} align="left">
+                            {row.averagePrice.toFixed(2)}
+                          </TableCell>
+                          <TableCell className={classes.row} align="left">
+                            {row.netShares}
+                          </TableCell>
                         </TableRow>
                       );
                     })}
@@ -244,13 +263,10 @@ const MyPositions = (props) => {
               onChangeRowsPerPage={handleChangeRowsPerPage}
             />
           </Paper>
-
         </div>
-
       ) : null}
-
     </div>
   );
-}
+};
 
 export default MyPositions;

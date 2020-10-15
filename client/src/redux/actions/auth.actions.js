@@ -1,61 +1,61 @@
-import URL from '../../config';
+import { SERVER_URL } from "../../config";
 export const FETCH_USER_INFORMATION_BEGIN = "FETCH_USER_INFORMATION_BEGIN";
 export const FETCH_USER_INFORMATION_SUCCESS = "FETCH_USER_INFORMATION_SUCCESS";
 export const FETCH_USER_INFORMATION_FAILURE = "FETCH_USER_INFORMATION_FAILURE";
 
 const fetchUserInfoBegin = () => ({
-  type: FETCH_USER_INFORMATION_BEGIN
+  type: FETCH_USER_INFORMATION_BEGIN,
 });
 
-const fetchUserInfoSuccess = userInfo => ({
+const fetchUserInfoSuccess = (userInfo) => ({
   type: FETCH_USER_INFORMATION_SUCCESS,
-  payload: { userInfo }
+  payload: { userInfo },
 });
 
-const fetchUserInfoFailure = err => ({
+const fetchUserInfoFailure = (err) => ({
   type: FETCH_USER_INFORMATION_FAILURE,
-  payload: { err }
+  payload: { err },
 });
 
 export const auth = (credentials, signInOrUp) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(fetchUserInfoBegin());
-    return fetch(`${URL}/api/auth/${signInOrUp}`, {
+    return fetch(`${SERVER_URL}/api/auth/${signInOrUp}`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...credentials
-      })
+        ...credentials,
+      }),
     })
-      .then(res => res.json())
-      .then(userInfo => {
-        dispatch(fetchUserInfoSuccess(userInfo))
-        localStorage.token = userInfo.accessToken
-        localStorage.userId = userInfo.id
-        return userInfo
+      .then((res) => res.json())
+      .then((userInfo) => {
+        dispatch(fetchUserInfoSuccess(userInfo));
+        localStorage.token = userInfo.accessToken;
+        localStorage.userId = userInfo.id;
+        return userInfo;
       })
-      .catch(err => dispatch(fetchUserInfoFailure(err)));
-  }
+      .catch((err) => dispatch(fetchUserInfoFailure(err)));
+  };
 };
 
 export const loginWithToken = (token) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(fetchUserInfoBegin());
-    return fetch(`${URL}/api/auth/loginWithToken`, {
+    return fetch(`${SERVER_URL}/api/auth/loginWithToken`, {
       method: "GET",
       headers: {
-        "x-access-token": token
-      }
+        "x-access-token": token,
+      },
     })
-    .then(res => res.json())
-    .then(userInfo => {
-      dispatch(fetchUserInfoSuccess(userInfo))
-      localStorage.token = userInfo.accessToken
-      localStorage.userId = userInfo.id
-      return userInfo
-    })
-    .catch(err => dispatch(fetchUserInfoFailure(err)))
-  }
+      .then((res) => res.json())
+      .then((userInfo) => {
+        dispatch(fetchUserInfoSuccess(userInfo));
+        localStorage.token = userInfo.accessToken;
+        localStorage.userId = userInfo.id;
+        return userInfo;
+      })
+      .catch((err) => dispatch(fetchUserInfoFailure(err)));
+  };
 };

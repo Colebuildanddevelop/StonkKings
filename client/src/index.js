@@ -1,30 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-
-import { Provider } from 'react-redux';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { Provider } from "react-redux";
 import store from "./redux/store";
-
-import { createMuiTheme }  from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/core/styles';
-import green from '@material-ui/core/colors/green';
-import grey from '@material-ui/core/colors/grey';
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
       main: "#484848",
-      dark: "#000000"
+      dark: "#000000",
     },
     secondary: {
-      main: "#d84315"
+      main: "#d84315",
     },
     text: {
       primary: "#64dd17",
-      secondary: "#fafafa"
-    }
-  }
-})
+      secondary: "#fafafa",
+    },
+  },
+});
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
@@ -32,6 +28,5 @@ ReactDOM.render(
       <App />
     </Provider>
   </ThemeProvider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
-

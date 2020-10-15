@@ -2,9 +2,8 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 
 class LatestPrice extends React.Component {
-
   componentDidMount() {
-    const intervalId = setInterval(this.fetchPrice, 1000)
+    const intervalId = setInterval(this.fetchPrice, 1000);
     this.setState({ intervalId: intervalId });
   }
 
@@ -13,26 +12,23 @@ class LatestPrice extends React.Component {
   }
 
   fetchPrice = () => {
-    fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${this.props.searchString}&apikey=3VP9375JIOYD1569`)
-      .then(res => res.json())
-      .then(priceData => {
-        this.props.setPrice(priceData["Global Quote"]["05. price"])
+    fetch(
+      `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${this.props.searchString}&apikey=3VP9375JIOYD1569`
+    )
+      .then((res) => res.json())
+      .then((priceData) => {
+        this.props.setPrice(priceData["Global Quote"]["05. price"]);
       });
-  }
+  };
 
   render() {
     return (
       <div>
-        <Typography variant="h5">
-          Current Price
-        </Typography>
-        <Typography variant="h6">
-          ${this.props.currentPrice}
-        </Typography>
+        <Typography variant="h5">Current Price</Typography>
+        <Typography variant="h6">${this.props.currentPrice}</Typography>
       </div>
     );
   }
 }
 
 export default LatestPrice;
-            
