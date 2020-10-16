@@ -6,4 +6,3 @@ import entry from "./entry.reducers";
 import trade from "./trade.reducers";
 
 export default combineReducers({ auth, tournament, entry, trade });
-

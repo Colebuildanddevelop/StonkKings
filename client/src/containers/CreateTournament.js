@@ -282,11 +282,6 @@ class CreateTournament extends React.Component {
         </Grid>
         <Grid item xs={6} style={{ padding: 5 }}>
           <TextField
-            InputLabelProps={{
-              style: {
-                color: "white",
-              },
-            }}
             value={this.state.entryFee}
             fullWidth={true}
             onChange={this.handleChange}
@@ -303,6 +298,9 @@ class CreateTournament extends React.Component {
               },
             }}
             InputProps={{
+              style: {
+                color: "white",
+              },
               classes: {
                 root: classes.cssOutlinedInput,
                 focused: classes.cssFocused,

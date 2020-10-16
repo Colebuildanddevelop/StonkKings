@@ -61,17 +61,12 @@ class Tournament extends React.Component {
   componentDidMount() {
     this.getPriceData("IBM", "TIME_SERIES_DAILY");
     this.props.getEntriesByTournamentId(this.props.match.params.id);
-    console.log(
-      this.props.tournaments.filter(
-        (tournament) => tournament.id === this.props.match.params.id
-      )
-    );
     if (localStorage.userId) {
       this.handleGetCurrentEntry();
     }
   }
 
-  getPriceData = (
+  getPriceData = async (
     searchString,
     timeFunction = "IBM",
     intradayInterval = ""
@@ -81,7 +76,8 @@ class Tournament extends React.Component {
       timeFunction,
       intradayInterval
     );
-    fetch(queryString)
+
+    const formattedData = await fetch(queryString)
       .then((res) => res.json())
       .then((data) => {
         if (data["Error Message"]) {
@@ -92,50 +88,117 @@ class Tournament extends React.Component {
         }
         const dataKeys = Object.keys(data);
         const timeSeriesHash = data[dataKeys[1]];
-        const formattedData = Object.keys(timeSeriesHash).map((key) => {
+        return Object.keys(timeSeriesHash).map((key) => {
           return {
             x: key,
             y: parseFloat(timeSeriesHash[key]["4. close"]),
           };
         });
-        fetch(
-          `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${searchString}&apikey=3VP9375JIOYD1569`
-        )
-          .then((res) => res.json())
-          .then((stockInfo) => {
-            fetch(
-              `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${searchString}&apikey=3VP9375JIOYD1569`
-            )
-              .then((res) => res.json())
-              .then((priceData) => {
-                let xScaleFormat = "%Y-%m-%d";
-                let xFormat = "time:%Y-%m-%d";
-                if (intradayInterval !== "") {
-                  xScaleFormat = "%Y-%m-%d %H:%M:%S";
-                  xFormat = "time:%Y-%m-%d %H:%M:%S";
-                }
-                this.setState({
-                  error: null,
-                  stockData: [
-                    {
-                      id: searchString,
-                      data: formattedData,
-                    },
-                  ],
-                  stockInfo: {
-                    symbol: stockInfo["Symbol"],
-                    name: stockInfo["Name"],
-                    exchange: stockInfo["Exchange"],
-                    sector: stockInfo["Sector"],
-                  },
-                  currentPrice: priceData["Global Quote"]["05. price"],
-                  xFormat: xFormat,
-                  xScaleFormat: xScaleFormat,
-                });
-              });
-          });
       });
+
+    const stockInfo = await fetch(
+      `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${searchString}&apikey=3VP9375JIOYD1569`
+    )
+      .then((res) => res.json())
+      .then((stockInfo) => stockInfo);
+
+    const priceData = await fetch(
+      `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${searchString}&apikey=3VP9375JIOYD1569`
+    )
+      .then((res) => res.json())
+      .then((priceData) => priceData);
+
+    let xScaleFormat = "%Y-%m-%d";
+    let xFormat = "time:%Y-%m-%d";
+    if (intradayInterval !== "") {
+      xScaleFormat = "%Y-%m-%d %H:%M:%S";
+      xFormat = "time:%Y-%m-%d %H:%M:%S";
+    }
+    this.setState({
+      error: null,
+      stockData: [
+        {
+          id: searchString,
+          data: formattedData,
+        },
+      ],
+      stockInfo: {
+        symbol: stockInfo["Symbol"],
+        name: stockInfo["Name"],
+        exchange: stockInfo["Exchange"],
+        sector: stockInfo["Sector"],
+      },
+      currentPrice: priceData["Global Quote"]["05. price"],
+      xFormat: xFormat,
+      xScaleFormat: xScaleFormat,
+    });
   };
+
+  // getPriceData = (
+  //   searchString,
+  //   timeFunction = "IBM",
+  //   intradayInterval = ""
+  // ) => {
+  //   const queryString = this.formatPriceQuery(
+  //     searchString,
+  //     timeFunction,
+  //     intradayInterval
+  //   );
+  //   fetch(queryString)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (data["Error Message"]) {
+  //         this.setState({
+  //           error: data["Error Message"],
+  //         });
+  //         return;
+  //       }
+  //       const dataKeys = Object.keys(data);
+  //       const timeSeriesHash = data[dataKeys[1]];
+  //       const formattedData = Object.keys(timeSeriesHash).map((key) => {
+  //         return {
+  //           x: key,
+  //           y: parseFloat(timeSeriesHash[key]["4. close"]),
+  //         };
+  //       });
+  //       fetch(
+  //         `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${searchString}&apikey=3VP9375JIOYD1569`
+  //       )
+  //         .then((res) => res.json())
+  //         .then((stockInfo) => {
+  //           fetch(
+  //             `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${searchString}&apikey=3VP9375JIOYD1569`
+  //           )
+  //             .then((res) => res.json())
+  //             .then((priceData) => {
+  //               let xScaleFormat = "%Y-%m-%d";
+  //               let xFormat = "time:%Y-%m-%d";
+  //               if (intradayInterval !== "") {
+  //                 xScaleFormat = "%Y-%m-%d %H:%M:%S";
+  //                 xFormat = "time:%Y-%m-%d %H:%M:%S";
+  //               }
+  //               this.setState({
+  //                 error: null,
+  //                 stockData: [
+  //                   {
+  //                     id: searchString,
+  //                     data: formattedData,
+  //                   },
+  //                 ],
+  //                 stockInfo: {
+  //                   symbol: stockInfo["Symbol"],
+  //                   name: stockInfo["Name"],
+  //                   exchange: stockInfo["Exchange"],
+  //                   sector: stockInfo["Sector"],
+  //                 },
+  //                 currentPrice: priceData["Global Quote"]["05. price"],
+  //                 xFormat: xFormat,
+  //                 xScaleFormat: xScaleFormat,
+  //               });
+  //             });
+  //         });
+  //     });
+  // };
 
   handleGetCurrentEntry = async () => {
     await this.props.getEntryByUsernameAndTournamentName(
@@ -202,14 +265,7 @@ class Tournament extends React.Component {
               </Grid>
               <Grid container>
                 {this.state.stockInfo ? (
-                  <Grid
-                    container
-                    item
-                    justify="space-between"
-                    item
-                    xs={12}
-                    md={6}
-                  >
+                  <Grid container item justify="space-between" xs={12} md={6}>
                     <div>
                       <div style={{ display: "flex" }}>
                         <Typography variant="h5" className={classes.stockInfo}>

@@ -34,29 +34,6 @@ export const getEntryByUsernameAndTournamentName = (userId, tournamentId) => {
   };
 };
 
-// export const getEntrants = (credentials, signInOrUp) => {
-// return dispatch => {
-// dispatch(fetchUserInfoBegin());
-// return fetch(`http://localhost:3000/api/auth/${signInOrUp}`, {
-// method: "POST",
-// headers: {
-// "Content-Type": "application/json"
-// },
-// body: JSON.stringify({
-// ...credentials
-// })
-// })
-// .then(res => res.json())
-// .then(userInfo => {
-// dispatch(fetchUserInfoSuccess(userInfo))
-// console.log(userInfo)
-// localStorage.token = userInfo.accessToken
-// return userInfo
-// })
-// .catch(err => dispatch(fetchUserInfoFailure(err)));
-// };
-// };
-
 export const CREATE_ENTRY_BEGIN = "CREATE_ENTRY_BEGIN";
 export const CREATE_ENTRY_SUCCESS = "CREATE_ENTRY_SUCCESS";
 export const CREATE_ENTRY_FAILURE = "CREATE_ENTRY_FAILURE";

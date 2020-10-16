@@ -199,7 +199,7 @@ const MyPositions = (props) => {
           ),
         };
       }
-      return;
+      return null;
     });
   };
 
