@@ -77,128 +77,56 @@ class Tournament extends React.Component {
       intradayInterval
     );
 
-    const formattedData = await fetch(queryString)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data["Error Message"]) {
-          this.setState({
-            error: data["Error Message"],
-          });
-          return;
-        }
-        const dataKeys = Object.keys(data);
-        const timeSeriesHash = data[dataKeys[1]];
-        return Object.keys(timeSeriesHash).map((key) => {
-          return {
-            x: key,
-            y: parseFloat(timeSeriesHash[key]["4. close"]),
-          };
-        });
+    try {
+      const timeSeriesDataResponse = await fetch(queryString);
+      const timeSeriesData = await timeSeriesDataResponse.json();
+      const stockInfoResponse = await fetch(
+        `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${searchString}&apikey=3VP9375JIOYD1569`
+      );
+      const stockInfo = await stockInfoResponse.json();
+      const priceDataResponse = await fetch(
+        `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${searchString}&apikey=3VP9375JIOYD1569`
+      );
+      const priceData = await priceDataResponse.json();
+
+      const dataKeys = Object.keys(timeSeriesData);
+      const timeSeriesHash = timeSeriesData[dataKeys[1]];
+      const formattedData = Object.keys(timeSeriesHash).map((key) => {
+        return {
+          x: key,
+          y: parseFloat(timeSeriesHash[key]["4. close"]),
+        };
       });
 
-    const stockInfo = await fetch(
-      `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${searchString}&apikey=3VP9375JIOYD1569`
-    )
-      .then((res) => res.json())
-      .then((stockInfo) => stockInfo);
+      let xScaleFormat = "%Y-%m-%d";
+      let xFormat = "time:%Y-%m-%d";
+      if (intradayInterval !== "") {
+        xScaleFormat = "%Y-%m-%d %H:%M:%S";
+        xFormat = "time:%Y-%m-%d %H:%M:%S";
+      }
 
-    const priceData = await fetch(
-      `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${searchString}&apikey=3VP9375JIOYD1569`
-    )
-      .then((res) => res.json())
-      .then((priceData) => priceData);
-
-    let xScaleFormat = "%Y-%m-%d";
-    let xFormat = "time:%Y-%m-%d";
-    if (intradayInterval !== "") {
-      xScaleFormat = "%Y-%m-%d %H:%M:%S";
-      xFormat = "time:%Y-%m-%d %H:%M:%S";
-    }
-    this.setState({
-      error: null,
-      stockData: [
-        {
-          id: searchString,
-          data: formattedData,
+      this.setState({
+        error: null,
+        stockData: [
+          {
+            id: searchString,
+            data: formattedData,
+          },
+        ],
+        stockInfo: {
+          symbol: stockInfo["Symbol"],
+          name: stockInfo["Name"],
+          exchange: stockInfo["Exchange"],
+          sector: stockInfo["Sector"],
         },
-      ],
-      stockInfo: {
-        symbol: stockInfo["Symbol"],
-        name: stockInfo["Name"],
-        exchange: stockInfo["Exchange"],
-        sector: stockInfo["Sector"],
-      },
-      currentPrice: priceData["Global Quote"]["05. price"],
-      xFormat: xFormat,
-      xScaleFormat: xScaleFormat,
-    });
+        currentPrice: priceData["Global Quote"]["05. price"],
+        xFormat: xFormat,
+        xScaleFormat: xScaleFormat,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
-
-  // getPriceData = (
-  //   searchString,
-  //   timeFunction = "IBM",
-  //   intradayInterval = ""
-  // ) => {
-  //   const queryString = this.formatPriceQuery(
-  //     searchString,
-  //     timeFunction,
-  //     intradayInterval
-  //   );
-  //   fetch(queryString)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data["Error Message"]) {
-  //         this.setState({
-  //           error: data["Error Message"],
-  //         });
-  //         return;
-  //       }
-  //       const dataKeys = Object.keys(data);
-  //       const timeSeriesHash = data[dataKeys[1]];
-  //       const formattedData = Object.keys(timeSeriesHash).map((key) => {
-  //         return {
-  //           x: key,
-  //           y: parseFloat(timeSeriesHash[key]["4. close"]),
-  //         };
-  //       });
-  //       fetch(
-  //         `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${searchString}&apikey=3VP9375JIOYD1569`
-  //       )
-  //         .then((res) => res.json())
-  //         .then((stockInfo) => {
-  //           fetch(
-  //             `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${searchString}&apikey=3VP9375JIOYD1569`
-  //           )
-  //             .then((res) => res.json())
-  //             .then((priceData) => {
-  //               let xScaleFormat = "%Y-%m-%d";
-  //               let xFormat = "time:%Y-%m-%d";
-  //               if (intradayInterval !== "") {
-  //                 xScaleFormat = "%Y-%m-%d %H:%M:%S";
-  //                 xFormat = "time:%Y-%m-%d %H:%M:%S";
-  //               }
-  //               this.setState({
-  //                 error: null,
-  //                 stockData: [
-  //                   {
-  //                     id: searchString,
-  //                     data: formattedData,
-  //                   },
-  //                 ],
-  //                 stockInfo: {
-  //                   symbol: stockInfo["Symbol"],
-  //                   name: stockInfo["Name"],
-  //                   exchange: stockInfo["Exchange"],
-  //                   sector: stockInfo["Sector"],
-  //                 },
-  //                 currentPrice: priceData["Global Quote"]["05. price"],
-  //                 xFormat: xFormat,
-  //                 xScaleFormat: xScaleFormat,
-  //               });
-  //             });
-  //         });
-  //     });
-  // };
 
   handleGetCurrentEntry = async () => {
     await this.props.getEntryByUsernameAndTournamentName(
