@@ -2,6 +2,7 @@ import {
   FETCH_USER_INFORMATION_BEGIN,
   FETCH_USER_INFORMATION_SUCCESS,
   FETCH_USER_INFORMATION_FAILURE,
+  END_USER_SESSION,
 } from "../actions/auth.actions";
 
 const initialState = {
@@ -31,6 +32,10 @@ const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload.error,
+      };
+    case END_USER_SESSION:
+      return {
+        ...initialState,
       };
     default:
       return state;

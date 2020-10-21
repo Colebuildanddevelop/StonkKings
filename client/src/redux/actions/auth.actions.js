@@ -2,6 +2,7 @@ import { SERVER_URL } from "../../config";
 export const FETCH_USER_INFORMATION_BEGIN = "FETCH_USER_INFORMATION_BEGIN";
 export const FETCH_USER_INFORMATION_SUCCESS = "FETCH_USER_INFORMATION_SUCCESS";
 export const FETCH_USER_INFORMATION_FAILURE = "FETCH_USER_INFORMATION_FAILURE";
+export const END_USER_SESSION = "END_USER_SESSION";
 
 const fetchUserInfoBegin = () => ({
   type: FETCH_USER_INFORMATION_BEGIN,
@@ -15,6 +16,10 @@ const fetchUserInfoSuccess = (userInfo) => ({
 const fetchUserInfoFailure = (err) => ({
   type: FETCH_USER_INFORMATION_FAILURE,
   payload: { error: err.message },
+});
+
+const endUserSession = () => ({
+  type: END_USER_SESSION,
 });
 
 export const auth = (credentials, signInOrUp) => {
@@ -61,5 +66,12 @@ export const loginWithToken = (token) => {
       .catch((err) => {
         dispatch(fetchUserInfoFailure(err));
       });
+  };
+};
+
+export const logout = () => {
+  return (dispatch) => {
+    dispatch(endUserSession());
+    localStorage.clear();
   };
 };

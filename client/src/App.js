@@ -17,10 +17,8 @@ import CreateTournament from "./containers/CreateTournament";
 import { withStyles } from "@material-ui/core/styles";
 
 const useStyles = (theme) => ({
-  app: {
-    backgroundColor: theme.palette.primary.light,
-  },
   mainContainer: {
+    backgroundColor: theme.palette.primary.light,
     minHeight: "100vh",
     width: "100%",
     height: "100%",
@@ -28,82 +26,57 @@ const useStyles = (theme) => ({
 });
 
 class App extends React.Component {
-  state = {
-    loggedIn: false,
-  };
-
   componentDidMount() {
-    this.handleLogin();
+    this.handleLoginUser();
   }
 
-  handleLogin = async () => {
+  handleLoginUser = async () => {
     await this.props.loginWithToken(localStorage.token);
-    if (!this.props.currentUser) {
-      console.log("error user");
-    }
-    this.logIn();
-  };
-
-  logIn = () => {
-    this.setState({
-      loggedIn: true,
-    });
+    if (!this.props.currentUser) console.log("error user");
   };
 
   render() {
     const { classes } = this.props;
+    if (!this.props.currentUser) {
+      return <Login currentUser={this.props.currentUser} />;
+    }
     return (
-      <div className={classes.app}>
+      <div className={classes.mainContainer}>
         <BrowserRouter>
-          {this.state.loggedIn || localStorage.token ? <NavBar /> : null}
-          <div className={classes.mainContainer}>
-            <Switch>
-              <Route
-                exact
-                path="/lobby"
-                render={(routeProps) => <Lobby {...routeProps} />}
-              />
-              <Route
-                exact
-                path="/"
-                render={(routeProps) => (
-                  <Login
-                    logIn={this.logIn}
-                    loggedIn={this.state.loggedIn}
-                    {...routeProps}
-                  />
-                )}
-              />
-              <Route
-                exact
-                path="/my-tournaments"
-                render={(routeProps) => <MyTournaments {...routeProps} />}
-              />
-              <Route
-                exact
-                path="/leaderboard"
-                render={(routeProps) => <Leaderboard {...routeProps} />}
-              />
-              <Route
-                exact
-                path="/create-tournament"
-                render={(routeProps) => <CreateTournament {...routeProps} />}
-              />
-              <Route
-                exact
-                path="/tournament/:id"
-                render={(routeProps) => (
-                  <Tournament
-                    {...routeProps}
-                    currentUser={this.props.currentUser}
-                  />
-                )}
-              />
-            </Switch>
-          </div>
-          {this.state.loggedIn || localStorage.token ? (
-            <Footer className={classes.footer} />
-          ) : null}
+          <NavBar />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(routeProps) => <Lobby {...routeProps} />}
+            />
+            <Route
+              exact
+              path="/my-tournaments"
+              render={(routeProps) => <MyTournaments {...routeProps} />}
+            />
+            <Route
+              exact
+              path="/leaderboard"
+              render={(routeProps) => <Leaderboard {...routeProps} />}
+            />
+            <Route
+              exact
+              path="/create-tournament"
+              render={(routeProps) => <CreateTournament {...routeProps} />}
+            />
+            <Route
+              exact
+              path="/tournament/:id"
+              render={(routeProps) => (
+                <Tournament
+                  {...routeProps}
+                  currentUser={this.props.currentUser}
+                />
+              )}
+            />
+          </Switch>
+          <Footer className={classes.footer} />
         </BrowserRouter>
       </div>
     );

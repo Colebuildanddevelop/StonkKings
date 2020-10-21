@@ -16,18 +16,15 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 
-function Copyright() {
+const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Stonk Kings
-      </Link>{" "}
-      {new Date().getFullYear()}
+      <Link color="inherit">Stonk Kings</Link> {new Date().getFullYear()}
       {"."}
     </Typography>
   );
-}
+};
 
 const useStyles = (theme) => ({
   root: {
@@ -92,13 +89,6 @@ class Login extends React.Component {
     signIn: true,
   };
 
-  componentDidUpdate() {
-    if (this.props.loggedIn) {
-      console.log("pushing");
-      this.props.history.push("/lobby");
-    }
-  }
-
   setSignIn = (bool) => {
     this.setState({ signIn: bool });
   };
@@ -110,20 +100,14 @@ class Login extends React.Component {
   };
 
   handleLogin = async () => {
-    const log = await this.props.auth(
+    await this.props.auth(
       { username: this.state.username, password: this.state.password },
       "signIn"
     );
-    if (log.message) {
-      console.log(log.message);
-    } else {
-      this.props.logIn();
-      this.props.history.push("/lobby");
-    }
   };
 
   handleSignUp = async () => {
-    const log = await this.props.auth(
+    await this.props.auth(
       {
         username: this.state.username,
         password: this.state.password,
@@ -131,19 +115,10 @@ class Login extends React.Component {
       },
       "signUp"
     );
-    console.log("log", log);
-    if (log.type) {
-      console.log(log.message);
-    } else {
-      this.props.logIn();
-      this.props.history.push("/lobby");
-    }
   };
 
   render() {
     const { classes } = this.props;
-    console.log(this.props.loggedIn);
-
     return (
       <Grid container component="main" className={classes.root}>
         <CssBaseline />

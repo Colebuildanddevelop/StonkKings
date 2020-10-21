@@ -1,5 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { logout } from "../redux/actions/auth.actions";
 // MATERIAL UI
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -13,21 +14,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LogoutModal = (props) => {
-  let history = useHistory();
-
-  const handleLogout = () => {
-    localStorage.clear();
-    history.push("/");
-    props.handleModal();
-    window.location.reload(false);
-  };
-
   const classes = useStyles();
   return (
     <>
       <Dialog open={props.open} onClose={props.handleModal}>
         <Grid className={classes.dialogContainer} container>
-          <Button onClick={() => handleLogout()} fullWidth>
+          <Button onClick={() => props.logout()} fullWidth>
             Logout!
           </Button>
         </Grid>
@@ -36,4 +28,4 @@ const LogoutModal = (props) => {
   );
 };
 
-export default LogoutModal;
+export default connect(null, { logout })(LogoutModal);
