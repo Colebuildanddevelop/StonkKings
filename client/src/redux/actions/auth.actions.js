@@ -14,7 +14,7 @@ const fetchUserInfoSuccess = (userInfo) => ({
 
 const fetchUserInfoFailure = (err) => ({
   type: FETCH_USER_INFORMATION_FAILURE,
-  payload: { err },
+  payload: { error: err.message },
 });
 
 export const auth = (credentials, signInOrUp) => {
@@ -36,7 +36,9 @@ export const auth = (credentials, signInOrUp) => {
         localStorage.userId = userInfo.id;
         return userInfo;
       })
-      .catch((err) => dispatch(fetchUserInfoFailure(err)));
+      .catch((err) => {
+        dispatch(fetchUserInfoFailure(err));
+      });
   };
 };
 
@@ -56,6 +58,8 @@ export const loginWithToken = (token) => {
         localStorage.userId = userInfo.id;
         return userInfo;
       })
-      .catch((err) => dispatch(fetchUserInfoFailure(err)));
+      .catch((err) => {
+        dispatch(fetchUserInfoFailure(err));
+      });
   };
 };

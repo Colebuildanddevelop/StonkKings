@@ -74,7 +74,6 @@ class NavBar extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.props.mediaQuery);
     return (
       <div>
         <AppBar position="static" className={classes.nav}>

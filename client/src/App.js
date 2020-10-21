@@ -32,18 +32,23 @@ class App extends React.Component {
     loggedIn: false,
   };
 
+  componentDidMount() {
+    this.handleLogin();
+  }
+
+  handleLogin = async () => {
+    await this.props.loginWithToken(localStorage.token);
+    if (!this.props.currentUser) {
+      console.log("error user");
+    }
+    this.logIn();
+  };
+
   logIn = () => {
     this.setState({
       loggedIn: true,
     });
   };
-
-  componentDidMount() {
-    if (localStorage.token) {
-      this.props.loginWithToken(localStorage.token);
-      this.logIn();
-    }
-  }
 
   render() {
     const { classes } = this.props;
