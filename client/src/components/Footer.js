@@ -38,7 +38,7 @@ const Footer = () => {
     <React.Fragment>
       {/* Footer */}
       <footer className={classes.footer}>
-        <Grid container xs={12}>
+        <Grid container>
           <Grid item xs={4}>
             <InstagramIcon className={classes.icon} />
           </Grid>

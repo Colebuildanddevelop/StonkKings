@@ -32,7 +32,6 @@ class App extends React.Component {
 
   handleLoginUser = async () => {
     await this.props.loginWithToken(localStorage.token);
-    if (!this.props.currentUser) console.log("error user");
   };
 
   render() {

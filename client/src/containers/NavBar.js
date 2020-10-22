@@ -80,7 +80,7 @@ class NavBar extends React.Component {
           <Toolbar>
             <Typography
               component={Link}
-              to={"/lobby"}
+              to={"/"}
               variant="h4"
               color="textPrimary"
               className={classes.title}
@@ -91,7 +91,7 @@ class NavBar extends React.Component {
               <>
                 <Typography
                   component={Link}
-                  to={"/lobby"}
+                  to={"/"}
                   variant="h6"
                   color="textPrimary"
                   className={classes.title}
@@ -181,6 +181,7 @@ class NavBar extends React.Component {
                 <SwipeableDrawer
                   classes={{ paper: classes.paper }}
                   open={this.state.drawerOpen}
+                  onOpen={() => this.setState({ drawerOpen: true })}
                   onClose={() => this.setState({ drawerOpen: false })}
                   anchor="right"
                 >
@@ -235,7 +236,7 @@ class NavBar extends React.Component {
                       onClick={() => this.setState({ drawerOpen: false })}
                       key={"Lobby"}
                       component={Link}
-                      to={"/lobby"}
+                      to={"/"}
                     >
                       <ListItemText
                         className={classes.listText}

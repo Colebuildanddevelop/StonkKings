@@ -23,28 +23,52 @@ const endUserSession = () => ({
 });
 
 export const auth = (credentials, signInOrUp) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(fetchUserInfoBegin());
-    return fetch(`${SERVER_URL}/api/auth/${signInOrUp}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...credentials,
-      }),
-    })
-      .then((res) => res.json())
-      .then((userInfo) => {
-        dispatch(fetchUserInfoSuccess(userInfo));
-        localStorage.token = userInfo.accessToken;
-        localStorage.userId = userInfo.id;
-        return userInfo;
-      })
-      .catch((err) => {
-        dispatch(fetchUserInfoFailure(err));
+    try {
+      const result = await fetch(`${SERVER_URL}/api/auth/${signInOrUp}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...credentials,
+        }),
       });
+      const userInfo = await result.json();
+      console.log(userInfo);
+      dispatch(fetchUserInfoSuccess(userInfo));
+
+      localStorage.token = userInfo.accessToken;
+      localStorage.userId = userInfo.id;
+    } catch (err) {
+      dispatch(fetchUserInfoFailure(err));
+    }
   };
+
+  // return (dispatch) => {
+  //   dispatch(fetchUserInfoBegin());
+  //   return fetch(`${SERVER_URL}/api/auth/${signInOrUp}`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       ...credentials,
+  //     }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((userInfo) => {
+  //       console.log(userInfo);
+  //       dispatch(fetchUserInfoSuccess(userInfo));
+  //       localStorage.token = userInfo.accessToken;
+  //       localStorage.userId = userInfo.id;
+  //       return userInfo;
+  //     })
+  //     .catch((err) => {
+  //       dispatch(fetchUserInfoFailure(err));
+  //     });
+  // };
 };
 
 export const loginWithToken = (token) => {
