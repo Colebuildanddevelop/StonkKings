@@ -13,9 +13,9 @@ const fetchUserInfoSuccess = (userInfo) => ({
   payload: { userInfo },
 });
 
-const fetchUserInfoFailure = (err) => ({
+const fetchUserInfoFailure = (error) => ({
   type: FETCH_USER_INFORMATION_FAILURE,
-  payload: { error: err.message },
+  payload: { error },
 });
 
 const endUserSession = () => ({
@@ -35,61 +35,44 @@ export const auth = (credentials, signInOrUp) => {
           ...credentials,
         }),
       });
-      const userInfo = await result.json();
-      console.log(userInfo);
-      dispatch(fetchUserInfoSuccess(userInfo));
-
-      localStorage.token = userInfo.accessToken;
-      localStorage.userId = userInfo.id;
+      if (result.status === 200) {
+        const userInfo = await result.json();
+        localStorage.token = userInfo.accessToken;
+        localStorage.userId = userInfo._id;
+        dispatch(fetchUserInfoSuccess(userInfo));
+      } else {
+        const error = await result.json();
+        dispatch(fetchUserInfoFailure(error));
+      }
     } catch (err) {
       dispatch(fetchUserInfoFailure(err));
     }
   };
-
-  // return (dispatch) => {
-  //   dispatch(fetchUserInfoBegin());
-  //   return fetch(`${SERVER_URL}/api/auth/${signInOrUp}`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       ...credentials,
-  //     }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((userInfo) => {
-  //       console.log(userInfo);
-  //       dispatch(fetchUserInfoSuccess(userInfo));
-  //       localStorage.token = userInfo.accessToken;
-  //       localStorage.userId = userInfo.id;
-  //       return userInfo;
-  //     })
-  //     .catch((err) => {
-  //       dispatch(fetchUserInfoFailure(err));
-  //     });
-  // };
 };
 
 export const loginWithToken = (token) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(fetchUserInfoBegin());
-    return fetch(`${SERVER_URL}/api/auth/loginWithToken`, {
-      method: "GET",
-      headers: {
-        "x-access-token": token,
-      },
-    })
-      .then((res) => res.json())
-      .then((userInfo) => {
-        dispatch(fetchUserInfoSuccess(userInfo));
-        localStorage.token = userInfo.accessToken;
-        localStorage.userId = userInfo.id;
-        return userInfo;
-      })
-      .catch((err) => {
-        dispatch(fetchUserInfoFailure(err));
+    try {
+      const result = await fetch(`${SERVER_URL}/api/auth/loginWithToken`, {
+        method: "GET",
+        headers: {
+          "x-access-token": token,
+        },
       });
+
+      if (result.status === 200) {
+        const userInfo = await result.json();
+        localStorage.token = userInfo.accessToken;
+        localStorage.userId = userInfo._id;
+        dispatch(fetchUserInfoSuccess(userInfo));
+      } else {
+        const error = await result.json();
+        dispatch(fetchUserInfoFailure(error));
+      }
+    } catch (err) {
+      dispatch(fetchUserInfoFailure(err));
+    }
   };
 };
 

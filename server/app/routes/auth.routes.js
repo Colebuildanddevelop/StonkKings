@@ -1,5 +1,4 @@
 const verifyToken = require("../middlewares/verifyToken");
-const checkDuplicateUsernameOrEmail = require("../middlewares/checkDuplicateUsernameOrEmail");
 const controller = require("../controllers/auth.controller");
 
 module.exports = function (app) {

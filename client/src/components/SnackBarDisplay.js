@@ -3,9 +3,9 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { withStyles } from "@material-ui/core/styles";
 
-function Alert(props) {
+const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+};
 
 const useStyles = (theme) => ({
   root: {
@@ -15,10 +15,6 @@ const useStyles = (theme) => ({
     },
   },
 });
-
-// put open state in parent component,
-//  when trade is created handle open in handle trade function,
-// pass results of created trade to be displayed in snasckbar
 
 class SnackBarDisplay extends React.Component {
   state = {

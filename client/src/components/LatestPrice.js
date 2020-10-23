@@ -11,14 +11,16 @@ class LatestPrice extends React.Component {
     clearInterval(this.state.intervalId);
   }
 
-  fetchPrice = () => {
-    fetch(
-      `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${this.props.searchString}&apikey=3VP9375JIOYD1569`
-    )
-      .then((res) => res.json())
-      .then((priceData) => {
-        this.props.setPrice(priceData["Global Quote"]["05. price"]);
-      });
+  fetchPrice = async () => {
+    try {
+      const result = await fetch(
+        `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${this.props.searchString}&apikey=3VP9375JIOYD1569`
+      );
+      const priceData = await result.json();
+      this.props.setPrice(priceData["Global Quote"]["05. price"]);
+    } catch (err) {
+      console.err(err);
+    }
   };
 
   render() {

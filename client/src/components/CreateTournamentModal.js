@@ -50,8 +50,6 @@ const CreateTournamentModal = (props) => {
   const classes = useStyles();
   const history = useHistory();
 
-  // getModalStyle is not a pure function, we roll the style only on the first render
-
   return (
     <div>
       <Dialog open={props.open} onClose={props.handleModal}>
@@ -112,7 +110,7 @@ const CreateTournamentModal = (props) => {
                 <DialogActions>
                   <Button
                     className={classes.lobbyButton}
-                    onClick={() => history.push("/lobby")}
+                    onClick={() => history.push("/")}
                     variant="contained"
                   >
                     Go to lobby!

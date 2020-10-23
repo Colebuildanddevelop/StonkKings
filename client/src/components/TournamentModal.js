@@ -61,10 +61,6 @@ const useStyles = (theme) => ({
   },
 });
 
-// updates and sets entered to true, and never gets reset to false.
-// when clicked sign in current user is updated but curr tournament clicked info is not
-// tournament info only updated on click tournament row which row info is updated when handleenter
-
 class TournamentModal extends React.Component {
   state = {
     entered: false,

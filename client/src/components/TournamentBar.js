@@ -109,6 +109,7 @@ class TournamentBar extends React.Component {
                 <SwipeableDrawer
                   classes={{ paper: classes.paper }}
                   open={this.state.drawerOpen}
+                  onOpen={() => this.setState({ drawerOpen: true })}
                   onClose={() => this.setState({ drawerOpen: false })}
                   anchor="top"
                 >

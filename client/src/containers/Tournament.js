@@ -37,7 +37,7 @@ class Tournament extends React.Component {
     error: null,
     stockData: [
       {
-        id: "IBM",
+        id: "SHOP",
         data: [
           {
             x: "2020-06-01",
@@ -47,9 +47,9 @@ class Tournament extends React.Component {
       },
     ],
     stockInfo: {
-      symbol: "IBM",
+      symbol: "SHOP",
     },
-    currentSearch: "IBM",
+    currentSearch: "SHOP",
     timeFunction: "TIME_SERIES_DAILY",
     intradayInterval: "1min",
     currentPrice: "loading",
@@ -59,7 +59,7 @@ class Tournament extends React.Component {
   };
 
   componentDidMount() {
-    this.getPriceData("IBM", "TIME_SERIES_DAILY");
+    this.getPriceData("SHOP", "TIME_SERIES_DAILY");
     this.props.getEntriesByTournamentId(this.props.match.params.id);
     if (localStorage.userId) {
       this.handleGetCurrentEntry();
@@ -68,7 +68,7 @@ class Tournament extends React.Component {
 
   getPriceData = async (
     searchString,
-    timeFunction = "IBM",
+    timeFunction = "SHOP",
     intradayInterval = ""
   ) => {
     const queryString = this.formatPriceQuery(

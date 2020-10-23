@@ -20,17 +20,17 @@ const fetchEntryInfoFailure = (err) => ({
 });
 
 export const getEntryByUsernameAndTournamentName = (userId, tournamentId) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(fetchEntryInfoBegin());
-    return fetch(`${SERVER_URL}/api/entries/${userId}/${tournamentId}`)
-      .then((res) => res.json())
-      .then((entryInfo) => {
-        dispatch(fetchEntryInfoSuccess(entryInfo));
-        return entryInfo;
-      })
-      .catch((err) => {
-        dispatch(fetchEntryInfoFailure(err));
-      });
+    try {
+      const result = await fetch(
+        `${SERVER_URL}/api/entries/${userId}/${tournamentId}`
+      );
+      const entryInfo = await result.json();
+      dispatch(fetchEntryInfoSuccess(entryInfo));
+    } catch (err) {
+      dispatch(fetchEntryInfoFailure(err));
+    }
   };
 };
 
@@ -53,26 +53,24 @@ const createEntryFailure = (err) => ({
 });
 
 export const createEntry = (tournamentId, token) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(createEntryBegin());
-    return fetch(`${SERVER_URL}/api/entries`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-access-token": token,
-      },
-      body: JSON.stringify({
-        tournamentId: tournamentId,
-      }),
-    })
-      .then((res) => res.json())
-      .then((entryInfo) => {
-        dispatch(createEntrySuccess(entryInfo));
-        return entryInfo;
-      })
-      .catch((err) => {
-        dispatch(createEntryFailure(err));
+    try {
+      const result = await fetch(`${SERVER_URL}/api/entries`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": token,
+        },
+        body: JSON.stringify({
+          tournamentId: tournamentId,
+        }),
       });
+      const entryInfo = await result.json();
+      dispatch(createEntrySuccess(entryInfo));
+    } catch (err) {
+      dispatch(createEntryFailure(err));
+    }
   };
 };
 
@@ -97,12 +95,15 @@ const fetchEntriesByTournamentIdFailure = (error) => ({
   payload: { error },
 });
 
-export const getEntriesByTournamentId = (tournamentId) => (dispatch) => {
+export const getEntriesByTournamentId = (tournamentId) => async (dispatch) => {
   dispatch(fetchEntriesByTournamentIdBegin());
-  return fetch(`${SERVER_URL}/api/entries/tournament/${tournamentId}`)
-    .then((res) => res.json())
-    .then((entriesArr) => {
-      dispatch(fetchEntriesByTournamentIdSuccess(entriesArr));
-    })
-    .catch((error) => dispatch(fetchEntriesByTournamentIdFailure(error)));
+  try {
+    const result = await fetch(
+      `${SERVER_URL}/api/entries/tournament/${tournamentId}`
+    );
+    const entriesArr = await result.json();
+    dispatch(fetchEntriesByTournamentIdSuccess(entriesArr));
+  } catch (err) {
+    dispatch(fetchEntriesByTournamentIdFailure(err));
+  }
 };

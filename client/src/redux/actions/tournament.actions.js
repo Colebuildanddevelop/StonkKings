@@ -17,12 +17,13 @@ const fetchTournamentsFailure = (err) => ({
   payload: { err },
 });
 
-export const getTournaments = () => (dispatch) => {
+export const getTournaments = () => async (dispatch) => {
   dispatch(fetchTouranmentsBegin());
-  return fetch(`${SERVER_URL}/api/tournaments`)
-    .then((res) => res.json())
-    .then((tournamentsArr) => {
-      dispatch(fetchTournamentsSuccess(tournamentsArr));
-    })
-    .catch((err) => dispatch(fetchTournamentsFailure(err)));
+  try {
+    const result = await fetch(`${SERVER_URL}/api/tournaments`);
+    const tournamentsArr = await result.json();
+    dispatch(fetchTournamentsSuccess(tournamentsArr));
+  } catch (err) {
+    dispatch(fetchTournamentsFailure(err));
+  }
 };

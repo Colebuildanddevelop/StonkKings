@@ -18,29 +18,29 @@ const createTradeFailure = (err) => ({
 });
 
 export const createTrade = (tradeObj, token) => {
-  return (dispatch) => {
-    dispatch(createTradeBegin());
-    return fetch(`${SERVER_URL}/api/trades`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-access-token": token,
-      },
-      body: JSON.stringify({
-        entryId: tradeObj.entryId,
-        stockTicker: tradeObj.stockTicker,
-        time: tradeObj.time,
-        buyOrSell: tradeObj.buyOrSell,
-        price: tradeObj.price,
-        amountOfShares: tradeObj.amountOfShares,
-      }),
-    })
-      .then((res) => res.json())
-      .then((tradeInfo) => {
-        dispatch(createTradeSuccess(tradeInfo));
-        return tradeInfo;
-      })
-      .catch((err) => dispatch(createTradeFailure(err)));
+  return async (dispatch) => {
+    try {
+      dispatch(createTradeBegin());
+      const result = await fetch(`${SERVER_URL}/api/trades`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": token,
+        },
+        body: JSON.stringify({
+          entryId: tradeObj.entryId,
+          stockTicker: tradeObj.stockTicker,
+          time: tradeObj.time,
+          buyOrSell: tradeObj.buyOrSell,
+          price: tradeObj.price,
+          amountOfShares: tradeObj.amountOfShares,
+        }),
+      });
+      const tradeInfo = result.json();
+      dispatch(createTradeSuccess(tradeInfo));
+    } catch (err) {
+      dispatch(createTradeFailure(err));
+    }
   };
 };
 
@@ -62,12 +62,13 @@ const fetchTradesByEntryFailure = (err) => ({
   payload: { err },
 });
 
-export const getTradesByEntryId = (entryId) => (dispatch) => {
+export const getTradesByEntryId = (entryId) => async (dispatch) => {
   dispatch(fetchTradesByEntryBegin());
-  return fetch(`${SERVER_URL}/api/trades/${entryId}`)
-    .then((res) => res.json())
-    .then((tradesByEntry) => {
-      dispatch(fetchTradesByEntrySuccess(tradesByEntry));
-    })
-    .catch((err) => dispatch(fetchTradesByEntryFailure(err)));
+  try {
+    const result = await fetch(`${SERVER_URL}/api/trades/${entryId}`);
+    const tradesByEntry = await result.json();
+    dispatch(fetchTradesByEntrySuccess(tradesByEntry));
+  } catch (err) {
+    dispatch(fetchTradesByEntryFailure(err));
+  }
 };

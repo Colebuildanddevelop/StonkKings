@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { loginWithToken } from "./redux/actions/auth.actions";
 // components
 import Footer from "./components/Footer";
+import DisplayErrors from "./components/DisplayErrors";
 // containers
 import Leaderboard from "./containers/Leaderboard";
 import MyTournaments from "./containers/MyTournaments";
@@ -17,8 +18,10 @@ import CreateTournament from "./containers/CreateTournament";
 import { withStyles } from "@material-ui/core/styles";
 
 const useStyles = (theme) => ({
-  mainContainer: {
+  base: {
     backgroundColor: theme.palette.primary.light,
+  },
+  mainContainer: {
     minHeight: "100vh",
     width: "100%",
     height: "100%",
@@ -36,47 +39,52 @@ class App extends React.Component {
 
   render() {
     const { classes } = this.props;
-    if (!this.props.currentUser) {
-      return <Login currentUser={this.props.currentUser} />;
-    }
+
     return (
-      <div className={classes.mainContainer}>
-        <BrowserRouter>
-          <NavBar />
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={(routeProps) => <Lobby {...routeProps} />}
-            />
-            <Route
-              exact
-              path="/my-tournaments"
-              render={(routeProps) => <MyTournaments {...routeProps} />}
-            />
-            <Route
-              exact
-              path="/leaderboard"
-              render={(routeProps) => <Leaderboard {...routeProps} />}
-            />
-            <Route
-              exact
-              path="/create-tournament"
-              render={(routeProps) => <CreateTournament {...routeProps} />}
-            />
-            <Route
-              exact
-              path="/tournament/:id"
-              render={(routeProps) => (
-                <Tournament
-                  {...routeProps}
-                  currentUser={this.props.currentUser}
+      <div className={classes.base}>
+        <div className={classes.mainContainer}>
+          <DisplayErrors />
+          {!this.props.currentUser ? (
+            <Login currentUser={this.props.currentUser} />
+          ) : (
+            <BrowserRouter>
+              <NavBar />
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={(routeProps) => <Lobby {...routeProps} />}
                 />
-              )}
-            />
-          </Switch>
-          <Footer className={classes.footer} />
-        </BrowserRouter>
+                <Route
+                  exact
+                  path="/my-tournaments"
+                  render={(routeProps) => <MyTournaments {...routeProps} />}
+                />
+                <Route
+                  exact
+                  path="/leaderboard"
+                  render={(routeProps) => <Leaderboard {...routeProps} />}
+                />
+                <Route
+                  exact
+                  path="/create-tournament"
+                  render={(routeProps) => <CreateTournament {...routeProps} />}
+                />
+                <Route
+                  exact
+                  path="/tournament/:id"
+                  render={(routeProps) => (
+                    <Tournament
+                      {...routeProps}
+                      currentUser={this.props.currentUser}
+                    />
+                  )}
+                />
+              </Switch>
+            </BrowserRouter>
+          )}
+        </div>
+        <Footer className={classes.footer} />
       </div>
     );
   }

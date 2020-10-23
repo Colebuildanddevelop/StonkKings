@@ -80,6 +80,7 @@ class Lobby extends React.Component {
   };
 
   render() {
+    console.log("lobby render");
     const { classes } = this.props;
     return (
       <div className={classes.mainContainer}>
@@ -92,7 +93,6 @@ class Lobby extends React.Component {
           currentUser={this.props.currentUser}
         />
         <LobbyTable
-          tableHeader={this.props.mainTableHeader}
           tournamentsArr={this.props.tournamentsArr}
           handleClickTournamentRow={this.handleClickTournamentRow}
         />
